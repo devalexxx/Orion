@@ -4,6 +4,8 @@ build/
 
 .idea/
 
+CMakeLists.txt
+
 # MacOS Cache
 .DS_Store
 
