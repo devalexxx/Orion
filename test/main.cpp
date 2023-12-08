@@ -1,8 +1,6 @@
-#include <iostream>
+//
+// Created by Alex on 12/11/2023.
+//
 
-using namespace std;
-
-int main(int argc, char** argv) {
-    cout << "Hello world" << endl;
-    return 0;
-}
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "doctest/doctest.h"

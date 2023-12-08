@@ -10,61 +10,127 @@ project(orion LANGUAGES CXX C)
 # target
 add_library(orion STATIC "")
 set_target_properties(orion PROPERTIES OUTPUT_NAME "orion")
-set_target_properties(orion PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/macosx/arm64/release")
+set_target_properties(orion PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/macosx/x86_64/release")
+target_include_directories(orion PRIVATE
+    include
+)
+target_include_directories(orion INTERFACE
+    include
+)
+target_include_directories(orion SYSTEM PRIVATE
+    /Users/alspin/.xmake/packages/g/glm/0.9.9+8/4fc0eb3c4cd2418fb1720cee58cca88d/include
+    /Users/alspin/.xmake/packages/g/glfw/3.3.8/f5992d88b37a4869874dc399c63c0180/include
+)
+target_compile_definitions(orion PRIVATE
+    GLFW_INCLUDE_NONE
+    GL_SILENCE_DEPRECATION
+)
 target_compile_options(orion PRIVATE
     $<$<COMPILE_LANGUAGE:C>:-target>
     $<$<COMPILE_LANGUAGE:CXX>:-target>
-    $<$<COMPILE_LANGUAGE:C>:arm64-apple-macos14.0>
-    $<$<COMPILE_LANGUAGE:CXX>:arm64-apple-macos14.0>
+    $<$<COMPILE_LANGUAGE:C>:x86_64-apple-macos14.0>
+    $<$<COMPILE_LANGUAGE:CXX>:x86_64-apple-macos14.0>
     $<$<COMPILE_LANGUAGE:C>:-isysroot>
     $<$<COMPILE_LANGUAGE:CXX>:-isysroot>
     $<$<COMPILE_LANGUAGE:C>:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk>
     $<$<COMPILE_LANGUAGE:CXX>:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk>
 )
+set_target_properties(orion PROPERTIES CXX_EXTENSIONS OFF)
+target_compile_features(orion PRIVATE c_std_99)
+set_target_properties(orion PROPERTIES CXX_EXTENSIONS OFF)
+target_compile_features(orion PRIVATE cxx_std_23)
 if(MSVC)
     set_property(TARGET orion PROPERTY
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
+target_link_libraries(orion PRIVATE
+    glfw3
+    "-framework Cocoa"
+    "-framework IOKit"
+    "-framework OpenGL"
+)
+target_link_directories(orion PRIVATE
+    /Users/alspin/.xmake/packages/g/glfw/3.3.8/f5992d88b37a4869874dc399c63c0180/lib
+)
 target_link_options(orion PRIVATE
     -target
-    arm64-apple-macos14.0
+    x86_64-apple-macos14.0
     -isysroot
     /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk
     -stdlib=libc++
     -lz
 )
 target_sources(orion PRIVATE
-    src/library.cpp
+    src/serializer/Archive.cpp
+    src/core/event/EventManager.cpp
+    src/core/event/EventListener.cpp
+    src/core/event/Event.cpp
+    src/core/Position.cpp
+    src/core/Size.cpp
+    src/graphics/VertexArray.cpp
+    src/graphics/RenderTarget.cpp
+    src/graphics/Color.cpp
+    src/graphics/window/WindowEventDispatcher.cpp
+    src/graphics/window/Window.cpp
+    src/graphics/window/WindowEvent.cpp
+    src/graphics/window/WindowEventListener.cpp
+    src/graphics/window/KeyEventListener.cpp
+    src/graphics/window/GLFWWindowWrapper.cpp
+    src/graphics/Vertex.cpp
+    src/engine/world/AbstractComponent.cpp
+    src/engine/world/GameObject.cpp
+    src/engine/world/Transform.cpp
 )
 
 # target
 add_executable(test "")
 set_target_properties(test PROPERTIES OUTPUT_NAME "test")
-set_target_properties(test PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/macosx/arm64/release")
+set_target_properties(test PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/macosx/x86_64/release")
 add_dependencies(test orion)
+target_include_directories(test PRIVATE
+    include
+)
+target_include_directories(test SYSTEM PRIVATE
+    /Users/alspin/.xmake/packages/d/doctest/2.4.11/86c94a195e634ffa9c445c5ce95a0c8f/include
+    /Users/alspin/.xmake/packages/g/glm/0.9.9+8/4fc0eb3c4cd2418fb1720cee58cca88d/include
+    /Users/alspin/.xmake/packages/g/glfw/3.3.8/f5992d88b37a4869874dc399c63c0180/include
+)
+target_compile_definitions(test PRIVATE
+    GLFW_INCLUDE_NONE
+    GL_SILENCE_DEPRECATION
+)
 target_compile_options(test PRIVATE
     $<$<COMPILE_LANGUAGE:C>:-target>
     $<$<COMPILE_LANGUAGE:CXX>:-target>
-    $<$<COMPILE_LANGUAGE:C>:arm64-apple-macos14.0>
-    $<$<COMPILE_LANGUAGE:CXX>:arm64-apple-macos14.0>
+    $<$<COMPILE_LANGUAGE:C>:x86_64-apple-macos14.0>
+    $<$<COMPILE_LANGUAGE:CXX>:x86_64-apple-macos14.0>
     $<$<COMPILE_LANGUAGE:C>:-isysroot>
     $<$<COMPILE_LANGUAGE:CXX>:-isysroot>
     $<$<COMPILE_LANGUAGE:C>:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk>
     $<$<COMPILE_LANGUAGE:CXX>:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk>
 )
+set_target_properties(test PROPERTIES CXX_EXTENSIONS OFF)
+target_compile_features(test PRIVATE c_std_99)
+set_target_properties(test PROPERTIES CXX_EXTENSIONS OFF)
+target_compile_features(test PRIVATE cxx_std_23)
 if(MSVC)
     set_property(TARGET test PROPERTY
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 target_link_libraries(test PRIVATE
     orion
+    glfw3
+    "-framework Cocoa"
+    "-framework IOKit"
+    "-framework OpenGL"
 )
 target_link_directories(test PRIVATE
-    build/macosx/arm64/release
+    build/macosx/x86_64/release
+    /Users/alspin/.xmake/packages/g/glfw/3.3.8/f5992d88b37a4869874dc399c63c0180/lib
 )
 target_link_options(test PRIVATE
     -target
-    arm64-apple-macos14.0
+    x86_64-apple-macos14.0
     -isysroot
     /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk
     -stdlib=libc++
@@ -72,5 +138,9 @@ target_link_options(test PRIVATE
 )
 target_sources(test PRIVATE
     test/main.cpp
+    test/core/test_event.cpp
+    test/core/test_thread_event.cpp
+    test/graphics/test_window.cpp
+    test/graphics/test_window_event.cpp
 )
 
