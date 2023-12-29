@@ -17,7 +17,7 @@ namespace orion {
     }
 
     void GameObject::start() {
-        addComponent<Transform>(glm::vec3(0.f), glm::quat(1.f, 0.f, 0.f, 0.f), glm::vec3(1.f));
+//        addComponent<Transform>(glm::vec3(0.f), glm::quat(1.f, 0.f, 0.f, 0.f), glm::vec3(1.f));
 
         for (size_t i = 0; i < m_component_count; ++i) {
             m_components.at(i)->start();

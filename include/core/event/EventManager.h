@@ -15,7 +15,7 @@ namespace orion {
     class EventManager {
     public:
         template <class EventType>
-        using call_type = std::function<void(const EventType&)>;
+        using call_type = std::function<void(Ref<EventType>)>;
 
         explicit EventManager() = default;
 
@@ -25,14 +25,14 @@ namespace orion {
         void unsubscribe(size_t id);
 
         template <typename EventType>
-        void emit(const EventType& event);
+        void emit(Ref<EventType> event);
 
     private:
         template<typename EventType>
         class CallbackWrapper {
         public:
             explicit CallbackWrapper(EventManager::call_type<EventType> callable);
-            void operator() (const BaseEvent& event);
+            void operator() (Ref<BaseEvent> event);
         private:
             EventManager::call_type<EventType> m_callable;
         };
@@ -54,7 +54,7 @@ namespace orion {
     }
 
     template<typename EventType>
-    void EventManager::emit(const EventType &event) {
+    void EventManager::emit(Ref<EventType> event) {
         std::lock_guard<std::mutex> l(m_mutex);
         size_t type = Event<EventType>::getType();
         if (type >= m_subscribers.size()) {
@@ -68,7 +68,7 @@ namespace orion {
     }
 
     template<typename EventType>
-    void EventManager::CallbackWrapper<EventType>::operator()(const BaseEvent &event) {
+    void EventManager::CallbackWrapper<EventType>::operator()(Ref<BaseEvent> event) {
         m_callable(static_cast<const Event<EventType>&>(event).event);
     }
 

@@ -5,8 +5,9 @@
 #ifndef ORION_CORE_H
 #define ORION_CORE_H
 
-#include "core/Position.h"
-#include "core/Size.h"
+#include "core/type.h"
+#include "core/Indexer.h"
+#include "core/DeferredRegistry.h"
 
 #include "core/event/Event.h"
 #include "core/event/EventManager.h"

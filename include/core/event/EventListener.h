@@ -14,10 +14,10 @@ namespace orion {
     class EventListener {
 
         template<typename Derived, typename EventType>
-        using EventHandler = void(Derived::*)(const EventType&);
+        using EventHandler = void(Derived::*)(Ref<EventType>);
 
     public:
-        explicit EventListener(const std::shared_ptr<EventManager>& event_manager);
+        explicit EventListener(Ref<std::shared_ptr<EventManager>> event_manager);
         ~EventListener();
 
     protected:

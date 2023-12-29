@@ -16,7 +16,7 @@
 //        public:
 //            explicit IEL(const std::shared_ptr<orion::EventManager>& event_manager) : orion::KeyEventListener(event_manager) {}
 //
-//            void onPressed(const orion::Input::KeyEvent &event) override {
+//            void on_pressed(const orion::Input::KeyEvent &event) override {
 //                if (event.key == orion::Input::Key::ESCAPE)
 //                    if(!event.window.expired())
 //                        event.window.lock()->close();
@@ -27,14 +27,14 @@
 //        public:
 //            explicit WEL(const std::shared_ptr<orion::EventManager>& event_manager) : orion::WindowEventListener(event_manager) {}
 //
-//            void onPositionChange(const orion::WindowPositionEvent &event) override {
+//            void on_position_change(const orion::WindowPositionEvent &event) override {
 //                std::cout << "last : " << event.last.x << ", current : " << event.current.x << "\n";
 //            }
 //        };
 //
 //        auto em = std::make_shared<orion::EventManager>();
 //        auto win = orion::Window::create("Event test");
-//        win->setEventManager(em);
+//        win->set_event_manager(em);
 //        WEL wel(em);
 //        IEL iel(em);
 //

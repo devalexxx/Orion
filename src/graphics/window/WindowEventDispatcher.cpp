@@ -18,35 +18,35 @@ namespace orion {
     void WindowEventDispatcher::window_position_callback(GLFWwindow *window, int xpos, int ypos) {
         auto w = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->shared_from_this();
 
-        static Position2D last = {0.0, 0.0};
+        static Vector2i last = {0, 0};
 
         WindowPositionEvent event = {
             {w},
             last,
-            {static_cast<float>(xpos), static_cast<float>(ypos)}
+            {xpos, ypos}
         };
 
         if (!w->m_event_manager.expired())
             w->m_event_manager.lock()->emit(event);
 
-        last = {static_cast<float>(xpos), static_cast<float>(ypos)};
+        last = {xpos, ypos};
     }
 
     void WindowEventDispatcher::window_size_callback(GLFWwindow *window, int width, int height) {
         auto w = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->shared_from_this();
 
-        static Size2D last = {0.0, 0.0};
+        static Vector2i last = {0, 0};
 
         WindowSizeEvent event = {
             {w},
             last,
-            {static_cast<float>(width), static_cast<float>(height)}
+            {width, height}
         };
 
         if (!w->m_event_manager.expired())
             w->m_event_manager.lock()->emit(event);
 
-        last = {static_cast<float>(width), static_cast<float>(height)};
+        last = {width, height};
     }
 
     void WindowEventDispatcher::window_close_callback(GLFWwindow *window) {
@@ -97,7 +97,7 @@ namespace orion {
     void WindowEventDispatcher::window_content_scale_callback(GLFWwindow* window, float xscale, float yscale) {
         auto w = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->shared_from_this();
 
-        static Scale2D last = {0.0, 0.0};
+        static Vector2f last = {0.0, 0.0};
 
         WindowContentScaleEvent event = {
                 {w},
@@ -137,18 +137,18 @@ namespace orion {
     void WindowEventDispatcher::cursor_position_callback(GLFWwindow *window, double xpos, double ypos) {
         auto w = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->shared_from_this();
 
-        static Position2D last = {0.0, 0.0};
+        static Vector2d last = {0.0, 0.0};
 
         Input::CursorPositionEvent event = {
                 {w},
                 last,
-                {static_cast<float>(xpos), static_cast<float>(ypos)}
+                {xpos, ypos}
         };
 
         if (!w->m_event_manager.expired())
             w->m_event_manager.lock()->emit(event);
 
-        last = {static_cast<float>(xpos), static_cast<float>(ypos)};
+        last = {xpos, ypos};
     }
 
     void WindowEventDispatcher::cursor_enter_callback(GLFWwindow *window, int entered) {
@@ -163,18 +163,18 @@ namespace orion {
     void WindowEventDispatcher::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
         auto w = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->shared_from_this();
 
-        static Position2D last = {0.0, 0.0};
+        static Vector2d last = {0.0, 0.0};
 
-        Input::CursorPositionEvent event = {
+        Input::ScrollEvent event = {
                 {w},
                 last,
-                {static_cast<float>(xoffset), static_cast<float>(yoffset)}
+                {xoffset, yoffset}
         };
 
         if (!w->m_event_manager.expired())
             w->m_event_manager.lock()->emit(event);
 
-        last = {static_cast<float>(xoffset), static_cast<float>(yoffset)};
+        last = {xoffset, yoffset};
     }
 
     void WindowEventDispatcher::key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {

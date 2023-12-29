@@ -7,41 +7,43 @@
 
 #include <string>
 
+#include "GL/glew.h"
 #include <GLFW/glfw3.h>
-#include "core/Position.h"
-#include "core/Size.h"
+
+#include "core/type.h"
+#include "math/Vector2.h"
 
 namespace orion {
     class GLFWWindowWrapper {
     public:
-        explicit GLFWWindowWrapper(int width, int height, const std::string& name, GLFWmonitor* monitor, GLFWwindow* share);
+        explicit GLFWWindowWrapper(int width, int height, Ref<std::string> name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share);
         virtual ~GLFWWindowWrapper();
 
-        [[nodiscard]] bool isClose() const;
+        [[nodiscard]] bool is_close() const;
         void close();
 
-        void setName(const std::string& name);
-        [[nodiscard]] std::string getName() const;
+        void set_name(Ref<std::string> name);
+        [[nodiscard]] Ref<std::string> get_name() const;
 
-        void setIcon(int t_count, const GLFWimage* images);
+        void set_icon(int t_count, Ptr<GLFWimage> images);
 
-        [[nodiscard]] Position2D getPosition() const;
-        void setPosition(const Position2D& position);
+        [[nodiscard]] Vector2i get_position() const;
+        void set_position(Ref<Vector2i> position);
 
-        [[nodiscard]] Size2D getSize() const;
-        void setSize(const Size2D& size);
+        [[nodiscard]] Vector2i get_size() const;
+        void set_size(Ref<Vector2i> size);
 
-        void setSizeLimits(const Size2D& min, const Size2D& max);
-        void setAspectRatio(int numer, int denom);
+        void set_size_limits(Ref<Vector2i> min, Ref<Vector2i> max);
+        void set_aspect_ratio(int numer, int denom);
 
-        [[nodiscard]] Size2D getFramebufferSize() const;
+        [[nodiscard]] Vector2i get_framebuffer_size() const;
 
-        [[nodiscard]] Size2D getFrameSize() const;
+        [[nodiscard]] Vector2i get_frame_size() const;
 
-        [[nodiscard]] Scale2D getContentScale() const;
+        [[nodiscard]] Vector2f get_content_scale() const;
 
-        [[nodiscard]] float getOpacity() const;
-        void setOpacity(float opacity);
+        [[nodiscard]] float get_opacity() const;
+        void set_opacity(float opacity);
 
         void iconify();
         void restore();
@@ -49,30 +51,30 @@ namespace orion {
         void show();
         void hide();
         void focus();
-        void requestAttention();
+        void request_attention();
 
-        [[nodiscard]] GLFWmonitor* getMonitor() const;
-        void setMonitor(GLFWmonitor* monitor, const Position2D& position, const Size2D& size, int refresh_rate);
+        [[nodiscard]] PtrMut<GLFWmonitor> get_monitor() const;
+        void set_monitor(PtrMut<GLFWmonitor> monitor, Ref<Vector2i> position, Ref<Vector2i> size, int refresh_rate);
 
-        int getAttribute(int attribute);
-        void setAttribute(int attribute, int value);
+        int get_attribute(int attribute);
+        void set_attribute(int attribute, int value);
 
-        void* getUserPointer();
-        void setUserPointer(void* ptr);
+        PtrMut<void> get_user_pointer();
+        void         set_user_pointer(PtrMut<void> ptr);
 
-        void swapBuffers();
+        void swap_buffers();
 
-        static void pollEvents();
-        static void waitEvents();
-        static void waitEventsTimeout(double timeout);
-        static void postEmptyEvent();
+        static void poll_events();
+        static void wait_events();
+        static void wait_events_timeout(double timeout);
+        static void post_empty_event();
 
     protected:
-        GLFWwindow* m_window;
-        std::string m_name;
+        PtrMut<GLFWwindow> m_window;
+        std::string        m_name;
 
     private:
-        static int count;
+        static int  count;
         static void initialize();
     };
 }

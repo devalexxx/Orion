@@ -5,18 +5,18 @@
 #include "graphics/window/KeyEventListener.h"
 
 namespace orion {
-    KeyEventListener::KeyEventListener(const std::shared_ptr<EventManager> &e_manager) : EventListener(e_manager) {
-        bind(&KeyEventListener::onEvent);
+    KeyEventListener::KeyEventListener(Ref<std::shared_ptr<EventManager>> e_manager) : EventListener(e_manager) {
+        bind(&KeyEventListener::on_event);
     }
 
-    void KeyEventListener::onEvent(const Input::KeyEvent &event) {
+    void KeyEventListener::on_event(Ref<Input::KeyEvent> event) {
         if(event.repeat) {
-            onRepeat(event);
-            onPressed(event);
+            on_repeat(event);
+            on_pressed(event);
         }
         else if (event.pressed)
-            onPressed(event);
+            on_pressed(event);
         else
-            onRelease(event);
+            on_release(event);
     }
 } // orion

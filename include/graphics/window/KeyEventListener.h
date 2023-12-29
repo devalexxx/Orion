@@ -13,11 +13,11 @@ namespace orion {
 
     class KeyEventListener : public EventListener {
     public:
-        explicit KeyEventListener(const std::shared_ptr<EventManager>& e_manager);
-        virtual void onEvent(const Input::KeyEvent& event);
-        virtual void onPressed(const Input::KeyEvent& event) {};
-        virtual void onRelease(const Input::KeyEvent& event) {};
-        virtual void onRepeat(const Input::KeyEvent& event) {};
+        explicit KeyEventListener(Ref<std::shared_ptr<EventManager>> e_manager);
+        virtual void on_event  (Ref<Input::KeyEvent> event);
+        virtual void on_pressed(Ref<Input::KeyEvent> event) {};
+        virtual void on_release(Ref<Input::KeyEvent> event) {};
+        virtual void on_repeat (Ref<Input::KeyEvent> event) {};
     };
 
 } // orion

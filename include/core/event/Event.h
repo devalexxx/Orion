@@ -7,6 +7,8 @@
 
 #include <cstdlib>
 
+#include "core/type.h"
+
 namespace orion {
 
     class BaseEvent {
@@ -21,13 +23,13 @@ namespace orion {
     template<typename EventType>
     class Event : public BaseEvent {
     public:
-        explicit Event(const EventType& event);
+        explicit Event(Ref<EventType> event);
         static size_t getType();
-        const EventType& event;
+        Ref<EventType> event;
     };
 
     template<typename EventType>
-    Event<EventType>::Event(const EventType &event) : event(event) {}
+    Event<EventType>::Event(Ref<EventType> event) : event(event) {}
 
     template<typename EventType>
     size_t Event<EventType>::getType() {

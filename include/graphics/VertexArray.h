@@ -1,19 +1,53 @@
 //
-// Created by Alex on 01/12/2023.
+// Created by Alex on 23/12/2023.
 //
 
 #ifndef ORION_VERTEXARRAY_H
 #define ORION_VERTEXARRAY_H
 
+#include "core/type.h"
+#include "VertexBuffer.h"
+
+#include "GL/glew.h"
+
 #include <vector>
 
 namespace orion {
 
-    class Vertex;
-
     class VertexArray {
+    public:
+        enum class DrawMode {
+            TRIANGLES = GL_TRIANGLES,
+            LINE_LOOP = GL_LINE_LOOP,
+            LINES     = GL_LINES,
+            POINTS    = GL_POINTS
+        };
+
+        static bool is_any_bind;
+        static void unbind();
+
+        static std::shared_ptr<VertexArray> create();
+        static std::shared_ptr<VertexArray> create(Ref<std::vector<PackedVertex>> data, Ref<std::shared_ptr<Shader>> shader);
+
+        ~VertexArray();
+
+        void bind() const;
+
+        [[nodiscard]] u32 count() const;
+        VertexBuffer& add_buffer(VertexBuffer::Type type);
+        VertexBuffer& add_buffer(VertexBuffer::Type type, VertexBuffer::Usage usage);
+
+        void draw(u32 first, u32 count, DrawMode mode = DrawMode::TRIANGLES) const;
+        void draw(u32 count, DrawMode mode = DrawMode::TRIANGLES) const;
+        void draw(DrawMode mode = DrawMode::TRIANGLES) const;
+
     private:
-        std::vector<Vertex> m_vertices;
+        VertexArray();
+
+        u32 m_id {};
+        std::vector<VertexBuffer> m_buffers;
+
+        friend class RenderTarget;
     };
 
 } // orion

@@ -7,17 +7,25 @@
 #include <iostream>
 
 namespace orion {
-    GLFWWindowWrapper::GLFWWindowWrapper(int width, int height, const std::string &name, GLFWmonitor *monitor, GLFWwindow *share) :
+    GLFWWindowWrapper::GLFWWindowWrapper(int width, int height, Ref<std::string> name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share) :
         m_name(name)
     {
         if (count == 0)
             initialize();
+
+//        glfwWindowHint(GLFW_SAMPLES, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
         m_window = glfwCreateWindow(width, height, name.c_str(), monitor, share);
         if (!m_window) {
             std::cerr << "Window creation failed.\n";
             exit(EXIT_FAILURE);
         }
+
+        glfwMakeContextCurrent(m_window);
 
         count += 1;
     }
@@ -38,7 +46,7 @@ namespace orion {
         }
     }
 
-    bool GLFWWindowWrapper::isClose() const {
+    bool GLFWWindowWrapper::is_close() const {
         return glfwWindowShouldClose(m_window);
     }
 
@@ -46,69 +54,69 @@ namespace orion {
         glfwSetWindowShouldClose(m_window, GLFW_TRUE);
     }
 
-    void GLFWWindowWrapper::setName(const std::string &name) {
+    void GLFWWindowWrapper::set_name(Ref<std::string> name) {
         m_name = name;
         glfwSetWindowTitle(m_window, m_name.c_str());
     }
 
-    std::string GLFWWindowWrapper::getName() const {
+    Ref<std::string> GLFWWindowWrapper::get_name() const {
         return m_name;
     }
 
-    void GLFWWindowWrapper::setIcon(int t_count, const GLFWimage *images) {
+    void GLFWWindowWrapper::set_icon(int t_count, Ptr<GLFWimage> images) {
         glfwSetWindowIcon(m_window, t_count, images);
     }
 
-    Position2D GLFWWindowWrapper::getPosition() const {
+    Vector2i GLFWWindowWrapper::get_position() const {
         int x, y;
         glfwGetWindowPos(m_window, &x, &y);
-        return {static_cast<float>(x), static_cast<float>(y)};
+        return {x, y};
     }
 
-    void GLFWWindowWrapper::setPosition(const Position2D &position) {
-        glfwSetWindowPos(m_window, static_cast<int>(position.x), static_cast<int>(position.y));
+    void GLFWWindowWrapper::set_position(Ref<Vector2i> position) {
+        glfwSetWindowPos(m_window, position.get_x(), position.get_y());
     }
 
-    Size2D GLFWWindowWrapper::getSize() const {
+    Vector2i GLFWWindowWrapper::get_size() const {
         int width, height;
         glfwGetWindowSize(m_window, &width, &height);
-        return {static_cast<float>(width), static_cast<float>(height)};
+        return {width, height};
     }
 
-    void GLFWWindowWrapper::setSize(const Size2D &size) {
-        glfwSetWindowSize(m_window, static_cast<int>(size.height), static_cast<int>(size.width));
+    void GLFWWindowWrapper::set_size(Ref<Vector2i> size) {
+        glfwSetWindowSize(m_window, size.get_x(), size.get_y());
     }
 
-    void GLFWWindowWrapper::setSizeLimits(const Size2D& min, const Size2D& max) {
-        glfwSetWindowSizeLimits(m_window, static_cast<int>(min.width), static_cast<int>(min.height), static_cast<int>(max.width), static_cast<int>(max.height));
+    void GLFWWindowWrapper::set_size_limits(Ref<Vector2i> min, Ref<Vector2i> max) {
+        glfwSetWindowSizeLimits(m_window, min.get_x(), min.get_y(), max.get_x(), max.get_y());
     }
-    void GLFWWindowWrapper::setAspectRatio(int numer, int denom) {
+    void GLFWWindowWrapper::set_aspect_ratio(int numer, int denom) {
         glfwSetWindowAspectRatio(m_window, numer, denom);
     }
 
-    Size2D GLFWWindowWrapper::getFramebufferSize() const {
+    Vector2i GLFWWindowWrapper::get_framebuffer_size() const {
         int width, height;
         glfwGetFramebufferSize(m_window, &width, &height);
-        return {static_cast<float>(width), static_cast<float>(height)};
+        return {width, height};
     }
 
-    Size2D GLFWWindowWrapper::getFrameSize() const {
+    Vector2i GLFWWindowWrapper::get_frame_size() const {
         int left, top, right, bottom;
         glfwGetWindowFrameSize(m_window, &left, &top, &right, &bottom);
-        return {static_cast<float>(right - left), static_cast<float>(bottom - top)};
+        return {right - left, bottom - top};
     }
 
-    Scale2D GLFWWindowWrapper::getContentScale() const {
+    Vector2f GLFWWindowWrapper::get_content_scale() const {
         float x, y;
         glfwGetWindowContentScale(m_window, &x, &y);
         return {x, y};
     }
 
-    float GLFWWindowWrapper::getOpacity() const {
+    float GLFWWindowWrapper::get_opacity() const {
         return glfwGetWindowOpacity(m_window);
     }
 
-    void GLFWWindowWrapper::setOpacity(float opacity) {
+    void GLFWWindowWrapper::set_opacity(float opacity) {
         glfwSetWindowOpacity(m_window, opacity);
     }
 
@@ -136,55 +144,55 @@ namespace orion {
         glfwFocusWindow(m_window);
     }
 
-    void GLFWWindowWrapper::requestAttention() {
+    void GLFWWindowWrapper::request_attention() {
         glfwRequestWindowAttention(m_window);
     }
 
-    GLFWmonitor *GLFWWindowWrapper::getMonitor() const {
+    GLFWmonitor *GLFWWindowWrapper::get_monitor() const {
         return glfwGetWindowMonitor(m_window);
     }
 
-    void GLFWWindowWrapper::setMonitor(GLFWmonitor *monitor, const Position2D &position, const Size2D &size, int refresh_rate) {
+    void GLFWWindowWrapper::set_monitor(PtrMut<GLFWmonitor> monitor, Ref<Vector2i> position, Ref<Vector2i> size, int refresh_rate) {
         glfwSetWindowMonitor(m_window, monitor,
-            static_cast<int>(position.x), static_cast<int>(position.y),
-            static_cast<int>(size.width), static_cast<int>(size.height),
+            position.get_x(), position.get_y(),
+            size.get_x(), size.get_y(),
             refresh_rate
         );
     }
 
-    int GLFWWindowWrapper::getAttribute(int attribute) {
+    int GLFWWindowWrapper::get_attribute(int attribute) {
         return glfwGetWindowAttrib(m_window, attribute);
     }
 
-    void GLFWWindowWrapper::setAttribute(int attribute, int value) {
+    void GLFWWindowWrapper::set_attribute(int attribute, int value) {
         glfwSetWindowAttrib(m_window, attribute, value);
     }
 
-    void *GLFWWindowWrapper::getUserPointer() {
+    PtrMut<void> GLFWWindowWrapper::get_user_pointer() {
         return glfwGetWindowUserPointer(m_window);
     }
 
-    void GLFWWindowWrapper::setUserPointer(void *ptr) {
+    void GLFWWindowWrapper::set_user_pointer(PtrMut<void> ptr) {
         glfwSetWindowUserPointer(m_window, ptr);
     }
 
-    void GLFWWindowWrapper::swapBuffers() {
+    void GLFWWindowWrapper::swap_buffers() {
         glfwSwapBuffers(m_window);
     }
 
-    void GLFWWindowWrapper::pollEvents() {
+    void GLFWWindowWrapper::poll_events() {
         glfwPollEvents();
     }
 
-    void GLFWWindowWrapper::waitEvents() {
+    void GLFWWindowWrapper::wait_events() {
         glfwWaitEvents();
     }
 
-    void GLFWWindowWrapper::waitEventsTimeout(double timeout) {
+    void GLFWWindowWrapper::wait_events_timeout(double timeout) {
         glfwWaitEventsTimeout(timeout);
     }
 
-    void GLFWWindowWrapper::postEmptyEvent() {
+    void GLFWWindowWrapper::post_empty_event() {
         glfwPostEmptyEvent();
     }
 }

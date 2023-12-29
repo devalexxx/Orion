@@ -9,8 +9,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "core/Position.h"
-#include "core/Size.h"
+#include "math/Vector2.h"
 
 namespace orion {
 
@@ -21,13 +20,13 @@ namespace orion {
     };
 
     struct WindowPositionEvent : public WindowEvent {
-        Position2D last;
-        Position2D current;
+        Vector2i last;
+        Vector2i current;
     };
 
     struct WindowSizeEvent : public WindowEvent {
-        Size2D last;
-        Size2D current;
+        Vector2i last;
+        Vector2i current;
     };
 
     struct WindowCloseEvent : public WindowEvent {};
@@ -47,8 +46,8 @@ namespace orion {
     };
 
     struct WindowContentScaleEvent : public WindowEvent {
-        Scale2D last;
-        Scale2D current;
+        Vector2f last;
+        Vector2f current;
     };
 
     namespace Input {
@@ -213,8 +212,8 @@ namespace orion {
         };
 
         struct CursorPositionEvent : public WindowEvent {
-            Position2D last;
-            Position2D current;
+            Vector2d last;
+            Vector2d current;
         };
 
         struct CursorEnterEvent : public WindowEvent {
@@ -222,8 +221,8 @@ namespace orion {
         };
 
         struct ScrollEvent : public WindowEvent {
-            Position2D last;
-            Position2D current;
+            Vector2d last;
+            Vector2d current;
         };
 
     }

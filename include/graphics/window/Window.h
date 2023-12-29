@@ -7,9 +7,11 @@
 
 #include <string>
 #include <memory>
+#include <functional>
 
 #include "GLFWWindowWrapper.h"
 #include "graphics/RenderTarget.h"
+#include "graphics/opengl/OpenGLRequired.h"
 
 namespace orion {
 
@@ -19,15 +21,16 @@ namespace orion {
     class Window :
             public GLFWWindowWrapper,
             public std::enable_shared_from_this<Window>,
-            public RenderTarget
+            public RenderTarget,
+            public OpenGLRequired
     {
     public:
         static std::shared_ptr<Window> create(const std::string& name);
-        void run();
+        void display();
 
-        void setEventManager(const std::shared_ptr<EventManager>& event_manager);
+        void set_event_manager(Ref<std::shared_ptr<EventManager>> event_manager);
     private:
-        explicit Window(const std::string& name);
+        explicit Window(Ref<std::string> name);
 
         std::weak_ptr<EventManager> m_event_manager;
 

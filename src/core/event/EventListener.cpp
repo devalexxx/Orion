@@ -7,7 +7,7 @@
 #include <iostream>
 
 namespace orion {
-    EventListener::EventListener(const std::shared_ptr<EventManager>& event_manager) : m_event_manager(event_manager) {}
+    EventListener::EventListener(Ref<std::shared_ptr<EventManager>> event_manager) : m_event_manager(event_manager) {}
 
     EventListener::~EventListener() {
         if (!m_event_manager.expired()) {

@@ -6,15 +6,15 @@
 
 namespace orion {
 
-    WindowEventListener::WindowEventListener(const std::shared_ptr<EventManager>& e_manager) : EventListener(e_manager) {
-        bind(&WindowEventListener::onPositionChange);
-        bind(&WindowEventListener::onSizeChange);
-        bind(&WindowEventListener::onClose);
-        bind(&WindowEventListener::onRefresh);
-        bind(&WindowEventListener::onFocus);
-        bind(&WindowEventListener::onIconify);
-        bind(&WindowEventListener::onMaximize);
-        bind(&WindowEventListener::onContentScaleChange);
+    WindowEventListener::WindowEventListener(Ref<std::shared_ptr<EventManager>> event_manager) : EventListener(event_manager) {
+        bind(&WindowEventListener::on_position_change);
+        bind(&WindowEventListener::on_size_change);
+        bind(&WindowEventListener::on_close);
+        bind(&WindowEventListener::on_refresh);
+        bind(&WindowEventListener::on_focus);
+        bind(&WindowEventListener::on_iconify);
+        bind(&WindowEventListener::on_maximize);
+        bind(&WindowEventListener::on_content_scale_change);
     }
 
 }

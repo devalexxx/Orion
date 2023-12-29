@@ -1,6 +1,8 @@
+add_rules("mode.debug", "mode.release")
+
 set_languages("c99", "c++23")
 
-add_requires("glm", "doctest", "glfw")
+add_requires("glm", "doctest", "glfw", "glew", "fmt", "stb")
 
 local module = {
     core = {
@@ -16,7 +18,7 @@ local module = {
     graphics = {
         config_name  = "graphics",
         dependencies = {"core"},
-        packages     = {"glm", "glfw"},
+        packages     = {"glm", "glfw", "glew"},
     },
     serializer = {
         config_name  = "serializer",
@@ -25,16 +27,32 @@ local module = {
     }
 }
 
+includes("xmake/**.lua")
+
 target("orion")
     set_kind("static")
+    if is_mode("debug") then
+        add_defines("DEBUG")
+    end
     add_files("src/**/*.cpp")
     add_includedirs("include", {public = true})
     add_packages("glm", {public = true})
     add_packages("glfw", {public = true})
+    add_packages("glew", {public = true})
+    add_packages("fmt", {public = true})
+    add_packages("stb", {public = true})
+
+    add_rules("glsl", "texture")
+
+    add_files("resource/**/*.glsl")
+    add_files("resource/**/*.png")
 target_end()
 
 target("test")
     set_kind("binary")
+    if is_mode("debug") then
+        add_defines("DEBUG")
+    end
     add_deps("orion")
     add_files("test/*.cpp")
     add_files("test/**/*.cpp")

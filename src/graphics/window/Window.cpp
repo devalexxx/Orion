@@ -9,19 +9,17 @@
 #include "graphics/window/WindowEventDispatcher.h"
 
 namespace orion {
-    std::shared_ptr<Window> Window::create(const std::string &name) {
+    std::shared_ptr<Window> Window::create(Ref<std::string> name) {
         auto p = std::shared_ptr<Window>(new Window(name));
         return std::move(p);
     }
 
-    void Window::run() {
-        do {
-            swapBuffers();
-            pollEvents();
-        } while (!isClose());
+    void Window::display() {
+        swap_buffers();
+        poll_events();
     }
 
-    Window::Window(const std::string &name) : GLFWWindowWrapper(1024, 768, name, nullptr, nullptr) {
+    Window::Window(Ref<std::string> name) : GLFWWindowWrapper(1024, 768, name, nullptr, nullptr) {
         glfwSetErrorCallback    (WindowEventDispatcher::error_callback);
         glfwSetJoystickCallback (WindowEventDispatcher::joystick_callback);
         glfwSetMonitorCallback  (WindowEventDispatcher::monitor_callback);
@@ -48,10 +46,10 @@ namespace orion {
 
         glfwSetDropCallback                 (m_window, WindowEventDispatcher::drop_callback);
 
-        setUserPointer(this);
+        set_user_pointer(this);
     }
 
-    void Window::setEventManager(const std::shared_ptr<EventManager>& event_manager) {
+    void Window::set_event_manager(Ref<std::shared_ptr<EventManager>> event_manager) {
         m_event_manager = event_manager;
     }
 }
