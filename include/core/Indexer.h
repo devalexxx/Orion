@@ -9,6 +9,7 @@
 
 #include <unordered_map>
 #include <iostream>
+#include <optional>
 
 namespace orion {
 
