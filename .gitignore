@@ -110,6 +110,9 @@ compile_commands.json
 
 !/xmake/actions/build/
 
+.xmake
+build
+
 # for linux driver
 *.o
 *.ko

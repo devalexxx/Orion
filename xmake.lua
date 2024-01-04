@@ -2,7 +2,10 @@ add_rules("mode.debug", "mode.release")
 
 set_languages("c99", "c++23")
 
-add_requires("glm", "doctest", "glfw", "glew", "fmt", "stb")
+add_requires("glm", "doctest", "fmt", "stb")
+
+add_requires("glfw", {configs = { debug = is_mode("debug") }})
+add_requires("glew", {configs = { debug = is_mode("debug") }})
 
 local module = {
     core = {
