@@ -8,13 +8,16 @@
 #include "graphics/PackedVertex.h"
 #include "graphics/RenderTarget.h"
 
+#include <iostream>
+
 namespace orion {
 
     Triangle::Triangle(Ref<Vector3f> position) {
-        if (default_vao == nullptr) {
-            default_vao = VertexArray::create(default_shape, m_shader);
+        if (!VertexArray::REGISTRY.exist("shape:triangle")) {
+            m_vao = VertexArray::REGISTRY.add("shape:triangle", VertexArray::create(default_shape, m_shader));
+        } else {
+            m_vao = VertexArray::REGISTRY.get("shape:triangle");
         }
-        m_vao = default_vao;
         m_transform.set_position(position);
     }
 
@@ -28,9 +31,7 @@ namespace orion {
         target.draw(*m_vao, m_context);
     }
 
-    std::shared_ptr<VertexArray> Triangle::default_vao = nullptr;
-
-    std::vector<PackedVertex>    Triangle::default_shape = {{
+    std::vector<PackedVertex> Triangle::default_shape = {{
         PackedVertex(Vector3f(0.0f, 1.0f, 0.0f),Vector2f(0.5f, 1.0f)),
         PackedVertex(Vector3f(-1.0f, -1.0f, 0.0f),Vector2f(0.0f, 0.0f)),
         PackedVertex(Vector3f(1.0f, -1.0f, 0.0f),Vector2f(1.0f, 0.0f))

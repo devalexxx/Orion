@@ -21,6 +21,7 @@ namespace orion {
 
         [[nodiscard]] bool is_close() const;
         void close();
+        void open();
 
         void set_name(Ref<std::string> name);
         [[nodiscard]] Ref<std::string> get_name() const;

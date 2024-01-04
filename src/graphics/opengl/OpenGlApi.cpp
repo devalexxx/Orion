@@ -2,28 +2,28 @@
 // Created by Alex on 26/12/2023.
 //
 
-#include "graphics/opengl/OpenGLApi.h"
-
-#include "graphics/Shader.h"
-#include "graphics/Texture.h"
+#include "graphics/opengl/OpenGlApi.h"
 
 #include "GL/glew.h"
 
 #include <iostream>
+#include <cassert>
+
+#include "graphics/opengl/OpenGlContext.h"
 
 namespace orion {
 
-    bool OpenGLApi::is_loaded = false;
+    bool OpenGlApi::is_loaded = false;
 
-    void OpenGLApi::load() {
+    void OpenGlApi::load() {
+
+        assert(OpenGlContext::is_any_current() && "You can't load OpenGl api without OpenGl context.");
+
         glewExperimental = true;
         if (glewInit() != GLEW_OK) {
             std::cerr << "Could not initialize OpenGL API. \n";
             exit(EXIT_FAILURE);
         }
-
-        Shader::REGISTRY.load();
-        Texture::REGISTRY.load();
 
         is_loaded = true;
     }

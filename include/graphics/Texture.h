@@ -10,11 +10,13 @@
 #include "core/type.h"
 #include "core/DeferredRegistry.h"
 
+#include "opengl/OpenGlContextRequired.h"
+
 namespace orion {
 
     class Image;
 
-    class Texture : public std::enable_shared_from_this<Texture> {
+    class Texture : public OpenGlContextRequired {
     public:
         static DeferredRegistry<Texture> REGISTRY;
 

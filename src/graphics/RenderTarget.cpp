@@ -22,7 +22,7 @@ namespace orion {
 
         auto& shader = context.m_shader;
         if (shader) {
-//            if (shader != last_context.get().m_shader) {
+//            if (shader != last_context.get_current().m_shader) {
                 shader->use();
 
                 if (shader->has_uniform("view"))
@@ -34,7 +34,7 @@ namespace orion {
 
             auto& texture = context.m_texture;
             if (texture) {
-//                if (texture != last_context.get().m_texture) {
+//                if (texture != last_context.get_current().m_texture) {
                     apply_texture(*texture, *shader);
 //                }
             }

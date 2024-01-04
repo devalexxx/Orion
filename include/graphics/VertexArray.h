@@ -6,7 +6,10 @@
 #define ORION_VERTEXARRAY_H
 
 #include "core/type.h"
+#include "core/DeferredRegistry.h"
 #include "VertexBuffer.h"
+
+#include "opengl/OpenGlContextRequired.h"
 
 #include "GL/glew.h"
 
@@ -14,7 +17,7 @@
 
 namespace orion {
 
-    class VertexArray {
+    class VertexArray : public OpenGlContextRequired {
     public:
         enum class DrawMode {
             TRIANGLES = GL_TRIANGLES,
@@ -22,6 +25,8 @@ namespace orion {
             LINES     = GL_LINES,
             POINTS    = GL_POINTS
         };
+
+        static DeferredRegistry<VertexArray> REGISTRY;
 
         static bool is_any_bind;
         static void unbind();

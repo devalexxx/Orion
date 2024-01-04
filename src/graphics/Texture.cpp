@@ -10,7 +10,7 @@
 
 namespace orion {
 
-    DeferredRegistry<Texture> Texture::REGISTRY = DeferredRegistry<Texture>();
+    DeferredRegistry<Texture> Texture::REGISTRY = DeferredRegistry<Texture>("opengl");
 
     std::shared_ptr<Texture> Texture::create_from_image(Ref<Image> image) {
         auto texture = std::shared_ptr<Texture>(new Texture());

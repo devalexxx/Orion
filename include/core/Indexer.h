@@ -22,6 +22,8 @@ namespace orion {
         bool set(Ref<K> key, Ref<V> value);
         bool remove(Ref<K> key);
 
+        void reset();
+
         std::optional<std::pair<const K, V>> get_by_key  (Ref<K> key)   const;
         std::optional<std::pair<const K, V>> get_by_value(Ref<V> value) const;
 
@@ -30,6 +32,12 @@ namespace orion {
         std::unordered_map<K, V> m_default {};
         std::unordered_map<V, K> m_reverse {};
     };
+
+    template<typename K, typename V>
+    void Indexer<K, V>::reset() {
+        m_default.clear();
+        m_reverse.clear();
+    }
 
     template<typename K, typename V>
     bool Indexer<K, V>::emplace(Ref<K> key, Ref<V> value) {

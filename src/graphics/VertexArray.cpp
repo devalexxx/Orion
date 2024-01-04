@@ -5,8 +5,11 @@
 #include "graphics/VertexArray.h"
 
 #include <type_traits>
+#include <iostream>
 
 namespace orion {
+
+    DeferredRegistry<VertexArray> VertexArray::REGISTRY = DeferredRegistry<VertexArray>("opengl");
 
     bool VertexArray::is_any_bind = false;
 

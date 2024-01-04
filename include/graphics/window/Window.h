@@ -11,7 +11,6 @@
 
 #include "GLFWWindowWrapper.h"
 #include "graphics/RenderTarget.h"
-#include "graphics/opengl/OpenGLRequired.h"
 
 namespace orion {
 
@@ -21,8 +20,7 @@ namespace orion {
     class Window :
             public GLFWWindowWrapper,
             public std::enable_shared_from_this<Window>,
-            public RenderTarget,
-            public OpenGLRequired
+            public RenderTarget
     {
     public:
         static std::shared_ptr<Window> create(const std::string& name);

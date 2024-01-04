@@ -11,8 +11,10 @@
 #include "core.h"
 #include "math/Matrix4.h"
 
+#include "opengl/OpenGlContextRequired.h"
+
 namespace orion {
-class Shader : public std::enable_shared_from_this<Shader> {
+class Shader : public OpenGlContextRequired {
 
         enum class Type {
             VERTEX,

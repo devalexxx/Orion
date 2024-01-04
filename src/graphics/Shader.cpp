@@ -14,7 +14,7 @@
 
 namespace orion {
 
-    DeferredRegistry<Shader> Shader::REGISTRY = DeferredRegistry<Shader>(
+    DeferredRegistry<Shader> Shader::REGISTRY = DeferredRegistry<Shader>("opengl",
             [](RefMut<DeferredRegistry<Shader>> reg) {
                 reg.add("default", Shader::load_from_file("resource/shader/basic_texture_vertex.glsl","resource/shader/basic_texture_fragment.glsl"));
             }
@@ -97,10 +97,10 @@ namespace orion {
         i32 result = GL_FALSE;
         i32 length;
         glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        if (length > 0){
-            std::vector<i8> errorMessage(length + 1);
-            glGetShaderInfoLog(id, length, nullptr, &errorMessage[0]);
+        if (result == GL_FALSE){
+            glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+            std::vector<i8> errorMessage(length);
+            glGetShaderInfoLog(id, length, &length, &errorMessage[0]);
             std::cerr << std::string(errorMessage.begin(), errorMessage.end()) << "\n";
         }
     }
@@ -108,11 +108,11 @@ namespace orion {
     void Shader::handle_link_error(u32 id) {
         i32 result = GL_FALSE;
         i32 length;
-        glGetShaderiv(id, GL_LINK_STATUS, &result);
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        if (length > 0){
-            std::vector<i8> errorMessage(length + 1);
-            glGetShaderInfoLog(id, length, nullptr, &errorMessage[0]);
+        glGetProgramiv(id, GL_LINK_STATUS, &result);
+        if (result == GL_FALSE){
+            glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
+            std::vector<i8> errorMessage(length);
+            glGetShaderInfoLog(id, length, &length, &errorMessage[0]);
             std::cerr << std::string(errorMessage.begin(), errorMessage.end()) << "\n";
         }
     }

@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "graphics/opengl/OpenGlContext.h"
+
 namespace orion {
     GLFWWindowWrapper::GLFWWindowWrapper(int width, int height, Ref<std::string> name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share) :
         m_name(name)
@@ -13,25 +15,19 @@ namespace orion {
         if (count == 0)
             initialize();
 
-        glfwWindowHint(GLFW_SAMPLES, 4);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
-
         m_window = glfwCreateWindow(width, height, name.c_str(), monitor, share);
         if (!m_window) {
             std::cerr << "Window creation failed.\n";
             exit(EXIT_FAILURE);
         }
 
-        glfwMakeContextCurrent(m_window);
+        OpenGlContext::set_current(m_window);
 
         count += 1;
     }
 
     GLFWWindowWrapper::~GLFWWindowWrapper() {
+        OpenGlContext::on_any_destroy(m_window);
         glfwDestroyWindow(m_window);
         count -= 1;
         if (count == 0)
@@ -45,6 +41,13 @@ namespace orion {
             std::cerr << "Could not initialize GLFW Library.\n";
             exit(EXIT_FAILURE);
         }
+
+        glfwWindowHint(GLFW_SAMPLES, 4);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
     }
 
     bool GLFWWindowWrapper::is_close() const {
@@ -53,6 +56,10 @@ namespace orion {
 
     void GLFWWindowWrapper::close() {
         glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+    }
+
+    void GLFWWindowWrapper::open() {
+        glfwSetWindowShouldClose(m_window, GLFW_FALSE);
     }
 
     void GLFWWindowWrapper::set_name(Ref<std::string> name) {

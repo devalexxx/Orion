@@ -7,7 +7,7 @@
 
 namespace orion {
 
-    class OpenGLApi {
+    class OpenGlApi {
     public:
         static bool is_loaded;
 
