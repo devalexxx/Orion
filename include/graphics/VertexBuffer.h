@@ -11,16 +11,21 @@
 #include <GL/glew.h>
 #include "core/type.h"
 
+#include "opengl/OpenGlContextRequired.h"
+
 namespace orion {
 
     template<size_t L, typename T>
     class Vector;
 
-    class PackedVertex;
     class Shader;
     class VertexArray;
 
-    class VertexBuffer {
+    struct PackedVertex;
+
+    class VertexBuffer :
+            public OpenGlContextRequired
+    {
     public:
         enum class Type {
             ARRAY   = GL_ARRAY_BUFFER,

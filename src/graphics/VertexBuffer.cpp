@@ -58,6 +58,6 @@ namespace orion {
                 shader->set_float_attrib_pointer("uv", 2, 8, 6);
         }
         else
-            std::cerr << "Can't set data for buffer " << m_id << " because no VAO is bind.\n";
+            std::cerr << "Can't set_current data for buffer " << m_id << " because no VAO is bind.\n";
     }
 }
