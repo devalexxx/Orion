@@ -111,7 +111,7 @@ compile_commands.json
 !/xmake/actions/build/
 
 .xmake
-build
+build/
 
 # for linux driver
 *.o
@@ -192,3 +192,4 @@ Temporary Items
 *.app
 
 
+/build/
