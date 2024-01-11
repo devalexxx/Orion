@@ -24,6 +24,9 @@ jobs:
       - name: PWD
         run: pwd
 
+      - name: LS
+        run: ls
+
       # Build the engine
       - name: Build Orion
         run: xmake --yes
