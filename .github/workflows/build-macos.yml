@@ -21,13 +21,9 @@ jobs:
       - name: Update xmake repository
         run: xmake repo --update
 
+      - name: PWD
+        run: pwd
+
       # Build the engine
       - name: Build Orion
         run: xmake --yes
-
-  test:
-    runs-on: macos-latest
-
-    steps:
-      - name: "Test test"
-        run: echo "Test"
