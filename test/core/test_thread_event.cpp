@@ -30,7 +30,7 @@ TEST_SUITE("Event") {
     };
 
     TEST_CASE("Thread safety event manager") {
-        auto em = std::make_shared<orion::EventManager>();
+        auto em = orion::EventManager::create();
 
         size_t thread_count     = std::thread::hardware_concurrency();
         size_t emit_per_thread  = 50;

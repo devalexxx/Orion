@@ -21,12 +21,12 @@ namespace orion {
         void draw(Ref<VertexArray> vao, Ref<RenderContext> context) const;
 
         RefMut<View> get_view();
+
+    protected:
+        bool m_frame_swap {false};
+
     private:
-        void apply_texture(Ref<Texture> texture, Ref<Shader> shader) const;
-
         View m_view {};
-
-        bool m_is_new_frame {false};
     };
 
 }

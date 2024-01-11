@@ -17,6 +17,7 @@ namespace orion {
     void Window::display() {
         swap_buffers();
         poll_events();
+        m_frame_swap = !m_frame_swap;
     }
 
     Window::Window(Ref<std::string> name) : GLFWWindowWrapper(1024, 768, name, nullptr, nullptr) {

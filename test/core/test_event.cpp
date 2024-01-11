@@ -25,17 +25,17 @@ TEST_SUITE("Event") {
     }
 
     TEST_CASE("EventManager") {
-        orion::EventManager e_manager;
-        e_manager.subscribe<TestStringEvent>(onTestString);
+        auto em = orion::EventManager::create();
+        em->subscribe<TestStringEvent>(onTestString);
         {
-            e_manager.subscribe<TestIntEvent>(onTestInt);
+            em->subscribe<TestIntEvent>(onTestInt);
 
             TestStringEvent se = {"42"};
-            e_manager.emit(se);
+            em->emit(se);
         }
 
         TestIntEvent ie = {42};
-        e_manager.emit(ie);
+        em->emit(ie);
     }
 
     class AbstractTestEventListener : public orion::EventListener {
@@ -77,21 +77,21 @@ TEST_SUITE("Event") {
     };
 
     TEST_CASE("Listener") {
-        std::shared_ptr<orion::EventManager> e_manager = std::make_shared<orion::EventManager>();
-        TestEventListener_1 tel_1(e_manager);
+        auto em = orion::EventManager::create();
+        TestEventListener_1 tel_1(em);
 
         {
-            TestEventListener_2 tel_2(e_manager);
+            TestEventListener_2 tel_2(em);
 
             TestStringEvent se = {"42"};
-            e_manager->emit(se);
+            em->emit(se);
             TestIntEvent ie = {42};
-            e_manager->emit(ie);
+            em->emit(ie);
         }
 
         TestStringEvent se = {"42"};
-        e_manager->emit(se);
+        em->emit(se);
         TestIntEvent ie = {42};
-        e_manager->emit(ie);
+        em->emit(ie);
     }
 }

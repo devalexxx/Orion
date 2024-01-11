@@ -20,7 +20,7 @@ namespace orion {
         void draw(const RenderTarget &target, const RenderContext &context) const override;
 
     private:
-        static std::vector<PackedVertex>    default_shape;
+        static std::vector<PackedVertex> default_shape;
     };
 
 } // orion

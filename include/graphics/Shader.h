@@ -14,7 +14,10 @@
 #include "opengl/OpenGlContextRequired.h"
 
 namespace orion {
-class Shader : public OpenGlContextRequired {
+
+    class Color;
+
+    class Shader : public OpenGlContextRequired {
 
         enum class Type {
             VERTEX,
@@ -26,6 +29,7 @@ class Shader : public OpenGlContextRequired {
         static DeferredRegistry<Shader> REGISTRY;
 
         static std::shared_ptr<Shader> load_from_file(Ptr<char> vertex, Ptr<char> fragment);
+        static std::shared_ptr<Shader> load_from_file(Ref<Path> vertex, Ref<Path> fragment);
         static std::shared_ptr<Shader> load_from_code(Ref<std::string> vertex, Ref<std::string> fragment);
 
         static void unbind();
@@ -42,6 +46,7 @@ class Shader : public OpenGlContextRequired {
 
         void set_uniform(Ptr<char> name, int value)           const;
         void set_uniform(Ptr<char> name, Ref<Matrix4f> value) const;
+        void set_uniform(Ptr<char> name, Ref<Color> value)    const;
 
         void set_float_attrib_pointer(Ptr<char> name, u32 size, u32 stride, u32 offset) const;
 

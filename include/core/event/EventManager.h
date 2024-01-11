@@ -17,7 +17,7 @@ namespace orion {
         template <class EventType>
         using call_type = std::function<void(Ref<EventType>)>;
 
-        explicit EventManager() = default;
+        static std::shared_ptr<EventManager> create();
 
         template <typename EventType>
         size_t subscribe(call_type<EventType> callable);
@@ -28,6 +28,8 @@ namespace orion {
         void emit(Ref<EventType> event);
 
     private:
+        explicit EventManager() = default;
+
         template<typename EventType>
         class CallbackWrapper {
         public:

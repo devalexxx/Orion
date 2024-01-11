@@ -46,6 +46,8 @@ namespace orion {
         if (!w->m_event_manager.expired())
             w->m_event_manager.lock()->emit(event);
 
+//        w->get_view().set_ratio((f32)width / (f32)height);
+
         last = {width, height};
     }
 

@@ -25,5 +25,6 @@
 #include "graphics/shape/Shape.h"
 #include "graphics/shape/Triangle.h"
 #include "graphics/shape/Square.h"
+#include "graphics/shape/Cube.h"
 
 #endif //ORION_GRAPHICS_H

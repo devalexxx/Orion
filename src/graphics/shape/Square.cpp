@@ -21,14 +21,12 @@ namespace orion {
     }
 
     void Square::draw(const RenderTarget &target, const RenderContext &context) const {
-        if (m_shader->has_uniform("model")) {
-            m_shader->set_uniform("model", m_transform.get_matrix());
-        }
+        Shape::draw(target, context);
 
         target.draw(*m_vao, m_context);
     }
 
-    std::vector<PackedVertex>    Square::default_shape = {{
+    std::vector<PackedVertex> Square::default_shape = {{
         PackedVertex(Vector3f(-1.0f,  1.0f, 0.0f),Vector2f(0.0f, 1.0f)),
         PackedVertex(Vector3f(-1.0f, -1.0f, 0.0f),Vector2f(0.0f, 0.0f)),
         PackedVertex(Vector3f( 1.0f,  1.0f, 0.0f),Vector2f(1.0f, 1.0f)),

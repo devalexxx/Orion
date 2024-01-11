@@ -11,9 +11,9 @@ namespace orion {
 
     EventListener::~EventListener() {
         if (!m_event_manager.expired()) {
-            auto e_manager = m_event_manager.lock();
+            auto event_manager = m_event_manager.lock();
             for (auto& id: m_handler_ids) {
-                e_manager->unsubscribe(id);
+                event_manager->unsubscribe(id);
             }
         }
     }

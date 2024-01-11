@@ -45,4 +45,16 @@ namespace orion {
         return translation * rotation * scale;
     }
 
+    Ref<Vector3f> Transform::get_position() const {
+        return m_position;
+    }
+
+    Ref<Vector3f> Transform::get_rotation() const {
+        return m_rotation;
+    }
+
+    Ref<Vector3f> Transform::get_scale() const {
+        return m_scale;
+    }
+
 } // orion

@@ -39,4 +39,12 @@ namespace orion {
         return m_data.data();
     }
 
+    Image Image::load_from_file(Ref<Path> path) {
+        return load_from_file(path.c_str());
+    }
+
+    Image Image::load_from_file(Ref<Path> path, bool flip_v) {
+        return load_from_file(path.c_str(), flip_v);
+    }
+
 } // orion

@@ -15,4 +15,8 @@ namespace orion {
                 m_subscribers[type].erase(it);
         }
     }
+
+    std::shared_ptr<EventManager> EventManager::create() {
+        return std::shared_ptr<EventManager>(new EventManager());
+    }
 }

@@ -8,7 +8,12 @@
 
 namespace orion {
 
-    Shape::Shape() : m_shader(Shader::REGISTRY.get("default")), m_context(RenderContext(m_shader, m_texture, VertexArray::DrawMode::TRIANGLES)) {}
+    Shape::Shape() :
+        m_shader(Shader::REGISTRY.get("shape")),
+        m_context(RenderContext(m_shader, m_texture, VertexArray::DrawMode::TRIANGLES)),
+        m_color(Color::WHITE),
+        m_sample_mode(SampleMode::UNIFORM_COLOR)
+    {}
 
     const std::shared_ptr<Texture> &Shape::get_texture() const {
         return m_texture;
@@ -21,6 +26,7 @@ namespace orion {
     void Shape::set_texture(std::shared_ptr<Texture> texture) {
         m_texture = std::move(texture);
         m_context.set_texture(m_texture);
+        m_sample_mode = SampleMode::TEXTURE;
     }
 
     void Shape::set_shader(std::shared_ptr<Shader> shader) {
@@ -30,6 +36,31 @@ namespace orion {
 
     RefMut<Transform> Shape::get_transform() {
         return m_transform;
+    }
+
+    void Shape::set_color(Ref<Color> color) {
+        m_color = color;
+    }
+
+    void Shape::set_color(std::vector<Color> color) {
+        // @todo
+        m_sample_mode = SampleMode::COLOR;
+    }
+
+    void Shape::set_sample_mode(Shape::SampleMode mode) {
+        m_sample_mode = mode;
+    }
+
+    void Shape::draw(Ref<RenderTarget> target, Ref<RenderContext> context) const {
+        if (m_shader->has_uniform("sample_mode"))
+            m_shader->set_uniform("sample_mode", std::underlying_type<SampleMode>::type(m_sample_mode));
+
+        if (m_sample_mode == SampleMode::UNIFORM_COLOR)
+            if (m_shader->has_uniform("uniform_color"))
+                m_shader->set_uniform("uniform_color", m_color);
+
+        if (m_shader->has_uniform("model"))
+            m_shader->set_uniform("model", m_transform.get_matrix());
     }
 
 } // orion

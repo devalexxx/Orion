@@ -4,6 +4,9 @@
 
 #include "graphics/Shader.h"
 
+#include "core/Resource.h"
+#include "graphics/Color.h"
+
 #include "GL/glew.h"
 
 #include <fstream>
@@ -15,8 +18,8 @@
 namespace orion {
 
     DeferredRegistry<Shader> Shader::REGISTRY = DeferredRegistry<Shader>("opengl",
-            [](RefMut<DeferredRegistry<Shader>> reg) {
-                reg.add("default", Shader::load_from_file("resource/shader/basic_texture_vertex.glsl","resource/shader/basic_texture_fragment.glsl"));
+            [](RefMut<DeferredRegistry<Shader>> r) {
+                r.add("shape",Shader::load_from_file(resource::shader::of("shape_vertex.glsl"),resource::shader::of("shape_fragment.glsl")));
             }
     );
 
@@ -44,6 +47,10 @@ namespace orion {
         }
 
         return std::shared_ptr<Shader>(new Shader(v_code, f_code));
+    }
+
+    std::shared_ptr<Shader> Shader::load_from_file(Ref<Path> vertex, Ref<Path> fragment) {
+        return load_from_file(vertex.c_str(), fragment.c_str());
     }
 
     std::shared_ptr<Shader> Shader::load_from_code(Ref<std::string> vertex, Ref<std::string> fragment) {
@@ -175,6 +182,10 @@ namespace orion {
 
     void Shader::set_uniform(Ptr<char> name, Ref<Matrix4f> value) const {
         glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, value.data());
+    }
+
+    void Shader::set_uniform(Ptr<char> name, Ref<Color> value) const {
+        glUniform4fv(get_uniform_location(name), 1, &value[0]);
     }
 
     void Shader::set_float_attrib_pointer(Ptr<char> name, u32 size, u32 stride, u32 offset) const {

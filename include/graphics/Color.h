@@ -5,15 +5,28 @@
 #ifndef ORION_COLOR_H
 #define ORION_COLOR_H
 
-#include "glm/glm.hpp"
+#include "math/Vector4.h"
+#include "math/Vector3.h"
 
 namespace orion {
+
     class Color {
     public:
-        explicit Color(float r, float g, float b);
-        [[nodiscard]] glm::vec3 data() const;
+        static const Color WHITE;
+        static const Color BLACK;
+        static const Color RED;
+        static const Color GREEN;
+        static const Color BLUE;
+
+        explicit Color(f32 r, f32 g, f32 b, f32 a);
+
+        RefMut<f32> operator[](size_t index);
+        Ref<f32>    operator[](size_t index) const;
+
+        [[nodiscard]] Vector3f to_rgb() const;
+
     private:
-        glm::vec3 m_data;
+        Vector4f m_data;
     };
 }
 

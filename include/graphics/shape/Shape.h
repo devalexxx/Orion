@@ -10,6 +10,7 @@
 #include "graphics/Shader.h"
 #include "graphics/RenderContext.h"
 #include "graphics/Transform.h"
+#include "graphics/Color.h"
 
 #include <memory>
 
@@ -20,6 +21,12 @@ namespace orion {
 
     class Shape: public Drawable {
     public:
+        enum class SampleMode {
+            TEXTURE       = 0,
+            COLOR         = 1,
+            UNIFORM_COLOR = 2,
+        };
+
         Shape();
 
         [[nodiscard]] Ref<std::shared_ptr<Texture>> get_texture() const;
@@ -29,6 +36,12 @@ namespace orion {
 
         void set_texture(std::shared_ptr<Texture> texture);
         void set_shader (std::shared_ptr<Shader> shader);
+        void set_color  (Ref<Color> color);
+        void set_color  (std::vector<Color> color);
+
+        void set_sample_mode(SampleMode mode);
+
+        void draw(Ref<RenderTarget> target, Ref<RenderContext> context) const override;
 
     protected:
         std::shared_ptr<VertexArray> m_vao;
@@ -36,6 +49,10 @@ namespace orion {
         std::shared_ptr<Shader>      m_shader;
 
         Transform m_transform;
+
+        SampleMode m_sample_mode;
+
+        Color m_color;
 
         RenderContext m_context;
     };

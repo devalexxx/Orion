@@ -5,6 +5,9 @@
 #ifndef ORION_TYPE_H
 #define ORION_TYPE_H
 
+#include <filesystem>
+#include <string>
+
 namespace orion {
 
     using i8 = char;
@@ -22,6 +25,8 @@ namespace orion {
     using f32 = float;
     using f64 = double;
 
+    using String = std::string;
+
     template<typename T>
     using Ref = const T&;
 
@@ -33,6 +38,9 @@ namespace orion {
 
     template<typename T>
     using PtrMut = T*;
+
+    namespace filesystem = std::filesystem;
+    using Path = filesystem::path;
 
 }
 

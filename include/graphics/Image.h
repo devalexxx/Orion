@@ -20,7 +20,9 @@ namespace orion {
     class Image {
     public:
         static Image load_from_file(Ptr<char> path);
+        static Image load_from_file(Ref<Path> path);
         static Image load_from_file(Ptr<char> path, bool flip_v);
+        static Image load_from_file(Ref<Path> path, bool flip_v);
 
         [[nodiscard]] u32 get_width() const;
         [[nodiscard]] u32 get_height() const;

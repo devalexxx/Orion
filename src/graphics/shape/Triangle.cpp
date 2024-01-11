@@ -24,9 +24,7 @@ namespace orion {
     Triangle::Triangle() : Triangle(Vector3f(0)) {}
 
     void Triangle::draw(const RenderTarget &target, const RenderContext &context) const {
-        if (m_shader->has_uniform("model")) {
-            m_shader->set_uniform("model", m_transform.get_matrix());
-        }
+        Shape::draw(target, context);
 
         target.draw(*m_vao, m_context);
     }
