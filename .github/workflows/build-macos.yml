@@ -1,0 +1,17 @@
+name: Macos build
+run-name: ${{ github.actor }} is testing out GitHub Actions
+on: [push]
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: "Build test"
+        run: echo "Build"
+
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: "Test test"
+        run: echo "Test"
