@@ -6,8 +6,20 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: "Build test"
-        run: echo "Build"
+      # Install xmake
+      - name: Setup xmake
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: branch@dev
+          actions-cache-folder: .xmake-cache
+
+      # Update xmake repository (in order to have the file that will be cached)
+      - name: Update xmake repository
+        run: xmake repo --update
+
+      # Build the engine
+      - name: Build Orion
+        run: xmake --yes
 
   test:
     runs-on: macos-latest
