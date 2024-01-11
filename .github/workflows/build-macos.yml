@@ -21,11 +21,9 @@ jobs:
       - name: Update xmake repository
         run: xmake repo --update
 
-      - name: PWD
-        run: pwd
-
-      - name: LS
-        run: ls
+      # Build the engine
+      - name: Configure xmake and install dependencies
+        run: xmake config
 
       # Build the engine
       - name: Build Orion
