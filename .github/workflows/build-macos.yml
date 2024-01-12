@@ -1,6 +1,13 @@
 name: Macos build
 run-name: ${{ github.actor }} is testing out GitHub Actions
-on: [push]
+on:
+  push:
+    paths:
+      - '**.c'
+      - '**.cpp'
+      - '**.h'
+      - '**.hpp'
+      - '**.lua'
 jobs:
   build:
     runs-on: macos-latest
