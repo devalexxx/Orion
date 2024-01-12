@@ -25,6 +25,11 @@
 #include "graphics/shape/Shape.h"
 #include "graphics/shape/Triangle.h"
 #include "graphics/shape/Square.h"
+#include "graphics/shape/Circle.h"
 #include "graphics/shape/Cube.h"
+
+#include "graphics/opengl/OpenGlApi.h"
+#include "graphics/opengl/OpenGlContext.h"
+#include "graphics/opengl/OpenGlContextRequired.h"
 
 #endif //ORION_GRAPHICS_H

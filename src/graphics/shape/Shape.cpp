@@ -4,6 +4,9 @@
 
 #include "graphics/shape/Shape.h"
 
+#include "graphics/PackedVertex.h"
+#include "omath.h"
+
 #include <utility>
 
 namespace orion {
@@ -63,4 +66,33 @@ namespace orion {
             m_shader->set_uniform("model", m_transform.get_matrix());
     }
 
+    std::vector<PackedVertex> generator::circle_vertices(u32 v_count) {
+        std::vector<PackedVertex> ret;
+
+        f32 angle = 360.0f / v_count;
+
+        u32 triangle_count = v_count - 2;
+
+        std::vector<Vector3f> temp;
+
+        for (u32 i = 0; i < v_count; i++)
+        {
+            f32 current_angle = angle * i;
+            f32 x = cos(rad(current_angle));
+            f32 y = sin(rad(current_angle));
+            f32 z = 0.0f;
+
+            temp.emplace_back(x, y, z);
+        }
+
+        static auto mapper = std::bind(map_range<3, f32>, std::placeholders::_1, -1.f, 1.f, 0.f, 1.f);
+        for (u32 i = 0; i < triangle_count; i++)
+        {
+            ret.emplace_back(temp[0], Vector2f(mapper(temp[0])));
+            ret.emplace_back(temp[i + 1], Vector2f(mapper(temp[i + 1])));
+            ret.emplace_back(temp[i + 2], Vector2f(mapper(temp[i + 2])));
+        }
+
+        return std::move(ret);
+    }
 } // orion

@@ -17,6 +17,13 @@ namespace orion {
     class EventManager;
     class WindowEventDispatcher;
 
+    enum class ClearMask {
+        COLOR   = GL_COLOR_BUFFER_BIT,
+        DEPTH   = GL_DEPTH_BUFFER_BIT,
+        STENCIL = GL_STENCIL_BUFFER_BIT,
+    };
+    ClearMask operator|(ClearMask lhs, ClearMask rhs);
+
     class Window :
             public GLFWWindowWrapper,
             public std::enable_shared_from_this<Window>,
@@ -24,7 +31,10 @@ namespace orion {
     {
     public:
         static std::shared_ptr<Window> create(const std::string& name);
+
         void display();
+
+        void clear(ClearMask mask);
 
         void set_event_manager(Ref<std::shared_ptr<EventManager>> event_manager);
     private:

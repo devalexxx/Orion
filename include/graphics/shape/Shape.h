@@ -57,6 +57,12 @@ namespace orion {
         RenderContext m_context;
     };
 
+    namespace generator {
+
+        std::vector<PackedVertex> circle_vertices(u32 v_count);
+
+    }
+
 } // orion
 
 #endif //ORION_SHAPE_H

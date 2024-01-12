@@ -20,5 +20,6 @@
 #include "math/distance.h"
 #include "math/perspective.h"
 #include "math/transform.h"
+#include "math/range.h"
 
 #endif //ORION_OMATH_H

@@ -405,6 +405,10 @@ TEST_SUITE("sandbox") {
             view.translate(Vector3f(3, 3, 15));
             view.look_at(Vector3f::zero());
 
+//            auto pv = orion::generator::circle_vertices(8);
+//            for(auto& v: pv)
+//                std::cout << v.position << "\n";
+
             em->subscribe<orion::Input::KeyEvent>([&](orion::Ref<orion::Input::KeyEvent> e) {
                 static auto& pos = view.get_position();
 
@@ -428,17 +432,43 @@ TEST_SUITE("sandbox") {
                         default:
                             break;
                     }
+//                    view.look_at(Vector3f(0, 0, 0));
                 }
             });
 
-            glEnable(GL_DEPTH_TEST);
-
-            glDepthFunc(GL_LESS);
+            orion::OpenGlApi::set_enable(orion::EnableCapability::DEPTH_TEST);
+            orion::OpenGlApi::set_depth_function(orion::DepthFunction::LESS);
 
             while (!w->is_close()) {
-                glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                w->clear(orion::ClearMask::COLOR | orion::ClearMask::DEPTH);
 
                 w->draw(cube);
+
+                w->display();
+            }
+        }
+
+        SUBCASE("circle") {
+
+            auto image = orion::Image::load_from_file(orion::resource::texture::of("weird-circle.png"), true);
+            auto texture = orion::Texture::create_from_image(image);
+
+            auto circle = orion::Circle();
+            circle.set_texture(texture);
+//            circle.get_transform().set_scale({20, 20, 1});
+
+            auto& view = w->get_view();
+//            view.translate(Vector3f(0, 3, 64));
+            view.translate(Vector3f(0, 0, 3));
+            view.look_at(Vector3f::zero());
+
+            orion::OpenGlApi::set_enable(orion::EnableCapability::DEPTH_TEST);
+            orion::OpenGlApi::set_depth_function(orion::DepthFunction::LESS);
+
+            while (!w->is_close()) {
+                w->clear(orion::ClearMask::COLOR | orion::ClearMask::DEPTH);
+
+                w->draw(circle);
 
                 w->display();
             }

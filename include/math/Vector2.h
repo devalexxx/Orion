@@ -19,10 +19,9 @@ namespace orion {
         static const Vector<2, T> RIGHT;
 
         Vector() = default;
-
         explicit Vector(T value);
-
         Vector(T x, T y);
+        Vector(Ref<Vector<3, T>> v);
 
         T get_x() const;
         T get_y() const;
@@ -53,6 +52,9 @@ namespace orion {
 
     template<typename T>
     Vector<2, T>::Vector(T value) : VectorBase<2, T>({value, value}) {}
+
+    template<typename T>
+    Vector<2, T>::Vector(const Vector<3, T> &v) : VectorBase<2, T>({v[0], v[1]}) {}
 
     template<typename T>
     T Vector<2, T>::get_x() const {

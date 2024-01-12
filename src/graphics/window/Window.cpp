@@ -9,6 +9,11 @@
 #include "graphics/window/WindowEventDispatcher.h"
 
 namespace orion {
+
+    ClearMask operator|(ClearMask lhs, ClearMask rhs) {
+        return (ClearMask)(std::underlying_type<ClearMask>::type (lhs) | std::underlying_type<ClearMask>::type (rhs));
+    }
+
     std::shared_ptr<Window> Window::create(Ref<std::string> name) {
         auto p = std::shared_ptr<Window>(new Window(name));
         return std::move(p);
@@ -18,6 +23,10 @@ namespace orion {
         swap_buffers();
         poll_events();
         m_frame_swap = !m_frame_swap;
+    }
+
+    void Window::clear(ClearMask mask) {
+        glClear(std::underlying_type<ClearMask>::type (mask));
     }
 
     Window::Window(Ref<std::string> name) : GLFWWindowWrapper(1024, 768, name, nullptr, nullptr) {
