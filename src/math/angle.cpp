@@ -2,9 +2,7 @@
 // Created by Alex on 14/12/2023.
 //
 
-//#ifdef MSCV
 #define _USE_MATH_DEFINES
-//#endif
 #include <cmath>
 
 #include "math/angle.h"

@@ -7,6 +7,8 @@
 
 #include "Vector.h"
 
+#include <cmath>
+
 namespace orion {
 
     template<size_t S, typename T>

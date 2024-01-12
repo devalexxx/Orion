@@ -5,6 +5,8 @@
 #ifndef ORION_DISTANCE_H
 #define ORION_DISTANCE_H
 
+#include <cmath>
+
 namespace orion {
 
     template<size_t S, typename T>
