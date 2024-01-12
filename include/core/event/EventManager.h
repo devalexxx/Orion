@@ -8,6 +8,7 @@
 #include <mutex>
 #include <functional>
 #include <unordered_map>
+#include <vector>
 
 #include "Event.h"
 
