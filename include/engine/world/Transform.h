@@ -5,9 +5,6 @@
 #ifndef ORION_TRANSFORM_COMPONENT_H
 #define ORION_TRANSFORM_COMPONENT_H
 
-#include <glm/glm.hpp>
-#include "glm/ext.hpp"
-
 #include "AbstractComponent.h"
 
 namespace orion {

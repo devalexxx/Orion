@@ -3,6 +3,7 @@
 //
 
 #include "graphics/VertexArray.h"
+#include "graphics/opengl/OpenGlApi.h"
 
 #include <type_traits>
 #include <iostream>
@@ -14,7 +15,7 @@ namespace orion {
     bool VertexArray::is_any_bind = false;
 
     void VertexArray::unbind() {
-        glBindVertexArray(0);
+        gl_check(glBindVertexArray(0));
         is_any_bind = false;
     }
 
@@ -31,21 +32,21 @@ namespace orion {
     }
 
     VertexArray::VertexArray() {
-        glGenVertexArrays(1, &m_id);
+        gl_check(glGenVertexArrays(1, &m_id));
     }
 
     VertexArray::~VertexArray() {
-        glDeleteVertexArrays(1, &m_id);
+        gl_check(glDeleteVertexArrays(1, &m_id));
     }
 
     void VertexArray::bind() const {
-        glBindVertexArray(m_id);
+        gl_check(glBindVertexArray(m_id));
         is_any_bind = true;
     }
 
     void VertexArray::draw(u32 first, u32 count, VertexArray::DrawMode mode) const {
         bind();
-        glDrawArrays(std::underlying_type<DrawMode>::type(mode), first, count);
+        gl_check(glDrawArrays(std::underlying_type<DrawMode>::type(mode), first, count));
     }
 
     void VertexArray::draw(u32 count, VertexArray::DrawMode mode) const {

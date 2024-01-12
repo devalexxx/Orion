@@ -19,9 +19,9 @@ namespace orion {
         static const Vector<2, T> RIGHT;
 
         Vector() = default;
-        explicit Vector(T value);
         Vector(T x, T y);
-        Vector(Ref<Vector<3, T>> v);
+        explicit Vector(T value);
+        explicit Vector(Ref<Vector<3, T>> v);
 
         T get_x() const;
         T get_y() const;

@@ -6,7 +6,10 @@
 #define ORION_OPENGLAPI_H
 
 #include "GL/glew.h"
+
 #include "core/type.h"
+
+#include <string_view>
 
 namespace orion {
 
@@ -62,6 +65,18 @@ namespace orion {
         static void set_enable        (EnableCapability cap);
         static void set_disable       (EnableCapability cap);
     };
+
+#ifdef ORION_DEBUG
+    #define gl_check(expr)                                      \
+        do {                                                   \
+            expr;                                              \
+            orion::gl_check_error(__FILE__, __LINE__, #expr); \
+        } while (false)
+#else
+    #define gl_check(expr) (expr)
+#endif
+
+    void gl_check_error(Ref<Path> file, u32 line, std::string_view expression);
 
 } // orion
 

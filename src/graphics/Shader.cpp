@@ -6,6 +6,7 @@
 
 #include "core/Resource.h"
 #include "graphics/Color.h"
+#include "graphics/opengl/OpenGlApi.h"
 
 #include "GL/glew.h"
 
@@ -58,15 +59,15 @@ namespace orion {
     }
 
     void Shader::unbind() {
-        glUseProgram(0);
+        gl_check(glUseProgram(0));
     }
 
     Shader::~Shader() {
-        glDeleteProgram(m_id);
+        gl_check(glDeleteProgram(m_id));
     }
 
     void Shader::use() const {
-        glUseProgram(m_id);
+        gl_check(glUseProgram(m_id));
     }
 
     Shader::Shader(Ref<std::string> vertex, Ref<std::string> fragment) {
@@ -79,35 +80,35 @@ namespace orion {
         auto fragment_id  = glCreateShader(GL_FRAGMENT_SHADER);
 
         auto v_code = vertex.c_str();
-        glShaderSource(vertex_id, 1, &v_code , nullptr);
-        glCompileShader(vertex_id);
+        gl_check(glShaderSource(vertex_id, 1, &v_code , nullptr));
+        gl_check(glCompileShader(vertex_id));
         handle_compile_error(vertex_id);
 
         auto f_code = fragment.c_str();
-        glShaderSource(fragment_id, 1, &f_code , nullptr);
-        glCompileShader(fragment_id);
+        gl_check(glShaderSource(fragment_id, 1, &f_code , nullptr));
+        gl_check(glCompileShader(fragment_id));
         handle_compile_error(fragment_id);
 
-        glAttachShader(m_id, vertex_id);
-        glAttachShader(m_id, fragment_id);
-        glLinkProgram(m_id);
+        gl_check(glAttachShader(m_id, vertex_id));
+        gl_check(glAttachShader(m_id, fragment_id));
+        gl_check(glLinkProgram(m_id));
         handle_link_error(m_id);
 
-        glDetachShader(m_id, vertex_id);
-        glDetachShader(m_id, fragment_id);
+        gl_check(glDetachShader(m_id, vertex_id));
+        gl_check(glDetachShader(m_id, fragment_id));
 
-        glDeleteShader(vertex_id);
-        glDeleteShader(fragment_id);
+        gl_check(glDeleteShader(vertex_id));
+        gl_check(glDeleteShader(fragment_id));
     }
 
     void Shader::handle_compile_error(u32 id) {
         i32 result = GL_FALSE;
         i32 length;
-        glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+        gl_check(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
         if (result == GL_FALSE){
-            glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+            gl_check(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
             std::vector<i8> errorMessage(length);
-            glGetShaderInfoLog(id, length, &length, &errorMessage[0]);
+            gl_check(glGetShaderInfoLog(id, length, &length, &errorMessage[0]));
             std::cerr << std::string(errorMessage.begin(), errorMessage.end()) << "\n";
         }
     }
@@ -115,11 +116,11 @@ namespace orion {
     void Shader::handle_link_error(u32 id) {
         i32 result = GL_FALSE;
         i32 length;
-        glGetProgramiv(id, GL_LINK_STATUS, &result);
+        gl_check(glGetProgramiv(id, GL_LINK_STATUS, &result));
         if (result == GL_FALSE){
-            glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
+            gl_check(glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length));
             std::vector<i8> errorMessage(length);
-            glGetShaderInfoLog(id, length, &length, &errorMessage[0]);
+            gl_check(glGetShaderInfoLog(id, length, &length, &errorMessage[0]));
             std::cerr << std::string(errorMessage.begin(), errorMessage.end()) << "\n";
         }
     }
@@ -177,20 +178,20 @@ namespace orion {
     }
 
     void Shader::set_uniform(Ptr<char> name, int value) const {
-        glUniform1i(get_uniform_location(name), value);
+        gl_check(glUniform1i(get_uniform_location(name), value));
     }
 
     void Shader::set_uniform(Ptr<char> name, Ref<Matrix4f> value) const {
-        glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, value.data());
+        gl_check(glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, value.data()));
     }
 
     void Shader::set_uniform(Ptr<char> name, Ref<Color> value) const {
-        glUniform4fv(get_uniform_location(name), 1, &value[0]);
+        gl_check(glUniform4fv(get_uniform_location(name), 1, &value[0]));
     }
 
     void Shader::set_float_attrib_pointer(Ptr<char> name, u32 size, u32 stride, u32 offset) const {
-        glEnableVertexAttribArray(get_attrib_location(name));
-        glVertexAttribPointer(get_attrib_location(name),size,GL_FLOAT,GL_FALSE,stride * sizeof(f32),(void*)(offset * sizeof(float)));
+        gl_check(glEnableVertexAttribArray(get_attrib_location(name)));
+        gl_check(glVertexAttribPointer(get_attrib_location(name),size,GL_FLOAT,GL_FALSE,stride * sizeof(f32),(void*)(offset * sizeof(float))));
     }
 
     bool Shader::has_attrib(Ptr<char> name) const {

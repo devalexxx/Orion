@@ -9,12 +9,13 @@
 #include "graphics/PackedVertex.h"
 #include "graphics/Shader.h"
 #include "graphics/VertexArray.h"
+#include "graphics/opengl/OpenGlApi.h"
 
 namespace orion {
 
     VertexBuffer::VertexBuffer(VertexBuffer::Type type, VertexBuffer::Usage usage) : m_type(type), m_usage(usage) {
         if (VertexArray::is_any_bind)
-            glGenBuffers(1, &m_id);
+            gl_check(glGenBuffers(1, &m_id));
         else
             std::cerr << "Can't generate buffer because no VAO is bind.\n";
     }
@@ -22,16 +23,16 @@ namespace orion {
     VertexBuffer::VertexBuffer(VertexBuffer::Type type) : VertexBuffer(type, Usage::STATIC) {}
 
     void VertexBuffer::unbind() {
-        glBindBuffer(1, 0);
+        gl_check(glBindBuffer(1, 0));
     }
 
     VertexBuffer::~VertexBuffer() {
-        glDeleteBuffers(1, &m_id);
+        gl_check(glDeleteBuffers(1, &m_id));
     }
 
     void VertexBuffer::bind() const {
         if (VertexArray::is_any_bind)
-            glBindBuffer(std::underlying_type<Type>::type(m_type), m_id);
+            gl_check(glBindBuffer(std::underlying_type<Type>::type(m_type), m_id));
         else
             std::cerr << "Can't bind buffer " << m_id << " because no VAO is bind.\n";
     }
@@ -41,12 +42,12 @@ namespace orion {
             bind();
             count = v.size();
             auto [arr, s] = to_float_array(v);
-            glBufferData(
+            gl_check(glBufferData(
                     std::underlying_type<Type>::type(m_type),
                     s * sizeof (f32),
                     arr,
                     std::underlying_type<Usage>::type(m_usage)
-            );
+            ));
 
             if (shader->has_attrib("position"))
                 shader->set_float_attrib_pointer("position", 3, 8, 0);

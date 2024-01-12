@@ -14,11 +14,9 @@ namespace orion {
     class Vector<4, T> : public VectorBase<4, T> {
     public:
         Vector() = default;
-
-        explicit Vector(T value);
-
         Vector(T x, T y, T z, T w);
         Vector(Ref<Vector<3, T>> v, T w);
+        explicit Vector(T value);
 
         T get_x() const;
         T get_y() const;
@@ -38,10 +36,10 @@ namespace orion {
     Vector<4, T>::Vector(T x, T y, T z, T w) : VectorBase<4, T>({x, y, z, w}) {}
 
     template<typename T>
-    Vector<4, T>::Vector(T value) : VectorBase<4, T>({value, value, value, value}) {}
+    Vector<4, T>::Vector(Ref<Vector<3, T>> v, T w) : VectorBase<4, T>({v[0], v[1], v[2], w}) {}
 
     template<typename T>
-    Vector<4, T>::Vector(Ref<Vector<3, T>> v, T w) : VectorBase<4, T>({v[0], v[1], v[2], w}) {}
+    Vector<4, T>::Vector(T value) : VectorBase<4, T>({value, value, value, value}) {}
 
     template<typename T>
     T Vector<4, T>::get_x() const {
