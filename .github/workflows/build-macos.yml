@@ -6,9 +6,15 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: "ls"
-        run: |
-          ls ${{ github.workspace }}
+      - name: Check file existence
+        id: check_files
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "xmake.lua"
+
+      - name: File exists
+        if: steps.check_files.outputs.files_exists == 'true'
+        run: echo "It exists !"
 #      # Install xmake
 #      - name: Setup xmake
 #        uses: xmake-io/github-action-setup-xmake@v1
