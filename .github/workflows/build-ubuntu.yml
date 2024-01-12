@@ -1,4 +1,4 @@
-name: Macos build
+name: Ubuntu build
 run-name: ${{ github.actor }} is testing out GitHub Actions
 on:
   push:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       # Checkout

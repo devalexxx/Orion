@@ -4,10 +4,10 @@
 
 #include "math/transform.h"
 
-#include "math/Vector4.h"
 #include "math/Matrix.h"
 #include "math/Vector.h"
 
+#include <cmath>
 
 namespace orion {
 
