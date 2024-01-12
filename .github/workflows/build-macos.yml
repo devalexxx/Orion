@@ -7,7 +7,8 @@ jobs:
 
     steps:
       - name: "ls"
-        run: ls
+        run: |
+          ls ${{ github.workspace }}
 #      # Install xmake
 #      - name: Setup xmake
 #        uses: xmake-io/github-action-setup-xmake@v1
