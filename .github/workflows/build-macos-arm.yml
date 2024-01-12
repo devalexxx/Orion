@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions
 on: [push]
 jobs:
   build:
-    runs-on: macos-large
+    runs-on: flyci-macos-large-latest-m1
 
     steps:
       - name: Checkout repository
