@@ -1,4 +1,4 @@
-name: Macos build
+name: Macos arm build
 run-name: ${{ github.actor }} is testing out GitHub Actions
 on: [push]
 jobs:
