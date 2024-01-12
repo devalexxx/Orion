@@ -6,6 +6,8 @@
 
 #include "math/Vector.h"
 
+#include <cmath>
+
 namespace orion {
 
     Matrix<4, 4, float> perspective(float fov, float aspect, float z_near, float z_far) {
