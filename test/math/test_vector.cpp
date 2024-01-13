@@ -8,6 +8,15 @@
 
 TEST_SUITE("math") {
 
+    template<size_t S>
+    bool fucking_float_operator(orion::Ref<orion::Vector<S, orion::f32>> lhs, orion::Ref<orion::Vector<S, orion::f32>> rhs) {
+        for (orion::u32 i = 0; i < S; ++i) {
+            if (lhs[i] != doctest::Approx(rhs[i]))
+                return false;
+        }
+        return true;
+    }
+
     TEST_CASE("vector2") {
 
         SUBCASE("vector2i") {
@@ -517,7 +526,7 @@ TEST_SUITE("math") {
             CHECK_EQ(1.f * v1, v1);
             CHECK_EQ(2.f * v1, v1 * 2.f);
             CHECK_EQ(v1 / 2.f,  Vector4f(4.f, 2.f, 8.f,        16.f));
-            CHECK((16.f / v1) == Vector4f(2.f, 4.f, 1.f, 16.f / 32.f));
+            CHECK(fucking_float_operator(16.f / v1, Vector4f(2.f, 4.f, 1.f, 16.f / 32.f)));
 
             auto v2 = Vector4f(-4.f, -9.f, 5.f, 2.f);
 
@@ -528,8 +537,8 @@ TEST_SUITE("math") {
             CHECK_EQ(v2 - v1, -(v1 - v2));
             CHECK_EQ(v1 * v2, Vector4f(-32.f, -36.f,  80.f, 64.f));
             CHECK_EQ(v1 * v2, v2 * v1);
-            CHECK((v1 / v2) == Vector4f( 8.f / -4.f,  4.f / -9.f, 16.f /  5.f,       16.f));
-            CHECK((v2 / v1) == Vector4f(-4.f /  8.f, -9.f /  4.f,  5.f / 16.f, 2.f / 32.f));
+            CHECK(fucking_float_operator(v1 / v2, Vector4f( 8.f / -4.f,  4.f / -9.f, 16.f /  5.f,       16.f)));
+            CHECK(fucking_float_operator(v2 / v1, Vector4f(-4.f /  8.f, -9.f /  4.f,  5.f / 16.f, 2.f / 32.f)));
 
             auto v3 = Vector3f(3.f, 5.f, 3.f);
 
