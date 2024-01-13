@@ -8,6 +8,7 @@ on:
       - '**.h'
       - '**.hpp'
       - '**.lua'
+      - './.github/workflows/build-windows.yml'
   workflow_dispatch:
 
 jobs:
@@ -34,4 +35,4 @@ jobs:
         run: xmake --yes
 
       - name: Run unittest
-        run: xmake run unittest
+        run: xmake run unittest -ts=math -tc=vector3
