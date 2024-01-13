@@ -8,7 +8,7 @@ on:
       - '**.h'
       - '**.hpp'
       - '**.lua'
-      - './.github/workflows/build-windows.yml'
+      - '.github/workflows/build-windows.yml'
   workflow_dispatch:
 
 jobs:
