@@ -35,4 +35,4 @@ jobs:
         run: xmake --yes
 
       - name: Run unittest
-        run: xmake run unittest -ts=math -tc=vector3
+        run: xmake run unittest
