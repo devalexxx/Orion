@@ -13,7 +13,7 @@ on:
 jobs:
   build:
     runs-on: flyci-macos-large-latest-m1
-    if: ${{ contains(github.event.head_commit.message, 'arm') && !contains(github.event.head_commit.message, 'build skip') }}
+    if: ${{ github.event.workflow_dispatch || (contains(github.event.head_commit.message, 'arm') && !contains(github.event.head_commit.message, 'build skip')) }}
 
     steps:
       - name: Checkout repository
