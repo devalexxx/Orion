@@ -10,7 +10,7 @@
 namespace orion {
 
     template<size_t S, typename T>
-    float distance(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
+    inline float distance(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
         T result {};
         for (int i = 0; i < S; ++i) {
             result += pow(lhs[i] - rhs[i], 2);

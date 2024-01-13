@@ -6,32 +6,33 @@
 
 #include "math/Matrix.h"
 #include "math/Vector.h"
+#include "math/normalize.h"
 
 #include <cmath>
 
 namespace orion {
 
-    Matrix<4, 4, float> rotate(Ref<Matrix<4, 4, float>> m, float angle, Ref<Vector<3, float>> axis) {
-        float const a = angle;
-        float const c = cos(a);
-        float const s = sin(a);
+    Matrix<4, 4, f32> rotate(Ref<Matrix<4, 4, f32>> m, const f32 angle, Ref<Vector<3, f32>> v) {
+        f32 const c = cos(angle);
+        f32 const s = sin(angle);
 
+        auto axis = normalize(v);
         auto temp = axis * (1 - c);
 
-        auto rotate = Matrix<4, 4, float>::identity();
-        rotate[0][0] = c              + temp[0]     * axis[0];
-        rotate[0][1] = temp[0] * axis[1] + s * axis[2];
-        rotate[0][2] = temp[0] * axis[2] - s * axis[1];
+        auto rotate = Matrix<4, 4, f32>::identity();
+        rotate[0][0] = c + temp[0] * axis[0];
+        rotate[1][0] =     temp[0] * axis[1] + s * axis[2];
+        rotate[2][0] =     temp[0] * axis[2] - s * axis[1];
 
-        rotate[1][0] = temp[1] * axis[0] - s * axis[2];
-        rotate[1][1] = c              + temp[1]     * axis[1];
-        rotate[1][2] = temp[1] * axis[2] + s * axis[0];
+        rotate[0][1] =     temp[1] * axis[0] - s * axis[2];
+        rotate[1][1] = c + temp[1] * axis[1];
+        rotate[2][1] =     temp[1] * axis[2] + s * axis[0];
 
-        rotate[2][0] = temp[2] * axis[0] + s * axis[1];
-        rotate[2][1] = temp[2] * axis[1] - s * axis[0];
-        rotate[2][2] = c              + temp[2]     * axis[2];
+        rotate[0][2] =     temp[2] * axis[0] + s * axis[1];
+        rotate[1][2] =     temp[2] * axis[1] - s * axis[0];
+        rotate[2][2] = c + temp[2] * axis[2];
 
-        auto ret = Matrix<4, 4, float>(0);
+        Matrix<4, 4, f32> ret;
 
         ret[0] = m[0] * rotate[0][0] + m[1] * rotate[0][1] + m[2] * rotate[0][2];
         ret[1] = m[0] * rotate[1][0] + m[1] * rotate[1][1] + m[2] * rotate[1][2];
@@ -41,14 +42,19 @@ namespace orion {
         return ret;
     }
 
-    Matrix<4, 4, float> rotate(float angle, const Vector<3, float>& axis) {
-        return rotate(Matrix<4, 4, float>::identity(), angle, axis);
+    Matrix<4, 4, f32> rotate(const f32 angle, Ref<Vector<3, f32>> axis) {
+        return rotate(Matrix<4, 4, f32>::identity(), angle, axis);
     }
 
-    Matrix<4, 4, float> translate(Ref<Matrix<4, 4, float>> m, Ref<Vector<3, float>> v) {
+    Matrix<4, 4, f32> translate(Ref<Matrix<4, 4, f32>> m, Ref<Vector<3, f32>> v) {
         auto ret = m;
         ret[3] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3];
+
         return ret;
+    }
+
+    Matrix<4, 4, f32> translate(Ref<Vector<3, f32>> v) {
+        return translate(Matrix<4, 4, f32>::identity(), v);
     }
 
     Matrix<4, 4, f32> scale(Ref<Matrix<4, 4, f32>> m, Ref<Vector<3, f32>> v) {
@@ -57,7 +63,12 @@ namespace orion {
         ret[1] = m[1] * v[1];
         ret[2] = m[2] * v[2];
         ret[3] = m[3];
+
         return ret;
+    }
+
+    Matrix<4, 4, f32> scale(Ref<Vector<3, f32>> v) {
+        return scale(Matrix<4, 4, f32>::identity(), v);
     }
 
 }

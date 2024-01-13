@@ -78,8 +78,8 @@ namespace orion {
         for (u32 i = 0; i < v_count; i++)
         {
             f32 current_angle = angle * i;
-            f32 x = cos(rad(current_angle));
-            f32 y = sin(rad(current_angle));
+            f32 x = cos(radian(current_angle));
+            f32 y = sin(radian(current_angle));
             f32 z = 0.0f;
 
             temp.emplace_back(x, y, z);

@@ -31,40 +31,40 @@ namespace orion {
         RefMut<T> operator[](size_t index);
         Ref<T>    operator[](size_t index) const;
 
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator+(Ref<Vector<SS, TT>> lhs, Ref<Vector<SS, TT>> rhs);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator+(Ref<Vector<SS, TT>> lhs, TT value);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator+(TT value, Ref<Vector<SS, TT>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator+(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator+(Ref<Vector<S_, T_>> lhs, T_ value);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator+(T_ value, Ref<Vector<S_, T_>> rhs);
 
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator-(Ref<Vector<SS, TT>> lhs, Ref<Vector<SS, TT>> rhs);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator-(Ref<Vector<SS, TT>> lhs, TT value);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator-(TT value, Ref<Vector<SS, TT>> rhs);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator-(Ref<Vector<SS, TT>> lhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator-(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator-(Ref<Vector<S_, T_>> lhs, T_ value);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator-(T_ value, Ref<Vector<S_, T_>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator-(Ref<Vector<S_, T_>> lhs);
 
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator*(Ref<Vector<SS, TT>> lhs, Ref<Vector<SS, TT>> rhs);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator*(Ref<Vector<SS, TT>> lhs, TT value);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator*(TT value, Ref<Vector<SS, TT>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator*(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator*(Ref<Vector<S_, T_>> lhs, T_ value);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator*(T_ value, Ref<Vector<S_, T_>> rhs);
 
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator/(Ref<Vector<SS, TT>> lhs, Ref<Vector<SS, TT>> rhs);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator/(Ref<Vector<SS, TT>> lhs, TT value);
-        template<size_t SS, typename TT>
-        friend Vector<SS, TT> operator/(TT value, Ref<Vector<SS, TT>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator/(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator/(Ref<Vector<S_, T_>> lhs, T_ value);
+        template<size_t S_, typename T_>
+        friend Vector<S_, T_> operator/(T_ value, Ref<Vector<S_, T_>> rhs);
 
-        template<size_t SS, typename TT>
-        friend bool operator==(Ref<Vector<SS, TT>> lhs, Ref<Vector<SS, TT>> rhs);
-        template<size_t SS, typename TT>
-        friend bool operator!=(Ref<Vector<SS, TT>> lhs, Ref<Vector<SS, TT>> rhs);
+        template<size_t S_, typename T_>
+        friend bool operator==(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs);
+        template<size_t S_, typename T_>
+        friend bool operator!=(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs);
 
         template<size_t SS, typename TT>
         friend RefMut<std::ostream> operator<<(RefMut<std::ostream> os, Ref<Vector<SS, TT>> v);
@@ -95,98 +95,98 @@ namespace orion {
         return m_data[index];
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator+(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator+(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs) {
         auto ret = lhs;
-        for (int i = 0; i < S; ++i) {
-            ret.m_data[i] += rhs.m_data[i];
+        for (int i = 0; i < S_; ++i) {
+            ret[i] += rhs[i];
         }
         return ret;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator+(Ref<Vector<S, T>> lhs, T value) {
-        return lhs + Vector<S, T>(value);
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator+(Ref<Vector<S_, T_>> lhs, T_ value) {
+        return lhs + Vector<S_, T_>(value);
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator+(T value, Ref<Vector<S, T>> rhs) {
-        return Vector<S, T>(value) + rhs;
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator+(T_ value, Ref<Vector<S_, T_>> rhs) {
+        return Vector<S_, T_>(value) + rhs;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator-(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator-(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs) {
         auto ret = lhs;
-        for (int i = 0; i < S; ++i) {
+        for (int i = 0; i < S_; ++i) {
             ret.m_data[i] -= rhs.m_data[i];
         }
         return ret;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator-(Ref<Vector<S, T>> lhs, T value) {
-        return lhs - Vector<S, T>(value);
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator-(Ref<Vector<S_, T_>> lhs, T_ value) {
+        return lhs - Vector<S_, T_>(value);
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator-(T value, Ref<Vector<S, T>> rhs) {
-        return Vector<S, T>(value) - rhs;
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator-(T_ value, Ref<Vector<S_, T_>> rhs) {
+        return Vector<S_, T_>(value) - rhs;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator-(Ref<Vector<S, T>> lhs) {
-        return static_cast<T>(0) - lhs;
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator-(Ref<Vector<S_, T_>> lhs) {
+        return static_cast<T_>(0) - lhs;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator*(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator*(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs) {
         auto ret = lhs;
-        for (int i = 0; i < S; ++i) {
+        for (int i = 0; i < S_; ++i) {
             ret.m_data[i] *= rhs.m_data[i];
         }
         return ret;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator*(Ref<Vector<S, T>> lhs, T value) {
-        return lhs * Vector<S, T>(value);
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator*(Ref<Vector<S_, T_>> lhs, T_ value) {
+        return lhs * Vector<S_, T_>(value);
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator*(T value, Ref<Vector<S, T>> rhs) {
-        return Vector<S, T>(value) * rhs;
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator*(T_ value, Ref<Vector<S_, T_>> rhs) {
+        return Vector<S_, T_>(value) * rhs;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator/(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator/(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs) {
         auto ret = lhs;
-        for (int i = 0; i < S; ++i) {
+        for (int i = 0; i < S_; ++i) {
             ret.m_data[i] /= rhs.m_data[i];
         }
         return ret;
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator/(Ref<Vector<S, T>> lhs, T value) {
-        return lhs / Vector<S, T>(value);
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator/(Ref<Vector<S_, T_>> lhs, T_ value) {
+        return lhs / Vector<S_, T_>(value);
     }
 
-    template<size_t S, typename T>
-    Vector<S, T> operator/(T value, Ref<Vector<S, T>> rhs) {
-        return Vector<S, T>(value) / rhs;
+    template<size_t S_, typename T_>
+    Vector<S_, T_> operator/(T_ value, Ref<Vector<S_, T_>> rhs) {
+        return Vector<S_, T_>(value) / rhs;
     }
 
-    template<size_t S, typename T>
-    bool operator==(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
-        for (int i = 0; i < S; ++i) {
+    template<size_t S_, typename T_>
+    bool operator==(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs) {
+        for (int i = 0; i < S_; ++i) {
             if(lhs.m_data[i] != rhs.m_data[i])
                 return false;
         }
         return true;
     }
 
-    template<size_t S, typename T>
-    bool operator!=(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
+    template<size_t S_, typename T_>
+    bool operator!=(Ref<Vector<S_, T_>> lhs, Ref<Vector<S_, T_>> rhs) {
         return !(lhs == rhs);
     }
 

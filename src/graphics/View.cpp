@@ -87,7 +87,7 @@ namespace orion {
     }
 
     void View::update_projection() {
-        m_projection = perspective(rad(m_fov), m_ratio, m_near, m_far);
+        m_projection = perspective(radian(m_fov), m_ratio, m_near, m_far);
     }
 
 }

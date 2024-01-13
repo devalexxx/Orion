@@ -34,19 +34,21 @@ namespace orion {
         RefMut<Vector<C, T>> operator[](size_t row);
         Ref<Vector<C, T>>    operator[](size_t row) const;
 
-        template<size_t RR, size_t CC, typename TT>
-        friend Matrix<RR, CC, TT> operator+(Ref<Matrix<RR, CC, TT>> lhs, Ref<Matrix<RR, CC, TT>> rhs);
+        template<size_t R_, size_t C_, typename T_>
+        friend Matrix<R_, C_, T_> operator+(Ref<Matrix<R_, C_, T_>> lhs, Ref<Matrix<R_, C_, T_>> rhs);
 
-        template<size_t RR, size_t CR, size_t CC, typename TT>
-        friend Matrix<RR, CC, TT> operator*(Ref<Matrix<RR, CR, TT>> lhs, Ref<Matrix<CR, CC, TT>> rhs);
+        template<size_t R_, size_t CR, size_t C_, typename T_>
+        friend Matrix<R_, C_, T_> operator*(Ref<Matrix<R_, CR, T_>> lhs, Ref<Matrix<CR, C_, T_>> rhs);
 
-        template<size_t RR, size_t CC, typename TT>
-        friend bool operator==(Ref<Matrix<RR, CC, TT>> lhs, Ref<Matrix<RR, CC, TT>> rhs);
-        template<size_t RR, size_t CC, typename TT>
-        friend bool operator!=(Ref<Matrix<RR, CC, TT>> lhs, Ref<Matrix<RR, CC, TT>> rhs);
+        template<size_t R_, size_t C_, typename T_>
+        friend bool operator==(Ref<Matrix<R_, C_, T_>> lhs, Ref<Matrix<R_, C_, T_>> rhs);
+        template<size_t R_, size_t C_, typename T_>
+        friend bool operator!=(Ref<Matrix<R_, C_, T_>> lhs, Ref<Matrix<R_, C_, T_>> rhs);
 
         template<size_t RR, size_t CC, typename TT>
         friend RefMut<std::ostream> operator<<(RefMut<std::ostream> os, Ref<Matrix<RR, CC, TT>> v);
+
+        Matrix<C, R, T> transpose() const;
 
     protected:
         MatrixBase() = default;
@@ -137,6 +139,17 @@ namespace orion {
         }
         os << ")";
         return os;
+    }
+
+    template<size_t R, size_t C, typename T>
+    Matrix<C, R, T> MatrixBase<R, C, T>::transpose() const {
+        auto ret = Matrix<C, R, T>();
+        for(u32 i = 0; i < R; ++i) {
+            for(u32 j = 0; i < C; ++i) {
+                ret[j][i] = (*this)[i][j];
+            }
+        }
+        return std::move(ret);
     }
 
     template<size_t R, size_t C, typename T>

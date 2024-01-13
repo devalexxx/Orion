@@ -8,7 +8,7 @@
 namespace orion {
 
     template<typename T>
-    Vector<3, T> cross(Ref<Vector<3, T>> lhs, Ref<Vector<3, T>> rhs) {
+    inline Vector<3, T> cross(Ref<Vector<3, T>> lhs, Ref<Vector<3, T>> rhs) {
         return Vector<3, T>(
             lhs[1] * rhs[2] - lhs[2] * rhs[1],
             lhs[2] * rhs[0] - lhs[0] * rhs[2],

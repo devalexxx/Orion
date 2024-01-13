@@ -8,7 +8,7 @@
 namespace orion {
 
     template<size_t S, typename T>
-    T dot(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
+    inline T dot(Ref<Vector<S, T>> lhs, Ref<Vector<S, T>> rhs) {
         T result {};
         for (int i = 0; i < S; ++i) {
             result += lhs[i] * rhs[i];
@@ -17,7 +17,7 @@ namespace orion {
     }
 
     template<size_t R, size_t CR, size_t C, typename T>
-    Matrix<R, C, T> dot(Ref<Matrix<R, CR, T>> lhs, Ref<Matrix<CR, C, T>> rhs) {
+    inline Matrix<R, C, T> dot(Ref<Matrix<R, CR, T>> lhs, Ref<Matrix<CR, C, T>> rhs) {
         Matrix<R, C, T> ret;
         for (int i = 0; i < R; ++i) {
             for (int j = 0; j < C; ++j) {
@@ -32,7 +32,7 @@ namespace orion {
     }
 
     template<size_t R, size_t C, typename T>
-    Vector<C, T> dot(Ref<Vector<R, T>> lhs, Ref<Matrix<R, C, T>> rhs) {
+    inline Vector<C, T> dot(Ref<Vector<R, T>> lhs, Ref<Matrix<R, C, T>> rhs) {
         Vector<R, T> ret;
         for (int j = 0; j < C; ++j) {
             T sum {0};
@@ -45,7 +45,7 @@ namespace orion {
     }
 
     template<size_t R, size_t C, typename T>
-    Vector<R, T> dot(Ref<Matrix<R, C, T>> lhs, Ref<Vector<C, T>> rhs) {
+    inline Vector<R, T> dot(Ref<Matrix<R, C, T>> lhs, Ref<Vector<C, T>> rhs) {
         Vector<R, T> ret;
         for (int i = 0; i < R; ++i) {
             T sum {0};

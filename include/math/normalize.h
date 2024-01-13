@@ -6,11 +6,12 @@
 #define ORION_NORMALIZE_H
 
 #include "Vector.h"
+#include "magnitude.h"
 
 namespace orion {
 
     template<size_t S, typename T>
-    Vector<S, T> normalize(Ref<Vector<S, T>> lhs) {
+    inline Vector<S, T> normalize(Ref<Vector<S, T>> lhs) {
         static_assert(std::is_floating_point_v<T>);
 
         return lhs / magnitude(lhs);

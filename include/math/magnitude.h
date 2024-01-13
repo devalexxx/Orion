@@ -12,7 +12,7 @@
 namespace orion {
 
     template<size_t S, typename T>
-    T magnitude(Ref<Vector<S, T>> lhs) {
+    inline T magnitude(Ref<Vector<S, T>> lhs) {
         static_assert(std::is_floating_point_v<T>);
 
         T result {};

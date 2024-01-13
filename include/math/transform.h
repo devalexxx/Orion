@@ -11,15 +11,31 @@
 
 namespace orion {
 
-    Matrix<4, 4, float> rotate(Ref<Matrix<4, 4, float>> m, float angle, Ref<Vector<3, float>> axis);
-    Matrix<4, 4, float> rotate(float angle, const Vector<3, float>& axis);
+    /**
+     * Returns the given matrix rotate
+     * @param m the matrix on which to apply the rotation
+     * @param angle the angle in degree
+     * @param axis the axis(es) to be rotated
+     * @return the matrix m rotate
+     */
+    Matrix<4, 4, f32> rotate(Ref<Matrix<4, 4, f32>> m, f32 angle, Ref<Vector<3, f32>> axis);
 
-    Matrix<4, 4, float> translate(Ref<Matrix<4, 4, float>> m, Ref<Vector<3, float>> v);
+    /**
+     * Returns a rotation matrix
+     * @param angle the angle in degree
+     * @param axis the axis(es) to be rotated
+     * @return the rotation matrix
+     */
+    Matrix<4, 4, f32> rotate(f32 angle, Ref<Vector<3, f32>> axis);
+
+    Matrix<4, 4, f32> translate(Ref<Matrix<4, 4, f32>> m, Ref<Vector<3, f32>> v);
+    Matrix<4, 4, f32> translate(Ref<Vector<3, f32>> v);
 
     Matrix<4, 4, f32> scale(Ref<Matrix<4, 4, f32>> m, Ref<Vector<3, f32>> v);
+    Matrix<4, 4, f32> scale(Ref<Vector<3, f32>> v);
 
     template<typename T>
-    Matrix<4, 4, T> look_at(Ref<Vector<3, T>> eye, Ref<Vector<3, T>> center, Ref<Vector<3, T>> up) {
+    inline Matrix<4, 4, T> look_at(Ref<Vector<3, T>> eye, Ref<Vector<3, T>> center, Ref<Vector<3, T>> up) {
         auto f = normalize(center - eye);
         auto s = normalize(cross(f, up));
         auto u = cross(s, f);
@@ -37,7 +53,8 @@ namespace orion {
         ret[3][0] = -dot(s, eye);
         ret[3][1] = -dot(u, eye);
         ret[3][2] =  dot(f, eye);
-        return ret;
+
+        return std::move(ret);
     }
 
 }
