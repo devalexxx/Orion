@@ -6,6 +6,7 @@
 #define ORION_TYPE_H
 
 #include <filesystem>
+#include <vector>
 #include <string>
 
 namespace orion {
@@ -49,7 +50,7 @@ namespace orion {
     using Pair = std::pair<T1, T2>;
 
     template<typename T>
-    using EnumValue = std::underlying_type<T>::type;
+    using EnumValue = typename std::underlying_type<T>::type;
 
 }
 
