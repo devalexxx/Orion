@@ -24,7 +24,7 @@ namespace orion {
     Triangle::Triangle() : Triangle(Vector3f(0)) {}
 
     void Triangle::draw(const RenderTarget &target, const RenderContext &context) const {
-        Shape::draw(target, context);
+        OldShape::draw(target, context);
 
         target.draw(*m_vao, m_context);
     }

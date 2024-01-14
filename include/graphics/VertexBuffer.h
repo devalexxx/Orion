@@ -20,12 +20,11 @@ namespace orion {
 
     class Shader;
     class VertexArray;
+    class PackedVertex;
 
-    struct PackedVertex;
+    using PackedVertexContainer = std::vector<PackedVertex>;
 
-    class VertexBuffer :
-            public OpenGlContextRequired
-    {
+    class VertexBuffer : public OpenGlContextRequired {
     public:
         enum class Type {
             ARRAY   = GL_ARRAY_BUFFER,
@@ -47,11 +46,14 @@ namespace orion {
 
         void bind() const;
 
-        void set_data(Ref<std::vector<PackedVertex>> v, Ref<std::shared_ptr<Shader>> shader);
+        void set_data(Ref<PackedVertexContainer> v, Ref<std::shared_ptr<Shader>> shader);
+
+        void set_data(Ref<PackedVertexContainer> v);
+        void set_data(Ref<IndexContainer> v);
 
     private:
-        Type  m_type;
-        Usage m_usage;
+        const Type  m_type;
+        const Usage m_usage;
         u32   count{0};
         u32   m_id {};
 

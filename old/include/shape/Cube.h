@@ -5,11 +5,11 @@
 #ifndef ORION_CUBE_H
 #define ORION_CUBE_H
 
-#include "Shape.h"
+#include "OldShape.h"
 
 namespace orion {
 
-    class Cube : public Shape {
+    class Cube : public OldShape {
     public:
         Cube();
         explicit Cube(Ref<Vector3f> position);

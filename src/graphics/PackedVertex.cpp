@@ -6,7 +6,7 @@
 
 namespace orion {
 
-    PackedVertex::PackedVertex(Ref<Vector3f> position, Ref<Vector3f> normal, Ref<Vector2f> uv) :
+    PackedVertex::PackedVertex(Ref<Vector3f> position, Ref<Vector2f> uv, Ref<Vector3f> normal) :
         position(position),
         normal(normal),
         uv(uv)

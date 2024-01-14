@@ -21,7 +21,7 @@ namespace orion {
     }
 
     void Cube::draw(const RenderTarget &target, const RenderContext &context) const {
-        Shape::draw(target, context);
+        OldShape::draw(target, context);
 
         target.draw(*m_vao, m_context);
     }

@@ -32,25 +32,29 @@ namespace orion {
         static void unbind();
 
         static std::shared_ptr<VertexArray> create();
-        static std::shared_ptr<VertexArray> create(Ref<std::vector<PackedVertex>> data, Ref<std::shared_ptr<Shader>> shader);
+        static std::shared_ptr<VertexArray> create(Ref<PackedVertexContainer> data, Ref<std::shared_ptr<Shader>> shader);
 
+        VertexArray();
         ~VertexArray();
 
         void bind() const;
 
         [[nodiscard]] u32 count() const;
-        VertexBuffer& add_buffer(VertexBuffer::Type type);
-        VertexBuffer& add_buffer(VertexBuffer::Type type, VertexBuffer::Usage usage);
+        RefMut<VertexBuffer> add_buffer(VertexBuffer::Type type);
+        RefMut<VertexBuffer> add_buffer(VertexBuffer::Type type, VertexBuffer::Usage usage);
 
+        RefMut<VertexBuffer> get_buffer(u32 index) { return m_vertex_buffers[index]; }
+        RefMut<std::optional<VertexBuffer>> get_ibo();
+
+    private:
         void draw(u32 first, u32 count, DrawMode mode = DrawMode::TRIANGLES) const;
         void draw(u32 count, DrawMode mode = DrawMode::TRIANGLES) const;
         void draw(DrawMode mode = DrawMode::TRIANGLES) const;
 
-    private:
-        VertexArray();
-
         u32 m_id {};
-        std::vector<VertexBuffer> m_buffers;
+
+        std::vector<VertexBuffer>   m_vertex_buffers;
+        std::optional<VertexBuffer> m_index_buffer;
 
         friend class RenderTarget;
     };

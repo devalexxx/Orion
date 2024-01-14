@@ -178,20 +178,24 @@ namespace orion {
     }
 
     void Shader::set_uniform(Ptr<char> name, int value) const {
+        use();
         gl_check(glUniform1i(get_uniform_location(name), value));
     }
 
     void Shader::set_uniform(Ptr<char> name, Ref<Matrix4f> value) const {
+        use();
         gl_check(glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, value.data()));
     }
 
     void Shader::set_uniform(Ptr<char> name, Ref<Color> value) const {
+        use();
         gl_check(glUniform4fv(get_uniform_location(name), 1, &value[0]));
     }
 
     void Shader::set_float_attrib_pointer(Ptr<char> name, u32 size, u32 stride, u32 offset) const {
+        use();
         gl_check(glEnableVertexAttribArray(get_attrib_location(name)));
-        gl_check(glVertexAttribPointer(get_attrib_location(name),size,GL_FLOAT,GL_FALSE,stride * sizeof(f32),(void*)(offset * sizeof(float))));
+        gl_check(glVertexAttribPointer(get_attrib_location(name), size,GL_FLOAT,GL_FALSE,stride * sizeof(f32),(void*)(offset * sizeof(f32))));
     }
 
     bool Shader::has_attrib(Ptr<char> name) const {

@@ -5,14 +5,14 @@
 #ifndef ORION_TRIANGLE_H
 #define ORION_TRIANGLE_H
 
-#include "Shape.h"
+#include "OldShape.h"
 #include "graphics/Transform.h"
 
 namespace orion {
 
     class VertexArray;
 
-    class Triangle : public Shape {
+    class Triangle : public OldShape {
     public:
         Triangle();
         explicit Triangle(Ref<Vector3f> position);

@@ -8,6 +8,18 @@
 
 namespace orion {
 
+    RenderContext::RenderContext() :
+        m_shader(nullptr),
+        m_texture(nullptr),
+        m_draw_mode(VertexArray::DrawMode::TRIANGLES)
+    {}
+
+    RenderContext::RenderContext(std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, VertexArray::DrawMode draw_mode) :
+            m_shader(std::move(shader)),
+            m_texture(std::move(texture)),
+            m_draw_mode(draw_mode)
+    {}
+
     Ref<std::shared_ptr<Shader>> RenderContext::get_shader() const {
         return m_shader;
     }
@@ -16,12 +28,20 @@ namespace orion {
         return m_texture;
     }
 
+    VertexArray::DrawMode RenderContext::get_draw_mode() const {
+        return m_draw_mode;
+    }
+
     void RenderContext::set_shader(std::shared_ptr<Shader> shader) {
         m_shader = std::move(shader);
     }
 
     void RenderContext::set_texture(std::shared_ptr<Texture> texture) {
         m_texture = std::move(texture);
+    }
+
+    void RenderContext::set_draw_mode(VertexArray::DrawMode mode) {
+        m_draw_mode = mode;
     }
 
     bool operator==(Ref<RenderContext> lhs, Ref<RenderContext> rhs) {
@@ -37,10 +57,4 @@ namespace orion {
     }
 
     const RenderContext RenderContext::DEFAULT = RenderContext();
-
-    RenderContext::RenderContext(std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, VertexArray::DrawMode draw_mode) :
-        m_shader(std::move(shader)),
-        m_texture(std::move(texture)),
-        m_draw_mode(draw_mode)
-    {}
 }

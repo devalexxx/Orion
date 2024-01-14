@@ -16,16 +16,19 @@ TEST_CASE("sample_mode") {
     auto triangle_image = orion::Image::load_from_file(orion::resource::texture::of("hazard.png"), true);
     auto triangle_texture = orion::Texture::create_from_image(triangle_image);
 
-    auto square0 = orion::Square();
+    auto square0 = orion::Shape(orion::Primitive::SQUARE);
     square0.set_texture(square_texture);
 
-    auto square1 = orion::Square(orion::Vector3f(-3, 0, 0));
+    auto square1 = orion::Shape(orion::Primitive::SQUARE);
+    square1.get_transform().set_position(orion::Vector3f(-3, 0, 0));
     square1.set_color(orion::Color::RED);
 
-    auto triangle0 = orion::Triangle(orion::Vector3f(2, 0, 0));
+    auto triangle0 = orion::Shape(orion::Primitive::TRIANGLE);
+    triangle0.get_transform().set_position(orion::Vector3f(2, 0, 0));
     triangle0.set_texture(triangle_texture);
 
-    auto triangle1 = orion::Triangle(orion::Vector3f(4, 0, 0));
+    auto triangle1 = orion::Shape(orion::Primitive::TRIANGLE);
+    triangle1.get_transform().set_position(orion::Vector3f(4, 0, 0));
 
 
     auto& view = w->get_view();
@@ -52,7 +55,7 @@ TEST_CASE("cam_move") {
     auto image = orion::Image::load_from_file(orion::resource::texture::of("dirt.png"), true);
     auto texture = orion::Texture::create_from_image(image);
 
-    auto cube = orion::Cube();
+    auto cube = orion::Shape(orion::Primitive::CUBE);
     cube.set_texture(texture);
 
     auto& view = w->get_view();

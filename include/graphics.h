@@ -21,12 +21,9 @@
 #include "graphics/VertexArray.h"
 #include "graphics/RenderTarget.h"
 #include "graphics/RenderContext.h"
-
-#include "graphics/shape/Shape.h"
-#include "graphics/shape/Triangle.h"
-#include "graphics/shape/Square.h"
-#include "graphics/shape/Circle.h"
-#include "graphics/shape/Cube.h"
+#include "graphics/Mesh.h"
+#include "graphics/Primitive.h"
+#include "graphics/Shape.h"
 
 #include "graphics/opengl/OpenGlApi.h"
 #include "graphics/opengl/OpenGlContext.h"

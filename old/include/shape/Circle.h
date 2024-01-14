@@ -5,11 +5,11 @@
 #ifndef ORION_CIRCLE_H
 #define ORION_CIRCLE_H
 
-#include "Shape.h"
+#include "OldShape.h"
 
 namespace orion {
 
-    class Circle : public Shape {
+    class Circle : public OldShape {
     public:
         Circle();
         explicit Circle(Ref<Vector3f> position);

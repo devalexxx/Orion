@@ -5,12 +5,12 @@
 #ifndef ORION_SQUARE_H
 #define ORION_SQUARE_H
 
-#include "Shape.h"
+#include "OldShape.h"
 #include "graphics/Transform.h"
 
 namespace orion {
 
-    class Square : public Shape {
+    class Square : public OldShape {
     public:
         Square();
         explicit Square(Ref<Vector3f> position);

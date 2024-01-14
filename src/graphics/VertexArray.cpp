@@ -33,6 +33,7 @@ namespace orion {
 
     VertexArray::VertexArray() {
         gl_check(glGenVertexArrays(1, &m_id));
+        m_vertex_buffers.reserve(5);
     }
 
     VertexArray::~VertexArray() {
@@ -46,7 +47,26 @@ namespace orion {
 
     void VertexArray::draw(u32 first, u32 count, VertexArray::DrawMode mode) const {
         bind();
-        gl_check(glDrawArrays(std::underlying_type<DrawMode>::type(mode), first, count));
+
+        if (m_index_buffer != std::nullopt) {
+            m_index_buffer->bind();
+            gl_check(glDrawElements(
+                std::underlying_type<DrawMode>::type(mode),
+                count,
+                GL_UNSIGNED_SHORT,
+                reinterpret_cast<const void *>(first))
+            );
+        }
+        else {
+            gl_check(glDrawArrays(
+                std::underlying_type<DrawMode>::type(mode),
+                first,
+                count
+            ));
+        }
+
+        VertexBuffer::unbind();
+        VertexArray ::unbind();
     }
 
     void VertexArray::draw(u32 count, VertexArray::DrawMode mode) const {
@@ -54,21 +74,32 @@ namespace orion {
     }
 
     void VertexArray::draw(VertexArray::DrawMode mode) const {
-        draw(0, count(), mode);
+        auto count = m_index_buffer == std::nullopt ? m_vertex_buffers[0].count : m_index_buffer->count;
+        draw(0, count, mode);
     }
 
-    VertexBuffer& VertexArray::add_buffer(VertexBuffer::Type type) {
+    RefMut<VertexBuffer> VertexArray::add_buffer(VertexBuffer::Type type) {
+        return add_buffer(type, VertexBuffer::Usage::STATIC);
+    }
+
+    // @todo : Voir si on remplace le buffer ou non ?
+    RefMut<VertexBuffer> VertexArray::add_buffer(VertexBuffer::Type type, VertexBuffer::Usage usage) {
         bind();
-        return m_buffers.emplace_back(type);
+        switch (type) {
+            case VertexBuffer::Type::ARRAY:
+                return m_vertex_buffers.emplace_back(type, usage);
+            case VertexBuffer::Type::ELEMENT:
+                if (m_index_buffer == std::nullopt)
+                    return m_index_buffer.emplace(type, usage);
+                else {
+                    return *m_index_buffer;
+                }
+        }
     }
 
-    VertexBuffer &VertexArray::add_buffer(VertexBuffer::Type type, VertexBuffer::Usage usage) {
-        bind();
-        return m_buffers.emplace_back(type, usage);
-    }
-
-    u32 VertexArray::count() const {
-        return m_buffers.empty() ? 0 : m_buffers[0].count;
+    // @todo : Voir si immuable ou non ?
+    RefMut<std::optional<VertexBuffer>> VertexArray::get_ibo() {
+        return m_index_buffer;
     }
 
 } // orion

@@ -26,8 +26,8 @@ namespace orion {
 
             auto it = IDeferredRegistry::REGISTRIES.find("opengl");
             if (it != IDeferredRegistry::REGISTRIES.cend()) {
-                for (auto dr: it->second) {
-                    dr->load();
+                for (auto registry: it->second) {
+                    registry->load();
                 }
             }
         }
@@ -41,8 +41,8 @@ namespace orion {
         if (context == get_current()) {
             auto it = IDeferredRegistry::REGISTRIES.find("opengl");
             if (it != IDeferredRegistry::REGISTRIES.cend()) {
-                for (auto dr: it->second) {
-                    dr->reset();
+                for (auto registry: it->second) {
+                    registry->reset();
                 }
             }
         }

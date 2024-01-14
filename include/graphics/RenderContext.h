@@ -20,14 +20,16 @@ namespace orion {
     public:
         static const RenderContext DEFAULT;
 
-        RenderContext() = default;
+        RenderContext();
         RenderContext(std::shared_ptr<Shader> shader, std::shared_ptr<Texture> texture, VertexArray::DrawMode draw_mode);
 
-        [[nodiscard]] Ref<std::shared_ptr<Shader>>  get_shader()  const;
-        [[nodiscard]] Ref<std::shared_ptr<Texture>> get_texture() const;
+        [[nodiscard]] Ref<std::shared_ptr<Shader>>  get_shader   ()  const;
+        [[nodiscard]] Ref<std::shared_ptr<Texture>> get_texture  () const;
+        [[nodiscard]] VertexArray::DrawMode         get_draw_mode() const;
 
-        void set_shader (std::shared_ptr<Shader> shader);
-        void set_texture(std::shared_ptr<Texture> texture);
+        void set_shader   (std::shared_ptr<Shader> shader);
+        void set_texture  (std::shared_ptr<Texture> texture);
+        void set_draw_mode(VertexArray::DrawMode mode);
 
         friend bool operator==(Ref<RenderContext> lhs, Ref<RenderContext> rhs);
         friend bool operator!=(Ref<RenderContext> lhs, Ref<RenderContext> rhs);

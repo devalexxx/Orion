@@ -42,6 +42,15 @@ namespace orion {
     namespace filesystem = std::filesystem;
     using Path = filesystem::path;
 
+    using Index = u16;
+    using IndexContainer = std::vector<Index>;
+
+    template<typename T1, typename T2>
+    using Pair = std::pair<T1, T2>;
+
+    template<typename T>
+    using EnumValue = std::underlying_type<T>::type;
+
 }
 
 #endif //ORION_TYPE_H
