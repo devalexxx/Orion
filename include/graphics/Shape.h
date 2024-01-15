@@ -28,7 +28,7 @@ namespace orion {
             UNIFORM_COLOR = 2,
         };
 
-        explicit Shape(std::shared_ptr<Mesh> mesh);
+        explicit Shape(std::shared_ptr<Mesh> mesh, bool use_attr = false);
         explicit Shape(Primitive primitive);
 
         [[nodiscard]] RefMut<Transform> get_transform();

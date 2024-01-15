@@ -53,6 +53,17 @@ namespace orion {
         TEXTURE_CUBE_MAP_SEAMLESS     = GL_TEXTURE_CUBE_MAP_SEAMLESS,
     };
 
+    enum class CullFace {
+        FRONT          = GL_FRONT,
+        BACK           = GL_BACK,
+        FRONT_AND_BACK = GL_FRONT_AND_BACK,
+    };
+
+    enum class FrontFace {
+        CLOCKWISE         = GL_CW,
+        COUNTER_CLOCKWISE = GL_CCW,
+    };
+
     class OpenGlApi {
     public:
         static bool is_loaded;
@@ -64,6 +75,8 @@ namespace orion {
         static void set_depth_function(DepthFunction func);
         static void set_enable        (EnableCapability cap);
         static void set_disable       (EnableCapability cap);
+        static void set_cull_face     (CullFace cf);
+        static void set_front_face    (FrontFace ff);
     };
 
 #ifdef ORION_DEBUG

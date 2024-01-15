@@ -7,6 +7,10 @@
 #include "graphics.h"
 #include "omath.h"
 
+#include <chrono>
+#include <iostream>
+#include <algorithm>
+
 TEST_CASE("triangle") {
     auto w = orion::Window::create("triangle");
 
@@ -163,17 +167,6 @@ TEST_CASE("sphere") {
     }
 }
 
-TEST_CASE("test") {
-    using orion::normalize;
-    using orion::Vector3f;
-
-    auto v1 = Vector3f(1, 2, 3);
-    auto v2 = Vector3f(4, 5, 6);
-
-    std::cout << normalize(v1 + v2) << "\n";
-    std::cout << normalize(v1) + normalize(v2) << "\n";
-}
-
 TEST_CASE("index_cube") {
     using orion::PackedVertex;
     using orion::u32;
@@ -325,6 +318,44 @@ TEST_CASE("mesh_shape") {
         w->draw(cube);
 
         w->display();
+    }
+
+}
+
+TEST_CASE("time_tester") {
+    auto w = orion::Window::create("ibo");
+
+    auto& view = w->get_view();
+    view.translate(orion::Vector3f(0.f, 0.f, 5.f));
+    view.look_at(orion::Vector3f::zero());
+
+    auto cube = orion::Shape(orion::Primitive::TRIANGLE);
+
+    orion::OpenGlApi::set_enable(orion::EnableCapability::DEPTH_TEST);
+    orion::OpenGlApi::set_depth_function(orion::DepthFunction::LESS);
+
+    std::vector<long long> elapsed_times;
+
+    auto max_it = 1000;
+    auto it     = 0;
+
+    while (!w->is_close()) {
+
+        auto start = std::chrono::high_resolution_clock::now();
+
+        w->clear(orion::ClearMask::DEPTH | orion::ClearMask::COLOR);
+
+        w->draw(cube);
+
+        w->display();
+
+        auto stop = std::chrono::high_resolution_clock::now();
+
+        elapsed_times.push_back(std::chrono::duration_cast<std::chrono::microseconds>(start - stop).count());
+
+        if (++it == max_it)
+            w->close();
+
     }
 
 }

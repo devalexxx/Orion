@@ -55,12 +55,12 @@ namespace orion {
 
         PackedVertexContainer square_vertices() {
             return {{
-                PackedVertex(Vector3f(-1.0f,  1.0f, 0.0f),Vector2f(0.0f, 1.0f)),
-                PackedVertex(Vector3f(-1.0f, -1.0f, 0.0f),Vector2f(0.0f, 0.0f)),
-                PackedVertex(Vector3f( 1.0f,  1.0f, 0.0f),Vector2f(1.0f, 1.0f)),
-                PackedVertex(Vector3f(-1.0f, -1.0f, 0.0f),Vector2f(0.0f, 0.0f)),
-                PackedVertex(Vector3f( 1.0f,  1.0f, 0.0f),Vector2f(1.0f, 1.0f)),
-                PackedVertex(Vector3f( 1.0f, -1.0f, 0.0f),Vector2f(1.0f, 0.0f)),
+                PackedVertex(Vector3f(-1.0f,  1.0f,  0.0f), Vector2f(1.0f, 1.0f)),
+                PackedVertex(Vector3f( 1.0f, -1.0f,  0.0f), Vector2f(0.0f, 0.0f)),
+                PackedVertex(Vector3f( 1.0f,  1.0f,  0.0f), Vector2f(0.0f, 1.0f)),
+                PackedVertex(Vector3f(-1.0f,  1.0f,  0.0f), Vector2f(1.0f, 1.0f)),
+                PackedVertex(Vector3f(-1.0f, -1.0f,  0.0f), Vector2f(1.0f, 0.0f)),
+                PackedVertex(Vector3f( 1.0f, -1.0f,  0.0f), Vector2f(0.0f, 0.0f)),
             }};
         }
 
@@ -94,49 +94,43 @@ namespace orion {
 
         PackedVertexContainer cube_vertices() {
             return {{
-                            // Front
-                            PackedVertex(Vector3f(-1.0f, 1.0f, 1.0f), Vector2f(0.0f, 1.0f), Vector3f::FORWARD),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, 1.0f), Vector2f(0.0f, 0.0f), Vector3f::FORWARD),
-                            PackedVertex(Vector3f(1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::FORWARD),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, 1.0f), Vector2f(0.0f, 0.0f), Vector3f::FORWARD),
-                            PackedVertex(Vector3f(1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::FORWARD),
-                            PackedVertex(Vector3f(1.0f, -1.0f, 1.0f), Vector2f(1.0f, 0.0f), Vector3f::FORWARD),
-                            // Back
-                            PackedVertex(Vector3f(-1.0f, 1.0f, -1.0f), Vector2f(0.0f, 1.0f), Vector3f::BACK),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::BACK),
-                            PackedVertex(Vector3f(1.0f, 1.0f, -1.0f), Vector2f(1.0f, 1.0f), Vector3f::BACK),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::BACK),
-                            PackedVertex(Vector3f(1.0f, 1.0f, -1.0f), Vector2f(1.0f, 1.0f), Vector3f::BACK),
-                            PackedVertex(Vector3f(1.0f, -1.0f, -1.0f), Vector2f(1.0f, 0.0f), Vector3f::BACK),
-                            // Left
-                            PackedVertex(Vector3f(-1.0f, 1.0f, -1.0f), Vector2f(0.0f, 1.0f), Vector3f::LEFT),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::LEFT),
-                            PackedVertex(Vector3f(-1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::LEFT),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::LEFT),
-                            PackedVertex(Vector3f(-1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::LEFT),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, 1.0f), Vector2f(1.0f, 0.0f), Vector3f::LEFT),
-                            // Right
-                            PackedVertex(Vector3f(1.0f, 1.0f, -1.0f), Vector2f(0.0f, 1.0f), Vector3f::RIGHT),
-                            PackedVertex(Vector3f(1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::RIGHT),
-                            PackedVertex(Vector3f(1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::RIGHT),
-                            PackedVertex(Vector3f(1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::RIGHT),
-                            PackedVertex(Vector3f(1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::RIGHT),
-                            PackedVertex(Vector3f(1.0f, -1.0f, 1.0f), Vector2f(1.0f, 0.0f), Vector3f::RIGHT),
-                            // Bottom
-                            PackedVertex(Vector3f(1.0f, -1.0f, -1.0f), Vector2f(0.0f, 1.0f), Vector3f::DOWN),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::DOWN),
-                            PackedVertex(Vector3f(1.0f, -1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::DOWN),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::DOWN),
-                            PackedVertex(Vector3f(1.0f, -1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::DOWN),
-                            PackedVertex(Vector3f(-1.0f, -1.0f, 1.0f), Vector2f(1.0f, 0.0f), Vector3f::DOWN),
-                            // Bottom
-                            PackedVertex(Vector3f(1.0f, 1.0f, -1.0f), Vector2f(0.0f, 1.0f), Vector3f::UP),
-                            PackedVertex(Vector3f(-1.0f, 1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::UP),
-                            PackedVertex(Vector3f(1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::UP),
-                            PackedVertex(Vector3f(-1.0f, 1.0f, -1.0f), Vector2f(0.0f, 0.0f), Vector3f::UP),
-                            PackedVertex(Vector3f(1.0f, 1.0f, 1.0f), Vector2f(1.0f, 1.0f), Vector3f::UP),
-                            PackedVertex(Vector3f(-1.0f, 1.0f, 1.0f), Vector2f(1.0f, 0.0f), Vector3f::UP),
-                    }};
+                PackedVertex(Vector3f(-1.0f,  1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::FORWARD),
+                PackedVertex(Vector3f( 1.0f, -1.0f,  1.0f), Vector2f(0.0f, 0.0f),Vector3f::FORWARD),
+                PackedVertex(Vector3f( 1.0f,  1.0f,  1.0f), Vector2f(0.0f, 1.0f),Vector3f::FORWARD),
+                PackedVertex(Vector3f( 1.0f, -1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::DOWN),
+                PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::DOWN),
+                PackedVertex(Vector3f( 1.0f, -1.0f, -1.0f), Vector2f(0.0f, 1.0f),Vector3f::DOWN),
+                PackedVertex(Vector3f(-1.0f, -1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::LEFT),
+                PackedVertex(Vector3f(-1.0f,  1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::LEFT),
+                PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 1.0f),Vector3f::LEFT),
+                PackedVertex(Vector3f( 1.0f,  1.0f, -1.0f), Vector2f(1.0f, 1.0f),Vector3f::BACK),
+                PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::BACK),
+                PackedVertex(Vector3f(-1.0f,  1.0f, -1.0f), Vector2f(0.0f, 1.0f),Vector3f::BACK),
+                PackedVertex(Vector3f( 1.0f,  1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::RIGHT),
+                PackedVertex(Vector3f( 1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::RIGHT),
+                PackedVertex(Vector3f( 1.0f,  1.0f, -1.0f), Vector2f(0.0f, 1.0f),Vector3f::RIGHT),
+                PackedVertex(Vector3f(-1.0f,  1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::UP),
+                PackedVertex(Vector3f( 1.0f,  1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::UP),
+                PackedVertex(Vector3f(-1.0f,  1.0f, -1.0f), Vector2f(0.0f, 1.0f),Vector3f::UP),
+                PackedVertex(Vector3f(-1.0f,  1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::FORWARD),
+                PackedVertex(Vector3f(-1.0f, -1.0f,  1.0f), Vector2f(1.0f, 0.0f),Vector3f::FORWARD),
+                PackedVertex(Vector3f( 1.0f, -1.0f,  1.0f), Vector2f(0.0f, 0.0f),Vector3f::FORWARD),
+                PackedVertex(Vector3f( 1.0f, -1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::DOWN),
+                PackedVertex(Vector3f(-1.0f, -1.0f,  1.0f), Vector2f(1.0f, 0.0f),Vector3f::DOWN),
+                PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::DOWN),
+                PackedVertex(Vector3f(-1.0f, -1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::LEFT),
+                PackedVertex(Vector3f(-1.0f,  1.0f,  1.0f), Vector2f(1.0f, 0.0f),Vector3f::LEFT),
+                PackedVertex(Vector3f(-1.0f,  1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::LEFT),
+                PackedVertex(Vector3f( 1.0f,  1.0f, -1.0f), Vector2f(1.0f, 1.0f),Vector3f::BACK),
+                PackedVertex(Vector3f( 1.0f, -1.0f, -1.0f), Vector2f(1.0f, 0.0f),Vector3f::BACK),
+                PackedVertex(Vector3f(-1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::BACK),
+                PackedVertex(Vector3f( 1.0f,  1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::RIGHT),
+                PackedVertex(Vector3f( 1.0f, -1.0f,  1.0f), Vector2f(1.0f, 0.0f),Vector3f::RIGHT),
+                PackedVertex(Vector3f( 1.0f, -1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::RIGHT),
+                PackedVertex(Vector3f(-1.0f,  1.0f,  1.0f), Vector2f(1.0f, 1.0f),Vector3f::UP),
+                PackedVertex(Vector3f( 1.0f,  1.0f,  1.0f), Vector2f(1.0f, 0.0f),Vector3f::UP),
+                PackedVertex(Vector3f( 1.0f,  1.0f, -1.0f), Vector2f(0.0f, 0.0f),Vector3f::UP),
+            }};
         }
 
         inline void subdivide(RefMut<PackedVertexContainer> ret, Ref<Vector3f> a, Ref<Vector3f> b, Ref<Vector3f> c, i32 depth) {

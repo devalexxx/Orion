@@ -27,24 +27,32 @@ namespace orion {
     }
 
     bool OpenGlApi::is_enable(EnableCapability cap) {
-        return glIsEnabled(std::underlying_type<EnableCapability>::type(cap)) == GL_TRUE;
+        return glIsEnabled(EnumValue<EnableCapability>(cap)) == GL_TRUE;
     }
 
     void OpenGlApi::set_depth_function(DepthFunction func) {
         if (is_enable(EnableCapability::DEPTH_TEST))
-            gl_check(glDepthFunc(std::underlying_type<DepthFunction>::type(func)));
+            gl_check(glDepthFunc(EnumValue<DepthFunction>(func)));
         else
             std::cerr << "You may enable EnableCapability::DEPTH_TEST to use depth func\n";
     }
 
     void OpenGlApi::set_enable(EnableCapability cap) {
         if (!is_enable(cap))
-            gl_check(glEnable(std::underlying_type<EnableCapability>::type(cap)));
+            gl_check(glEnable(EnumValue<EnableCapability>(cap)));
     }
 
     void OpenGlApi::set_disable(EnableCapability cap) {
         if (is_enable(cap))
-            gl_check(glDisable(std::underlying_type<EnableCapability>::type(cap)));
+            gl_check(glDisable(EnumValue<EnableCapability>(cap)));
+    }
+
+    void OpenGlApi::set_cull_face(CullFace cf) {
+        gl_check(glCullFace(EnumValue<CullFace>(cf)));
+    }
+
+    void OpenGlApi::set_front_face(FrontFace ff) {
+        gl_check(glFrontFace(EnumValue<FrontFace>(ff)));
     }
 
     void gl_check_error(Ref<Path> file, u32 line, std::string_view expression) {

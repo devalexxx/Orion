@@ -10,35 +10,37 @@
 
 namespace orion {
 
-    Shape::Shape(std::shared_ptr<Mesh> mesh) :
+    Shape::Shape(std::shared_ptr<Mesh> mesh, bool use_attr) :
         m_mesh       (std::move(mesh)),
         m_shader     (Shader::REGISTRY.get("shape")),
         m_context    (RenderContext(m_shader, m_texture, VertexArray::DrawMode::TRIANGLES)),
         m_color      (Color::WHITE),
         m_sample_mode(SampleMode::UNIFORM_COLOR)
-    {}
+    {
+        if (use_attr) {
+            auto& vao = m_mesh->get_vao();
+            auto& vbo = vao.get_buffer(0);
+
+            vao.bind();
+            vbo.bind();
+
+            if (m_shader->has_attrib("position"))
+                m_shader->set_float_attrib_pointer("position", 3, 8, 0);
+
+            if (m_shader->has_attrib("normal"))
+                m_shader->set_float_attrib_pointer("normal",   3, 8, 3);
+
+            if (m_shader->has_attrib("uv"))
+                m_shader->set_float_attrib_pointer("uv",       2, 8, 6);
+
+            VertexBuffer::unbind();
+            VertexArray ::unbind();
+        }
+    }
 
     Shape::Shape(Primitive primitive) :
-            Shape(Mesh::REGISTRY.get(to_string(primitive)))
-    {
-        auto& vao = m_mesh->get_vao();
-        auto& vbo = vao.get_buffer(0);
-
-        vao.bind();
-        vbo.bind();
-
-        if (m_shader->has_attrib("position"))
-            m_shader->set_float_attrib_pointer("position", 3, 8, 0);
-
-        if (m_shader->has_attrib("normal"))
-            m_shader->set_float_attrib_pointer("normal",   3, 8, 3);
-
-        if (m_shader->has_attrib("uv"))
-            m_shader->set_float_attrib_pointer("uv",       2, 8, 6);
-
-        VertexBuffer::unbind();
-        VertexArray ::unbind();
-    }
+            Shape(Mesh::REGISTRY.get(default_mesh_name_of(primitive)), true)
+    {}
 
     RefMut<Transform> Shape::get_transform() {
         return m_transform;

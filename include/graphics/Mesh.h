@@ -9,6 +9,7 @@
 #include "PackedVertex.h"
 #include "VertexArray.h"
 #include "Drawable.h"
+#include "Primitive.h"
 
 namespace orion {
 
@@ -35,6 +36,9 @@ namespace orion {
         u32         m_length;
         VertexArray m_vao;
     };
+
+    std::string mesh_name_builder(Primitive p, bool indexed, Ref<String> opt = "");
+    std::string default_mesh_name_of(Primitive p);
 
 } // orion
 

@@ -15,11 +15,38 @@ namespace orion {
             [](RefMut<DeferredRegistry<Mesh>> registry) {
                 using namespace generator;
 
-                registry.add(to_string(Primitive::TRIANGLE), Mesh::create(triangle_vertices()));
-                registry.add(to_string(Primitive::SQUARE  ), Mesh::create(square_vertices()));
-                registry.add(to_string(Primitive::CIRCLE  ), Mesh::create(index(circle_vertices(128))));
-                registry.add(to_string(Primitive::CUBE    ), Mesh::create(index(cube_vertices())));
-                registry.add(to_string(Primitive::SPHERE  ), Mesh::create(index(sphere_vertices(4))));
+                registry.add(
+                    mesh_name_builder(Primitive::TRIANGLE, false),
+                    Mesh::create(triangle_vertices())
+                );
+                registry.add(
+                        mesh_name_builder(Primitive::SQUARE, false),
+                    Mesh::create(square_vertices())
+                );
+                registry.add(
+                        mesh_name_builder(Primitive::CIRCLE, false, "128"),
+                        Mesh::create(index(circle_vertices(128)))
+                );
+                registry.add(
+                    mesh_name_builder(Primitive::CIRCLE, true, "128"),
+                    Mesh::create(index(circle_vertices(128)))
+                );
+                registry.add(
+                        mesh_name_builder(Primitive::CUBE, false),
+                        Mesh::create(index(cube_vertices()))
+                );
+                registry.add(
+                    mesh_name_builder(Primitive::CUBE, true),
+                    Mesh::create(index(cube_vertices()))
+                );
+                registry.add(
+                        mesh_name_builder(Primitive::SPHERE, false, "4"),
+                        Mesh::create(index(sphere_vertices(4)))
+                );
+                registry.add(
+                    mesh_name_builder(Primitive::SPHERE, true, "4"),
+                    Mesh::create(index(sphere_vertices(4)))
+                );
             }
     );
 
@@ -70,4 +97,30 @@ namespace orion {
         m_indexed(indexed),
         m_length(length)
     {}
+
+    std::string mesh_name_builder(Primitive p, bool indexed, Ref<String> opt) {
+        std::string ret;
+
+        ret.append(indexed ? "indexed" : "default");
+        ret.append("|");
+        ret.append(to_string(p));
+        ret.append("|");
+        ret.append(opt);
+
+        return ret;
+    }
+
+    std::string default_mesh_name_of(Primitive p) {
+        switch (p) {
+            case Primitive::TRIANGLE:
+            case Primitive::SQUARE:
+                return std::move(mesh_name_builder(p, false));
+            case Primitive::CIRCLE:
+                return std::move(mesh_name_builder(p, true, "128"));
+            case Primitive::CUBE:
+                return std::move(mesh_name_builder(p, true));
+            case Primitive::SPHERE:
+                return std::move(mesh_name_builder(p, true, "4"));
+        }
+    }
 } // orion
