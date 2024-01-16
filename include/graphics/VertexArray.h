@@ -28,18 +28,14 @@ namespace orion {
 
         static DeferredRegistry<VertexArray> REGISTRY;
 
-        static bool is_any_bind;
+        static u32 CURRENT_BOUND;
         static void unbind();
-
-        static std::shared_ptr<VertexArray> create();
-        static std::shared_ptr<VertexArray> create(Ref<PackedVertexContainer> data, Ref<std::shared_ptr<Shader>> shader);
 
         VertexArray();
         ~VertexArray();
 
         void bind() const;
 
-        [[nodiscard]] u32 count() const;
         RefMut<VertexBuffer> add_buffer(VertexBuffer::Type type);
         RefMut<VertexBuffer> add_buffer(VertexBuffer::Type type, VertexBuffer::Usage usage);
 

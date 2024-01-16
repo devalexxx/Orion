@@ -8,11 +8,9 @@
 #include "graphics/window/WindowEvent.h"
 #include "core/event/EventManager.h"
 
-#include <iostream>
-
 namespace orion {
     void WindowEventDispatcher::error_callback(int error, const char *description) {
-        std::cerr << "Error: " << description << "\n";
+        fmt::print(stderr, "Error: {}", description);
     }
 
     void WindowEventDispatcher::window_position_callback(GLFWwindow *window, int xpos, int ypos) {

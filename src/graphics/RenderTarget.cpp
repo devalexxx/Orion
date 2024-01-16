@@ -9,7 +9,7 @@
 #include "graphics/Shader.h"
 #include "graphics/Texture.h"
 
-#include <iostream>
+#include <fmt/core.h>
 
 namespace orion {
 
@@ -54,7 +54,7 @@ namespace orion {
                 last_context = std::ref(context);
         }
         else
-            std::cerr << "Unable to render vao " << vao.m_id << " because no shader was provide.\n";
+            fmt::print(stderr, "Unable to render vao {} because no shader was provide.\n", vao.m_id);
     }
 
     RefMut<View> RenderTarget::get_view() {

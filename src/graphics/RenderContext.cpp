@@ -46,9 +46,9 @@ namespace orion {
 
     bool operator==(Ref<RenderContext> lhs, Ref<RenderContext> rhs) {
         return (
-                lhs.m_texture    == rhs.m_texture &&
-                lhs.m_shader     == rhs.m_shader  &&
-                lhs.m_draw_mode  == rhs.m_draw_mode
+            lhs.m_texture    == rhs.m_texture &&
+            lhs.m_shader     == rhs.m_shader  &&
+            lhs.m_draw_mode  == rhs.m_draw_mode
         );
     }
 

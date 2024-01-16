@@ -10,25 +10,9 @@
 
 namespace orion {
 
-    DeferredRegistry<VertexArray> VertexArray::REGISTRY = DeferredRegistry<VertexArray>("opengl");
-
-    bool VertexArray::is_any_bind = false;
-
     void VertexArray::unbind() {
-        gl_check(glBindVertexArray(0));
-        is_any_bind = false;
-    }
-
-    std::shared_ptr<VertexArray> VertexArray::create() {
-        return std::shared_ptr<VertexArray>(new VertexArray());
-    }
-
-    std::shared_ptr<VertexArray> VertexArray::create(Ref<std::vector<PackedVertex>> data, Ref<std::shared_ptr<Shader>> shader) {
-        auto ret = std::shared_ptr<VertexArray>(new VertexArray());
-        auto& buffer = ret->add_buffer(VertexBuffer::Type::ARRAY);
-        buffer.set_data(data, shader);
-
-        return std::move(ret);
+        if (CURRENT_BOUND == 0)
+            gl_check(glBindVertexArray(0));
     }
 
     VertexArray::VertexArray() {
@@ -41,8 +25,10 @@ namespace orion {
     }
 
     void VertexArray::bind() const {
-        gl_check(glBindVertexArray(m_id));
-        is_any_bind = true;
+        if(CURRENT_BOUND != m_id) {
+            gl_check(glBindVertexArray(m_id));
+            CURRENT_BOUND = m_id;
+        }
     }
 
     void VertexArray::draw(u32 first, u32 count, VertexArray::DrawMode mode) const {
@@ -50,6 +36,7 @@ namespace orion {
 
         if (m_index_buffer != std::nullopt) {
             m_index_buffer->bind();
+
             gl_check(glDrawElements(
                 std::underlying_type<DrawMode>::type(mode),
                 count,
@@ -64,9 +51,6 @@ namespace orion {
                 count
             ));
         }
-
-        VertexBuffer::unbind();
-        VertexArray ::unbind();
     }
 
     void VertexArray::draw(u32 count, VertexArray::DrawMode mode) const {
@@ -101,5 +85,7 @@ namespace orion {
     RefMut<std::optional<VertexBuffer>> VertexArray::get_ibo() {
         return m_index_buffer;
     }
+
+    u32 VertexArray::CURRENT_BOUND = 0;
 
 } // orion

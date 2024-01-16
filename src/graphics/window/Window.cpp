@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "graphics/window/WindowEventDispatcher.h"
+#include "graphics/opengl/OpenGlApi.h"
 
 namespace orion {
 
@@ -26,6 +27,9 @@ namespace orion {
     }
 
     void Window::clear(ClearMask mask) {
+        #ifdef ORION_DEBUG
+            OpenGlApi::CALL_TRACE = {};
+        #endif
         glClear(std::underlying_type<ClearMask>::type (mask));
     }
 

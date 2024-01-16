@@ -8,8 +8,6 @@
 #include "omath.h"
 
 #include <chrono>
-#include <iostream>
-#include <algorithm>
 
 TEST_CASE("triangle") {
     auto w = orion::Window::create("triangle");
@@ -193,11 +191,11 @@ TEST_CASE("index_cube") {
     auto context = orion::RenderContext();
     context.set_shader(shader);
 
-    auto vao = orion::VertexArray::create();
-    auto& vbo = vao->add_buffer(orion::VertexBuffer::Type::ARRAY, orion::VertexBuffer::Usage::STATIC);
+    auto vao = orion::VertexArray();
+    auto& vbo = vao.add_buffer(orion::VertexBuffer::Type::ARRAY, orion::VertexBuffer::Usage::STATIC);
     vbo.set_data(vertices);
 
-    auto& ibo = vao->add_buffer(orion::VertexBuffer::Type::ELEMENT, orion::VertexBuffer::Usage::STATIC);
+    auto& ibo = vao.add_buffer(orion::VertexBuffer::Type::ELEMENT, orion::VertexBuffer::Usage::STATIC);
     ibo.set_data(indices);
 
     shader->set_uniform("view",         view.get_view());
@@ -219,11 +217,12 @@ TEST_CASE("index_cube") {
 
         shader->use();
 
-        vao->bind();
+        vao.bind();
         ibo.bind();
 //        gl_check(glDrawElements(std::underlying_type<orion::VertexArray::DrawMode>::type (context.get_draw_mode()), indices.size(), GL_UNSIGNED_BYTE, nullptr));
         gl_check(glDrawElements(std::underlying_type<orion::VertexArray::DrawMode>::type (context.get_draw_mode()), indices.size(), GL_UNSIGNED_SHORT, nullptr));
-        vao->unbind();
+
+        orion::VertexArray::unbind();
 
         orion::Shader::unbind();
 

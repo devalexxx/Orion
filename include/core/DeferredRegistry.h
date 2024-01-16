@@ -9,9 +9,10 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
-#include <iostream>
 #include <functional>
 #include <map>
+
+#include <fmt/core.h>
 
 #include "type.h"
 #include "Indexer.h"
@@ -101,7 +102,7 @@ namespace orion {
             m_indexer.emplace(name, m_storage.size() - 1);
         }
         else
-            std::cerr << "Could not add object " << name << " to register because this name is already register\n";
+            fmt::print(stderr, "Could not add object {} to register because this name is already register\n", name);
         return std::move(ptr);
     }
 
@@ -120,7 +121,7 @@ namespace orion {
             return ret;
         }
         else {
-            std::cerr << "Object " << name << " does not exist in this registry\n";
+            fmt::print(stderr, "Object {} does not exist in this registry\n", name);
             return nullptr;
         }
     }
@@ -131,7 +132,7 @@ namespace orion {
         if (opt != std::nullopt)
             return m_storage[opt->second];
         else {
-            std::cerr << "Object " << name << " does not exist in this registry\n";
+            fmt::print(stderr, "Object {} does not exist in this registry\n", name);
             return nullptr;
         }
     }

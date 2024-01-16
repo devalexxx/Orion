@@ -24,6 +24,8 @@ namespace orion {
             }
     );
 
+    u32 Shader::CURRENT_USE = 0;
+
     std::shared_ptr<Shader> Shader::load_from_file(Ptr<char> vertex, Ptr<char> fragment) {
         std::string     v_code;
         std::ifstream   v_stream(vertex, std::ios::in);
@@ -32,9 +34,9 @@ namespace orion {
             v_sstr << v_stream.rdbuf();
             v_code = v_sstr.str();
             v_stream.close();
-        } else {
-            std::cerr << "Impossible to open " << vertex << ". Are you in the right directory ? Don't forget to read the FAQ !\n";
         }
+        else
+            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", vertex);
 
         std::string     f_code;
         std::ifstream   f_stream(fragment, std::ios::in);
@@ -43,9 +45,9 @@ namespace orion {
             f_sstr << f_stream.rdbuf();
             f_code = f_sstr.str();
             f_stream.close();
-        } else {
-            std::cerr << "Impossible to open " << fragment << ". Are you in the right directory ? Don't forget to read the FAQ !\n";
         }
+        else
+            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", fragment);
 
         return std::shared_ptr<Shader>(new Shader(v_code, f_code));
     }
@@ -67,7 +69,10 @@ namespace orion {
     }
 
     void Shader::use() const {
-        gl_check(glUseProgram(m_id));
+        if (CURRENT_USE != m_id) {
+            gl_check(glUseProgram(m_id));
+            CURRENT_USE = m_id;
+        }
     }
 
     Shader::Shader(Ref<std::string> vertex, Ref<std::string> fragment) {
@@ -99,6 +104,14 @@ namespace orion {
 
         gl_check(glDeleteShader(vertex_id));
         gl_check(glDeleteShader(fragment_id));
+
+//        for(auto& it: m_uniform) {
+//            it.second.location = glGetUniformLocation(m_id, it.first.c_str());
+//        }
+//
+//        for (auto& it: m_attrib) {
+//            it.second.location = glGetAttribLocation(m_id, it.first.c_str());
+//        }
     }
 
     void Shader::handle_compile_error(u32 id) {
@@ -145,6 +158,11 @@ namespace orion {
                 k.push_back(c);
             }
 
+//            if (attr)
+//                m_attrib.emplace(k, Description {v});
+//            else
+//                m_uniform.emplace(k, Description {v});
+
             if (attr)
                 m_attrib.emplace(k, v);
             else
@@ -166,15 +184,21 @@ namespace orion {
     }
 
     int Shader::get_uniform_location(Ptr<char> name) const {
-        if (!has_uniform(name))
-            std::cerr << "Shader does not contain uniform '" << name << "'\n";
-        return glGetUniformLocation(m_id, name);
+        if (!has_uniform(name)) {
+            fmt::print(stderr, "Shader does not contain uniform '{}'\n", name);
+            return -1;
+        }
+        else
+            return glGetUniformLocation(m_id, name);
     }
 
     int Shader::get_attrib_location(Ptr<char> name) const {
-        if (!has_attrib(name))
-            std::cerr << "Shader does not contain input '" << name << "'\n";
-        return glGetAttribLocation(m_id, name);
+        if (!has_attrib(name)) {
+            fmt::print(stderr, "Shader does not contain attribute '{}'\n", name);
+            return -1;
+        }
+        else
+            return glGetAttribLocation(m_id, name);
     }
 
     void Shader::set_uniform(Ptr<char> name, int value) const {
@@ -205,13 +229,5 @@ namespace orion {
     bool Shader::has_uniform(Ptr<char> name) const {
         return m_uniform.contains(name);
     }
-
-//    void Shader::handle_uniform_name_and_type_error(const std::string &name, const std::string &type) const {
-//        if (!m_uniform.contains(name))
-//            std::cerr << "Shader does not contain uniform '" << name << "'\n";
-//        else
-//            if (m_uniform.at(name) != type)
-//                std::cerr << "Shader expect '"<< m_uniform.at(name) << "' type for '" << name << "' but the given type is '" << type << "'\n";
-//    }
 
 }

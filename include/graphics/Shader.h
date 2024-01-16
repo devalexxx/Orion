@@ -28,6 +28,8 @@ namespace orion {
     public:
         static DeferredRegistry<Shader> REGISTRY;
 
+        static u32 CURRENT_USE;
+
         static std::shared_ptr<Shader> load_from_file(Ptr<char> vertex, Ptr<char> fragment);
         static std::shared_ptr<Shader> load_from_file(Ref<Path> vertex, Ref<Path> fragment);
         static std::shared_ptr<Shader> load_from_code(Ref<std::string> vertex, Ref<std::string> fragment);
@@ -57,12 +59,19 @@ namespace orion {
         static void handle_link_error   (u32 id);
 
         void compute_mapping(Ref<std::string> code, Type type);
-//        void handle_uniform_name_and_type_error(const std::string& name, const std::string& type) const;
 
         u32 m_id {};
 
-        std::unordered_map<std::string, std::string> m_attrib   {};
+        std::unordered_map<std::string, std::string> m_attrib  {};
         std::unordered_map<std::string, std::string> m_uniform {};
+
+//        struct Description {
+//            String type;
+//            i32    location = -1;
+//        };
+//
+//        std::unordered_map<std::string, Description> m_attrib  {};
+//        std::unordered_map<std::string, Description> m_uniform {};
     };
 }
 

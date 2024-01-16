@@ -4,9 +4,9 @@
 
 #include "graphics/window/GLFWWindowWrapper.h"
 
-#include <iostream>
-
 #include "graphics/opengl/OpenGlContext.h"
+
+#include <fmt/core.h>
 
 namespace orion {
     GLFWWindowWrapper::GLFWWindowWrapper(int width, int height, Ref<std::string> name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share) :
@@ -17,7 +17,7 @@ namespace orion {
 
         m_window = glfwCreateWindow(width, height, name.c_str(), monitor, share);
         if (!m_window) {
-            std::cerr << "Window creation failed.\n";
+            fmt::print(stderr, "Window creation failed.\n");
             exit(EXIT_FAILURE);
         }
 
@@ -38,7 +38,7 @@ namespace orion {
 
     void GLFWWindowWrapper::initialize() {
         if (!glfwInit()) {
-            std::cerr << "Could not initialize GLFW Library.\n";
+            fmt::print(stderr, "Could not initialize GLFW Library.\n");
             exit(EXIT_FAILURE);
         }
 

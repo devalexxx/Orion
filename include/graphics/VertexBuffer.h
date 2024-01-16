@@ -37,6 +37,7 @@ namespace orion {
             STREAM  = GL_STREAM_DRAW,
         };
 
+        static u32 CURRENT_BOUND;
         static void unbind();
 
         VertexBuffer(Type type, Usage usage);
@@ -45,8 +46,6 @@ namespace orion {
         ~VertexBuffer();
 
         void bind() const;
-
-        void set_data(Ref<PackedVertexContainer> v, Ref<std::shared_ptr<Shader>> shader);
 
         void set_data(Ref<PackedVertexContainer> v);
         void set_data(Ref<IndexContainer> v);

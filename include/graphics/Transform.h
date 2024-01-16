@@ -21,9 +21,9 @@ namespace orion {
         void set_rotation(Ref<Vector3f> rotation);
         void set_scale   (Ref<Vector3f> scale);
 
-        Ref<Vector3f> get_position() const;
-        Ref<Vector3f> get_rotation() const;
-        Ref<Vector3f> get_scale   () const;
+        [[nodiscard]] Ref<Vector3f> get_position() const;
+        [[nodiscard]] Ref<Vector3f> get_rotation() const;
+        [[nodiscard]] Ref<Vector3f> get_scale   () const;
 
         [[nodiscard]] Matrix4f get_matrix() const;
     private:

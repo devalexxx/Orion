@@ -14,15 +14,21 @@
 
 TEST_SUITE("bench") {
 
-    auto max_it = 100;
+    auto max_it = 200;
     auto x_c_s  =  10;
     auto y_c_s  =  10;
     auto z_c_s  =  10;
 
-    auto cam_offset = orion::Vector3f(0.f, 0.f, 100.f);
+    auto cam_offset = orion::Vector3f(0.f, 0.f, 70.f);
 
     void display_stats(orion::RefMut<std::vector<long long>> v) {
         std::sort(v.begin(), v.end());
+#ifdef ORION_DEBUG
+        std::cout << "Draw call\t" << orion::OpenGlApi::CALL_TRACE.draw << "\n";
+        std::cout << "Bind call\t" << orion::OpenGlApi::CALL_TRACE.bound << "\n";
+        std::cout << "Prog call\t" << orion::OpenGlApi::CALL_TRACE.program << "\n";
+        std::cout << "Unif call\t" << orion::OpenGlApi::CALL_TRACE.uniform << "\n";
+#endif
         std::cout << "Average\t\t" << std::reduce(v.begin(), v.end()) / v.size() << "\tus\n";
         std::cout << "Maximum\t\t" << *(v.end() - 1) << "\tus\n";
         std::cout << "Minimum\t\t" << *(v.begin()) << "\tus\n";
@@ -43,7 +49,7 @@ TEST_SUITE("bench") {
         using orion::CullFace;
         using orion::FrontFace;
 
-//        OpenGlApi::set_enable(EnableCapability::CULL_FACE);
+        OpenGlApi::set_enable(EnableCapability::CULL_FACE);
 //        OpenGlApi::set_cull_face(CullFace::FRONT);
 //        OpenGlApi::set_front_face(FrontFace::CLOCKWISE);
 

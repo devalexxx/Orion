@@ -4,14 +4,20 @@
 
 #include "graphics/opengl/OpenGlApi.h"
 
-#include <iostream>
+#include "graphics/opengl/OpenGlContext.h"
+
 #include <cassert>
 
-#include "graphics/opengl/OpenGlContext.h"
+#include <fmt/core.h>
+#include <fmt/ostream.h>
 
 namespace orion {
 
-    bool OpenGlApi::is_loaded = false;
+#ifdef ORION_DEBUG
+    OpenGlCallTrace OpenGlApi::CALL_TRACE = {};
+#endif
+
+    bool OpenGlApi::IS_LOADED = false;
 
     void OpenGlApi::load() {
 
@@ -19,11 +25,11 @@ namespace orion {
 
         glewExperimental = true;
         if (glewInit() != GLEW_OK) {
-            std::cerr << "Could not initialize OpenGL API. \n";
+            fmt::print(stderr, "Could not initialize OpenGL API. \n");
             exit(EXIT_FAILURE);
         }
 
-        is_loaded = true;
+        IS_LOADED = true;
     }
 
     bool OpenGlApi::is_enable(EnableCapability cap) {
@@ -34,7 +40,7 @@ namespace orion {
         if (is_enable(EnableCapability::DEPTH_TEST))
             gl_check(glDepthFunc(EnumValue<DepthFunction>(func)));
         else
-            std::cerr << "You may enable EnableCapability::DEPTH_TEST to use depth func\n";
+            fmt::print(stderr, "You may enable EnableCapability::DEPTH_TEST to use depth func\n");
     }
 
     void OpenGlApi::set_enable(EnableCapability cap) {
@@ -55,8 +61,19 @@ namespace orion {
         gl_check(glFrontFace(EnumValue<FrontFace>(ff)));
     }
 
+#ifdef ORION_DEBUG
+
     void gl_check_error(Ref<Path> file, u32 line, std::string_view expression) {
         const GLenum errorCode = glGetError();
+
+        if (expression.contains("Bind"))
+            OpenGlApi::CALL_TRACE.bound   += 1;
+        else if (expression.contains("Draw"))
+            OpenGlApi::CALL_TRACE.draw    += 1;
+        else if (expression.contains("UseProgram"))
+            OpenGlApi::CALL_TRACE.program += 1;
+        else if (expression.contains("Uniform"))
+            OpenGlApi::CALL_TRACE.uniform += 1;
 
         if (errorCode != GL_NO_ERROR) {
             std::string error = "Unknown error";
@@ -107,9 +124,14 @@ namespace orion {
                     break;
             }
 
-            std::cerr << "An internal OpenGL call failed in " << file.filename() << "(" << line << ")."
-                  << "\nExpression:\n   " << expression << "\nError description:\n   " << error << "\n   "
-                  << description << '\n';
+            fmt::print(
+                stderr,
+                "An internal OpenGL call failed in {}, ({}).\nExpression:\n\t{}\nError description:\n\t{}\n{}\n",
+                fmt::streamed(file.filename()), line, expression, error, description
+            );
         }
     }
+
+#endif
+
 } // orion

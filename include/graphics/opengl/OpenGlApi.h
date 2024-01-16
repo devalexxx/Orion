@@ -64,9 +64,20 @@ namespace orion {
         COUNTER_CLOCKWISE = GL_CCW,
     };
 
+    struct OpenGlCallTrace {
+        u64 draw    = 0;
+        u64 bound   = 0;
+        u64 program = 0;
+        u64 uniform = 0;
+    };
+
     class OpenGlApi {
     public:
-        static bool is_loaded;
+        static bool IS_LOADED;
+
+#ifdef ORION_DEBUG
+        static OpenGlCallTrace CALL_TRACE;
+#endif
 
         static void load();
 
@@ -80,16 +91,16 @@ namespace orion {
     };
 
 #ifdef ORION_DEBUG
-    #define gl_check(expr)                                      \
-        do {                                                   \
-            expr;                                              \
+    #define gl_check(expr)                                    \
+        do {                                                  \
+            expr;                                             \
             orion::gl_check_error(__FILE__, __LINE__, #expr); \
         } while (false)
+
+    void gl_check_error(Ref<Path> file, u32 line, std::string_view expression);
 #else
     #define gl_check(expr) (expr)
 #endif
-
-    void gl_check_error(Ref<Path> file, u32 line, std::string_view expression);
 
 } // orion
 
