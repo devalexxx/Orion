@@ -35,7 +35,7 @@ namespace orion {
 
         void set_texture(std::shared_ptr<Texture> texture);
         void set_shader (std::shared_ptr<Shader> shader);
-        void set_color  (Ref<Color> color);
+        void set_color  (Color color);
         void set_color  (std::vector<Color> color);
 
         void set_sample_mode(SampleMode mode);

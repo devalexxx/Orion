@@ -22,7 +22,7 @@ namespace orion {
         Vector(T x, T y);
         explicit Vector(T value);
         explicit Vector(Ref<Vector<3, T>> v);
-        explicit Vector(Ref<std::array<T, 2>> a);
+        explicit Vector(std::array<T, 2> a);
 
         T get_x() const;
         T get_y() const;
@@ -49,16 +49,16 @@ namespace orion {
     const Vector<2, T> Vector<2, T>::RIGHT = Vector<2, T>(1, 0);
 
     template<typename T>
-    Vector<2, T>::Vector(T x, T y) : VectorBase<2, T>({x, y}) {}
+    Vector<2, T>::Vector(T x, T y) : VectorBase<2, T>({std::move(x), std::move(y)}) {}
 
     template<typename T>
     Vector<2, T>::Vector(T value) : VectorBase<2, T>({value, value}) {}
 
     template<typename T>
-    Vector<2, T>::Vector(const Vector<3, T> &v) : VectorBase<2, T>({v[0], v[1]}) {}
+    Vector<2, T>::Vector(Ref<Vector<3, T>> v) : VectorBase<2, T>({v[0], v[1]}) {}
 
     template<typename T>
-    Vector<2, T>::Vector(Ref<std::array<T, 2>> a) : VectorBase<2, T>(a) {}
+    Vector<2, T>::Vector(std::array<T, 2> a) : VectorBase<2, T>(std::move(a)) {}
 
     template<typename T>
     T Vector<2, T>::get_x() const {

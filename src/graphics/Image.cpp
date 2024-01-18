@@ -18,7 +18,7 @@ namespace orion {
         auto v = std::vector<u8>(data, data + (w * h * 4));
         stbi_image_free(data);
 
-        return Image(w, h, v);
+        return Image(w, h, std::move(v));
     }
 
     Image::Image(u32 width, u32 height, std::vector<u8> data) :

@@ -9,22 +9,22 @@ namespace orion {
 
     Transform::Transform() : m_scale(Vector3f(1)) {}
 
-    orion::Transform::Transform(Ref<Vector3f> position, Ref<Vector3f> rotation, Ref<Vector3f> scale) :
-        m_position(position),
-        m_rotation(rotation),
-        m_scale(scale)
+    orion::Transform::Transform(Vector3f position, Vector3f rotation, Vector3f scale) :
+        m_position(std::move(position)),
+        m_rotation(std::move(rotation)),
+        m_scale   (std::move(scale))
     {}
 
-    void Transform::set_position(Ref<Vector3f> position) {
-        m_position = position;
+    void Transform::set_position(Vector3f position) {
+        m_position = std::move(position);
     }
 
-    void Transform::set_rotation(Ref<Vector3f> rotation) {
-        m_rotation = rotation;
+    void Transform::set_rotation(Vector3f rotation) {
+        m_rotation = std::move(rotation);
     }
 
-    void Transform::set_scale(Ref<Vector3f> scale) {
-        m_scale = scale;
+    void Transform::set_scale(Vector3f scale) {
+        m_scale = std::move(scale);
     }
 
     Matrix4f Transform::get_matrix() const {

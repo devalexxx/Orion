@@ -18,9 +18,9 @@ namespace orion {
     public:
         Indexer() = default;
 
-        bool emplace(Ref<K> key, Ref<V> value);
+        bool emplace(K key, V value);
 
-        bool set(Ref<K> key, Ref<V> value);
+        bool set(K key, V value);
         bool remove(Ref<K> key);
 
         void reset();
@@ -41,21 +41,21 @@ namespace orion {
     }
 
     template<typename K, typename V>
-    bool Indexer<K, V>::emplace(Ref<K> key, Ref<V> value) {
+    bool Indexer<K, V>::emplace(K key, V value) {
         if (m_default.find(key) == m_default.cend()) {
             m_default.emplace(key, value);
-            m_reverse.emplace(value, key);
+            m_reverse.emplace(std::move(value), std::move(key));
             return true;
         }
         return false;
     }
 
     template<typename K, typename V>
-    bool Indexer<K, V>::set(Ref<K> key, Ref<V> value) {
+    bool Indexer<K, V>::set(K key, V value) {
         auto it = m_default.find(key);
         if (it != m_default.cend()) {
-            it->second = value;
-            m_reverse.find(value)->second = key;
+            it->second = std::move(value);
+            m_reverse.find(it->second)->second = std::move(key);
             return true;
         }
         return false;

@@ -6,26 +6,26 @@
 
 namespace orion {
 
-    View::View(Ref<Vector3f> position, Ref<Vector3f> rotation, Ref<Vector3f> scale, f32 fov, f32 ratio, f32 near, f32 far) :
-            m_position(position),
-            m_rotation(rotation),
-            m_scale(scale),
-            m_fov(fov),
-            m_ratio(ratio),
-            m_near(near),
-            m_far(far)
-    {
-        look_at(Vector3f::zero());
-        update_projection();
-    }
-
     orion::View::View() :
         View(Vector3f::zero(), Vector3f::zero(), Vector3f::one(), 45.f, 4.f / 3.f, 0.1f, 100.f)
     {}
 
-    View::View(Ref<Vector3f> position) :
-        View(position, Vector3f::zero(), Vector3f::one(), 45.f, 4.f / 3.f, 0.1f, 100.f)
+    View::View(Vector3f position) :
+            View(std::move(position), Vector3f::zero(), Vector3f::one(), 45.f, 4.f / 3.f, 0.1f, 100.f)
     {}
+
+    View::View(Vector3f position, Vector3f rotation, Vector3f scale, f32 fov, f32 ratio, f32 near, f32 far) :
+            m_position(std::move(position)),
+            m_rotation(std::move(rotation)),
+            m_scale   (std::move(scale)),
+            m_fov     (fov),
+            m_ratio   (ratio),
+            m_near    (near),
+            m_far     (far)
+    {
+        look_at(Vector3f::zero());
+        update_projection();
+    }
 
     void View::set_fov(const f32 fov) {
         m_fov = fov;

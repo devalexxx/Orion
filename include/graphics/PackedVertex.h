@@ -19,10 +19,10 @@ namespace orion {
         Vector3f normal {};
         Vector2f uv     {};
 
-        explicit PackedVertex(Ref<Vector3f> position);
-        PackedVertex(Ref<Vector3f> position, Ref<Vector3f> normal);
-        PackedVertex(Ref<Vector3f> position, Ref<Vector2f> uv);
-        PackedVertex(Ref<Vector3f> position, Ref<Vector2f> uv, Ref<Vector3f> normal);
+        explicit PackedVertex(Vector3f position);
+        PackedVertex(Vector3f position, Vector3f normal);
+        PackedVertex(Vector3f position, Vector2f uv);
+        PackedVertex(Vector3f position, Vector2f uv, Vector3f normal);
 
         friend inline bool operator==(Ref<PackedVertex> lhs, Ref<PackedVertex> rhs) {
             return rhs.position == lhs.position && rhs.normal == lhs.normal && rhs.uv == lhs.uv;

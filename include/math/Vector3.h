@@ -20,14 +20,12 @@ namespace orion {
         static const Vector<3, T> FORWARD;
         static const Vector<3, T> BACK;
 
-        static u32 length();
-
         Vector() = default;
         Vector(T x, T y, T z);
         Vector(Ref<Vector<2, T>> v, T z);
         explicit Vector(T value);
         explicit Vector(Ref<Vector<4, T>> v);
-        explicit Vector(Ref<std::array<T, 3>> a);
+        explicit Vector(std::array<T, 3> a);
 
         T get_x() const;
         T get_y() const;
@@ -61,10 +59,10 @@ namespace orion {
     const Vector<3, T> Vector<3, T>::BACK = Vector<3, T>(0, 0, -1);
 
     template<typename T>
-    Vector<3, T>::Vector(T x, T y, T z) : VectorBase<3, T>({x, y, z}) {}
+    Vector<3, T>::Vector(T x, T y, T z) : VectorBase<3, T>({std::move(x), std::move(y), std::move(z)}) {}
 
     template<typename T>
-    Vector<3, T>::Vector(Ref<Vector<2, T>> v, T z) : VectorBase<3, T>({v[0], v[1], z}) {}
+    Vector<3, T>::Vector(Ref<Vector<2, T>> v, T z) : VectorBase<3, T>({v[0], v[1], std::move(z)}) {}
 
     template<typename T>
     Vector<3, T>::Vector(T value) : VectorBase<3, T>({value, value, value}) {}
@@ -73,7 +71,7 @@ namespace orion {
     Vector<3, T>::Vector(Ref<Vector<4, T>> v) : VectorBase<3, T>({v[0], v[1], v[2]}) {}
 
     template<typename T>
-    Vector<3, T>::Vector(Ref<std::array<T, 3>> a) : VectorBase<3, T>(a) {}
+    Vector<3, T>::Vector(std::array<T, 3> a) : VectorBase<3, T>(std::move(a)) {}
 
     template<typename T>
     T Vector<3, T>::get_x() const {

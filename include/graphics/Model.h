@@ -23,7 +23,7 @@ namespace orion {
         explicit Model(PackedVertexContainer packed_vertices);
         Model(PackedVertexContainer packed_vertices, IndexContainer indices);
 
-        std::shared_ptr<Mesh> get_mesh() const;
+        [[nodiscard]] std::shared_ptr<Mesh> get_mesh() const;
 
     private:
         PackedVertexContainer m_packed_vertices;

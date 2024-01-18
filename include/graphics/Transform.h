@@ -15,11 +15,11 @@ namespace orion {
     class Transform {
     public:
         Transform();
-        Transform(Ref<Vector3f> position, Ref<Vector3f> rotation, Ref<Vector3f> scale);
+        Transform(Vector3f position, Vector3f rotation, Vector3f scale);
 
-        void set_position(Ref<Vector3f> position);
-        void set_rotation(Ref<Vector3f> rotation);
-        void set_scale   (Ref<Vector3f> scale);
+        void set_position(Vector3f position);
+        void set_rotation(Vector3f rotation);
+        void set_scale   (Vector3f scale);
 
         [[nodiscard]] Ref<Vector3f> get_position() const;
         [[nodiscard]] Ref<Vector3f> get_rotation() const;

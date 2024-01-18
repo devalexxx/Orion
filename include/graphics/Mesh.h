@@ -19,7 +19,6 @@ namespace orion {
 
         static std::shared_ptr<Mesh> create(Ref<PackedVertexContainer> vertices);
         static std::shared_ptr<Mesh> create(Ref<PackedVertexContainer> vertices, Ref<IndexContainer> indices);
-        static std::shared_ptr<Mesh> create(Ref<Pair<PackedVertexContainer, IndexContainer>> indexed);
 
         RefMut<VertexArray> get_vao();
 

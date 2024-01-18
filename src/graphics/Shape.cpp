@@ -54,8 +54,8 @@ namespace orion {
         m_context.set_shader(m_shader);
     }
 
-    void Shape::set_color(Ref<Color> color) {
-        m_color = color;
+    void Shape::set_color(Color color) {
+        m_color = std::move(color);
     }
 
     void Shape::set_color(std::vector<Color> color) {

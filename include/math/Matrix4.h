@@ -29,10 +29,10 @@ namespace orion {
     using Matrix4d = Matrix<4, 4, f64>;
 
     template<typename T>
-    Matrix<4, 4, T>::Matrix(T value) : MatrixBase<4, 4, T>(value) {}
+    Matrix<4, 4, T>::Matrix(T value) : MatrixBase<4, 4, T>(std::move(value)) {}
 
     template<typename T>
-    Matrix<4, 4, T>::Matrix(std::array<T, 16> array) : MatrixBase<4, 4, T>(array) {}
+    Matrix<4, 4, T>::Matrix(std::array<T, 16> array) : MatrixBase<4, 4, T>(std::move(array)) {}
 
 } // orion
 

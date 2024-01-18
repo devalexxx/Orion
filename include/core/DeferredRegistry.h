@@ -32,18 +32,18 @@ namespace orion {
     public:
         using Initializer = std::function<void(RefMut<DeferredRegistry<T>>)>;
 
-        explicit DeferredRegistry(Ref<std::string> category);
-        DeferredRegistry(Ref<std::string> category, Initializer&& initializer);
+        explicit DeferredRegistry(std::string category);
+        DeferredRegistry(std::string category, Initializer&& initializer);
 
         void load () override;
         void reset() override;
 
-        std::shared_ptr<T> add(Ref<std::string> name, std::shared_ptr<T> ptr);
+        std::shared_ptr<T> add(std::string name, std::shared_ptr<T> ptr);
 
-        std::shared_ptr<T> remove(const std::string& name);
-        std::shared_ptr<T> get   (const std::string& name) const;
+        std::shared_ptr<T> remove(Ref<std::string> name);
+        std::shared_ptr<T> get   (Ref<std::string> name) const;
 
-        [[nodiscard]] bool exist(const std::string& name) const;
+        [[nodiscard]] bool exist(Ref<std::string> name) const;
 
         [[nodiscard]] bool is_loaded() const;
     private:
@@ -55,24 +55,24 @@ namespace orion {
     };
 
     template<typename T>
-    DeferredRegistry<T>::DeferredRegistry(Ref<std::string> category, DeferredRegistry::Initializer &&initializer) : m_initializer(initializer), m_is_loaded(false) {
+    DeferredRegistry<T>::DeferredRegistry(std::string category, DeferredRegistry::Initializer &&initializer) : m_initializer(initializer), m_is_loaded(false) {
         auto it = IDeferredRegistry::REGISTRIES.find(category);
         if (it != IDeferredRegistry::REGISTRIES.cend()) {
             it->second.push_back(this);
         }
         else {
-            IDeferredRegistry::REGISTRIES.emplace(category, std::vector<PtrMut<IDeferredRegistry>> {{this}});
+            IDeferredRegistry::REGISTRIES.emplace(std::move(category), std::vector<PtrMut<IDeferredRegistry>> {{this}});
         }
     }
 
     template<typename T>
-    DeferredRegistry<T>::DeferredRegistry(Ref<std::string> category) : m_is_loaded(false) {
+    DeferredRegistry<T>::DeferredRegistry(std::string category) : m_is_loaded(false) {
         auto it = IDeferredRegistry::REGISTRIES.find(category);
         if (it != IDeferredRegistry::REGISTRIES.cend()) {
             it->second.push_back(this);
         }
         else {
-            IDeferredRegistry::REGISTRIES.emplace(category, std::vector<PtrMut<IDeferredRegistry>> {{this}});
+            IDeferredRegistry::REGISTRIES.emplace(std::move(category), std::vector<PtrMut<IDeferredRegistry>> {{this}});
         }
     }
 
@@ -96,10 +96,10 @@ namespace orion {
     }
 
     template<typename T>
-    std::shared_ptr<T> DeferredRegistry<T>::add(Ref<std::string> name, std::shared_ptr<T> ptr) {
+    std::shared_ptr<T> DeferredRegistry<T>::add(std::string name, std::shared_ptr<T> ptr) {
         if (!m_indexer.exist(name)) {
             m_storage.push_back(ptr);
-            m_indexer.emplace(name, m_storage.size() - 1);
+            m_indexer.emplace(std::move(name), m_storage.size() - 1);
         }
         else
             fmt::print(stderr, "Could not add object {} to register because this name is already register\n", name);
@@ -107,7 +107,7 @@ namespace orion {
     }
 
     template<typename T>
-    std::shared_ptr<T> DeferredRegistry<T>::remove(const std::string &name) {
+    std::shared_ptr<T> DeferredRegistry<T>::remove(Ref<std::string> name) {
         auto opt = m_indexer.get_by_key(name);
         if (opt != std::nullopt) {
             auto ret = m_storage[opt->second];
@@ -127,7 +127,7 @@ namespace orion {
     }
 
     template<typename T>
-    std::shared_ptr<T> DeferredRegistry<T>::get(const std::string &name) const {
+    std::shared_ptr<T> DeferredRegistry<T>::get(Ref<std::string> name) const {
         auto opt = m_indexer.get_by_key(name);
         if (opt != std::nullopt)
             return m_storage[opt->second];
@@ -138,7 +138,7 @@ namespace orion {
     }
 
     template<typename T>
-    bool DeferredRegistry<T>::exist(const std::string &name) const {
+    bool DeferredRegistry<T>::exist(Ref<std::string> name) const {
         return m_indexer.get_by_key(name) != std::nullopt;
     }
 

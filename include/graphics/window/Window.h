@@ -30,7 +30,7 @@ namespace orion {
             public RenderTarget
     {
     public:
-        static std::shared_ptr<Window> create(const std::string& name);
+        static std::shared_ptr<Window> create(std::string name);
 
         void display();
 
@@ -38,7 +38,7 @@ namespace orion {
 
         void set_event_manager(Ref<std::shared_ptr<EventManager>> event_manager);
     private:
-        explicit Window(Ref<std::string> name);
+        explicit Window(std::string name);
 
         std::weak_ptr<EventManager> m_event_manager;
 

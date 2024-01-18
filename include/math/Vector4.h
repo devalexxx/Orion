@@ -33,10 +33,10 @@ namespace orion {
     using Vector4d = Vector4<f64>;
 
     template<typename T>
-    Vector<4, T>::Vector(T x, T y, T z, T w) : VectorBase<4, T>({x, y, z, w}) {}
+    Vector<4, T>::Vector(T x, T y, T z, T w) : VectorBase<4, T>({std::move(x), std::move(y), std::move(z), std::move(w)}) {}
 
     template<typename T>
-    Vector<4, T>::Vector(Ref<Vector<3, T>> v, T w) : VectorBase<4, T>({v[0], v[1], v[2], w}) {}
+    Vector<4, T>::Vector(Ref<Vector<3, T>> v, T w) : VectorBase<4, T>({v[0], v[1], v[2], std::move(w)}) {}
 
     template<typename T>
     Vector<4, T>::Vector(T value) : VectorBase<4, T>({value, value, value, value}) {}

@@ -15,8 +15,8 @@ namespace orion {
         return static_cast<ClearMask>(EnumValue<ClearMask>(lhs) | EnumValue<ClearMask> (rhs));
     }
 
-    std::shared_ptr<Window> Window::create(Ref<std::string> name) {
-        auto p = std::shared_ptr<Window>(new Window(name));
+    std::shared_ptr<Window> Window::create(std::string name) {
+        auto p = std::shared_ptr<Window>(new Window(std::move(name)));
         return std::move(p);
     }
 
@@ -33,8 +33,8 @@ namespace orion {
         glClear(std::underlying_type<ClearMask>::type (mask));
     }
 
-    Window::Window(Ref<std::string> name)
-        : GLFWWindowWrapper(1024, 768, name, nullptr, nullptr)
+    Window::Window(std::string name)
+        : GLFWWindowWrapper(1024, 768, std::move(name), nullptr, nullptr)
     {
         glfwSetErrorCallback    (WindowEventDispatcher::error_callback);
         glfwSetJoystickCallback (WindowEventDispatcher::joystick_callback);

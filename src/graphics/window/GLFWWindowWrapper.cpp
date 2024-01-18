@@ -62,8 +62,8 @@ namespace orion {
         glfwSetWindowShouldClose(m_window, GLFW_FALSE);
     }
 
-    void GLFWWindowWrapper::set_name(Ref<std::string> name) {
-        m_name = name;
+    void GLFWWindowWrapper::set_name(std::string name) {
+        m_name = std::move(name);
         glfwSetWindowTitle(m_window, m_name.c_str());
     }
 

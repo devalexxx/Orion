@@ -15,6 +15,10 @@ namespace orion {
             [](RefMut<DeferredRegistry<Mesh>> registry) {
                 using namespace generator;
 
+                auto mesh_wrapper = [](Ref<Pair<PackedVertexContainer, IndexContainer>> p) {
+                    return std::move(Mesh::create(p.first, p.second));
+                };
+
                 registry.add(
                     mesh_name_builder(Primitive::TRIANGLE, false),
                     Mesh::create(triangle_vertices())
@@ -25,27 +29,27 @@ namespace orion {
                 );
                 registry.add(
                     mesh_name_builder(Primitive::CIRCLE, false, "128"),
-                    Mesh::create(index(circle_vertices(128)))
+                    mesh_wrapper(index(circle_vertices(128)))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::CIRCLE, true, "128"),
-                    Mesh::create(index(circle_vertices(128)))
+                    mesh_wrapper(index(circle_vertices(128)))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::CUBE, false),
-                    Mesh::create(index(cube_vertices()))
+                    mesh_wrapper(index(cube_vertices()))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::CUBE, true),
-                    Mesh::create(index(cube_vertices()))
+                    mesh_wrapper(index(cube_vertices()))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::SPHERE, false, "4"),
-                    Mesh::create(index(sphere_vertices(4)))
+                    mesh_wrapper(index(sphere_vertices(4)))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::SPHERE, true, "4"),
-                    Mesh::create(index(sphere_vertices(4)))
+                    mesh_wrapper(index(sphere_vertices(4)))
                 );
             }
     );
@@ -69,10 +73,6 @@ namespace orion {
         ibo.set_data(indices);
 
         return std::move(ret);
-    }
-
-    std::shared_ptr<Mesh> Mesh::create(Ref<Pair<PackedVertexContainer, IndexContainer>> indexed) {
-        return create(indexed.first, indexed.second);
     }
 
     RefMut<VertexArray> Mesh::get_vao() {

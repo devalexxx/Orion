@@ -12,8 +12,8 @@ namespace orion {
     class View {
     public:
         View();
-        explicit View(Ref<Vector3f> position);
-        View(Ref<Vector3f> position, Ref<Vector3f> rotation, Ref<Vector3f> scale, f32 fov, f32 ratio, f32 near, f32 far);
+        explicit View(Vector3f position);
+        View(Vector3f position, Vector3f rotation, Vector3f scale, f32 fov, f32 ratio, f32 near, f32 far);
 
         void set_fov  (f32 fov);
         void set_ratio(f32 ratio);

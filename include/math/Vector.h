@@ -76,7 +76,7 @@ namespace orion {
     protected:
         VectorBase() = default;
         explicit VectorBase(std::array<T, S> data);
-        T m_data[S] {};
+        std::array<T, S> m_data {};
     };
 
     template<size_t S, typename T>
@@ -212,9 +212,7 @@ namespace orion {
 
     template<size_t S, typename T>
     VectorBase<S, T>::VectorBase(std::array<T, S> data) {
-        for (int i = 0; i < S; ++i) {
-            m_data[i] = data[i];
-        }
+        m_data = std::move(data);
     }
 
 } // orion

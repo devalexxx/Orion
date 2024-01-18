@@ -23,7 +23,7 @@ namespace orion {
         void close();
         void open();
 
-        void set_name(Ref<std::string> name);
+        void set_name(std::string name);
         [[nodiscard]] Ref<std::string> get_name() const;
 
         void set_icon(int t_count, Ptr<GLFWimage> images);

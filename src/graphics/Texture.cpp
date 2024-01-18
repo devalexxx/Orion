@@ -34,7 +34,7 @@ namespace orion {
     void Texture::set_data(u32 width, u32 height, Ptr<u8> data) const {
         bind();
 
-        gl_check(glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, static_cast<i32>(width), static_cast<i32>(height), 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
+        gl_check(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, static_cast<i32>(width), static_cast<i32>(height), 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
 
         gl_check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
         gl_check(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));

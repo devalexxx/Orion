@@ -41,7 +41,7 @@ namespace orion {
                 EnumValue<DrawMode>(mode),
                 count,
                 GL_UNSIGNED_SHORT,
-                reinterpret_cast<const void *>(first))
+                reinterpret_cast<const void*>(first))
             );
         }
         else {
