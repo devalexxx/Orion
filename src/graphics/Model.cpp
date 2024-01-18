@@ -35,7 +35,7 @@ namespace orion {
                     if (sscanf(line.c_str(), "v %f %f %f\n", &x, &y, &z) == 3)
                         tmp_vertex.emplace_back(x, y, z);
                     else {
-                        fmt::print(stderr, "Failed to retrieve vertex from {}\n", path.c_str());
+                        fmt::print(stderr, "Failed to retrieve vertex from {}\n", fmt::streamed(path));
                         break;
                     }
                 }
@@ -44,7 +44,7 @@ namespace orion {
                     if (sscanf(line.c_str(), "vn %f %f %f\n", &x, &y, &z) == 3)
                         tmp_normal.emplace_back(x, y, z);
                     else {
-                        fmt::print(stderr, "Failed to retrieve normal from {}\n", path.c_str());
+                        fmt::print(stderr, "Failed to retrieve normal from {}\n", fmt::streamed(path));
                         break;
                     }
                 }
@@ -53,7 +53,7 @@ namespace orion {
                     if (sscanf(line.c_str(), "vt %f %f\n", &x, &y) == 2)
                         tmp_uv.emplace_back(x, y);
                     else {
-                        fmt::print(stderr, "Failed to retrieve uv from {}\n", path.c_str());
+                        fmt::print(stderr, "Failed to retrieve uv from {}\n", fmt::streamed(path));
                         break;
                     }
                 }
@@ -65,7 +65,7 @@ namespace orion {
                         tmp_index.emplace_back(f, h, i);
                     }
                     else {
-                        fmt::print(stderr, "Failed to retrieve uv from {}\nIt seems your object file is not triangulated.", path.c_str());
+                        fmt::print(stderr, "Failed to retrieve uv from {}\nIt seems your object file is not triangulated.", fmt::streamed(path));
                         break;
                     }
                 }
@@ -74,7 +74,7 @@ namespace orion {
             stream.close();
         }
         else
-            fmt::print(stderr, "Unable to open {}. Are you in the right directory ?\n", path.c_str());
+            fmt::print(stderr, "Unable to open {}. Are you in the right directory ?\n", fmt::streamed(path));
 
         PackedVertexContainer packed_vertices;
         packed_vertices.reserve(tmp_index.size());
