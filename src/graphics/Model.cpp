@@ -74,7 +74,7 @@ namespace orion {
             stream.close();
         }
         else
-            fmt::print(stderr, "Unable to open {}. Are you in the right directory ?\n", fmt::streamed(path));
+            fmt::print(stderr, "Unable to open {}. Are you in the right directory ?\n", path.c_str());
 
         PackedVertexContainer packed_vertices;
         packed_vertices.reserve(tmp_index.size());

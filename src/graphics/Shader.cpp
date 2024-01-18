@@ -43,7 +43,7 @@ namespace orion {
             v_stream.close();
         }
         else
-            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", fmt::streamed(vertex));
+            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", vertex.c_str());
 
         std::string     f_code;
         std::ifstream   f_stream(fragment.c_str(), std::ios::in);
@@ -54,7 +54,7 @@ namespace orion {
             f_stream.close();
         }
         else
-            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", fmt::streamed(fragment));
+            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", fragment.c_str());
 
         return std::shared_ptr<Shader>(new Shader(v_code, f_code));
     }
