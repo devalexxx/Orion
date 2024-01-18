@@ -12,7 +12,7 @@
 namespace orion {
 
     ClearMask operator|(ClearMask lhs, ClearMask rhs) {
-        return (ClearMask)(std::underlying_type<ClearMask>::type (lhs) | std::underlying_type<ClearMask>::type (rhs));
+        return static_cast<ClearMask>(EnumValue<ClearMask>(lhs) | EnumValue<ClearMask> (rhs));
     }
 
     std::shared_ptr<Window> Window::create(Ref<std::string> name) {
@@ -33,7 +33,9 @@ namespace orion {
         glClear(std::underlying_type<ClearMask>::type (mask));
     }
 
-    Window::Window(Ref<std::string> name) : GLFWWindowWrapper(1024, 768, name, nullptr, nullptr) {
+    Window::Window(Ref<std::string> name)
+        : GLFWWindowWrapper(1024, 768, name, nullptr, nullptr)
+    {
         glfwSetErrorCallback    (WindowEventDispatcher::error_callback);
         glfwSetJoystickCallback (WindowEventDispatcher::joystick_callback);
         glfwSetMonitorCallback  (WindowEventDispatcher::monitor_callback);
@@ -61,6 +63,9 @@ namespace orion {
         glfwSetDropCallback                 (m_window, WindowEventDispatcher::drop_callback);
 
         set_user_pointer(this);
+
+        auto vm = glfwGetVideoMode(get_monitor());
+        m_view.set_ratio((f32) vm->width / (f32) vm->height);
     }
 
     void Window::set_event_manager(Ref<std::shared_ptr<EventManager>> event_manager) {

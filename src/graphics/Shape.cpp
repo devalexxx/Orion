@@ -32,9 +32,6 @@ namespace orion {
 
             if (m_shader->has_attrib("uv"))
                 m_shader->set_float_attrib_pointer("uv",       2, 8, 6);
-
-            VertexBuffer::unbind();
-            VertexArray ::unbind();
         }
     }
 

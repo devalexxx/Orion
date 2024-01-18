@@ -15,8 +15,6 @@ namespace orion {
 
     class Mesh : public Drawable {
     public:
-        using Initializer = std::function<void(Ref<Shader>)>;
-
         static DeferredRegistry<Mesh> REGISTRY;
 
         static std::shared_ptr<Mesh> create(Ref<PackedVertexContainer> vertices);

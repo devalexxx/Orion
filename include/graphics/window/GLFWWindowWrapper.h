@@ -70,12 +70,15 @@ namespace orion {
         static void wait_events_timeout(double timeout);
         static void post_empty_event();
 
+        static void enable_vsync ();
+        static void disable_vsync();
+
     protected:
         PtrMut<GLFWwindow> m_window;
         std::string        m_name;
 
     private:
-        static int  count;
+        static int  COUNT;
         static void initialize();
     };
 }

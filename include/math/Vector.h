@@ -25,8 +25,12 @@ namespace orion {
     class VectorBase {
         static_assert(std::is_floating_point_v<T> || std::is_integral_v<T>, "Vector must use integral or floating point type.");
     public:
+        using value_type = T;
+
         static Vector<S, T> zero();
         static Vector<S, T> one();
+
+        static constexpr size_t size();
 
         RefMut<T> operator[](size_t index);
         Ref<T>    operator[](size_t index) const;
@@ -83,6 +87,11 @@ namespace orion {
     template<size_t S, typename T>
     Vector<S, T> VectorBase<S, T>::one() {
         return Vector<S, T>(1);
+    }
+
+    template<size_t S, typename T>
+    constexpr size_t VectorBase<S, T>::size() {
+        return S;
     }
 
     template<size_t S, typename T>

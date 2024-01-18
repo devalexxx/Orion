@@ -24,6 +24,7 @@
 #include "graphics/Mesh.h"
 #include "graphics/Primitive.h"
 #include "graphics/Shape.h"
+#include "graphics/Model.h"
 
 #include "graphics/opengl/OpenGlApi.h"
 #include "graphics/opengl/OpenGlContext.h"

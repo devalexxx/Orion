@@ -26,6 +26,12 @@ namespace orion::resource {
         Path of(Ref<String> filename);
     }
 
+    namespace model {
+        static Path DIRECTORY = WORKING_DIRECTORY / "model";
+
+        Path of(Ref<String> filename);
+    }
+
 }
 
 // orion

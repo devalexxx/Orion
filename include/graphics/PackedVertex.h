@@ -9,6 +9,8 @@
 
 #include "omath.h"
 #include "core/type.h"
+#include "math/Vector.h"
+
 
 namespace orion {
 

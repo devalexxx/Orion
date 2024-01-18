@@ -38,7 +38,7 @@ namespace orion {
             m_index_buffer->bind();
 
             gl_check(glDrawElements(
-                std::underlying_type<DrawMode>::type(mode),
+                EnumValue<DrawMode>(mode),
                 count,
                 GL_UNSIGNED_SHORT,
                 reinterpret_cast<const void *>(first))
@@ -46,7 +46,7 @@ namespace orion {
         }
         else {
             gl_check(glDrawArrays(
-                std::underlying_type<DrawMode>::type(mode),
+                EnumValue<DrawMode>(mode),
                 first,
                 count
             ));

@@ -24,8 +24,11 @@ namespace orion {
     VertexBuffer::VertexBuffer(VertexBuffer::Type type) : VertexBuffer(type, Usage::STATIC) {}
 
     void VertexBuffer::unbind() {
-        gl_check(glBindBuffer(EnumValue<Type>(Type::ARRAY), 0));
-        gl_check(glBindBuffer(EnumValue<Type>(Type::ELEMENT), 0));
+        if (CURRENT_BOUND != 0) {
+            gl_check(glBindBuffer(EnumValue<Type>(Type::ARRAY), 0));
+            gl_check(glBindBuffer(EnumValue<Type>(Type::ELEMENT), 0));
+            CURRENT_BOUND = 0;
+        }
     }
 
     VertexBuffer::~VertexBuffer() {

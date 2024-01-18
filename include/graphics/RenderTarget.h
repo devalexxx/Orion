@@ -25,7 +25,7 @@ namespace orion {
     protected:
         bool m_frame_swap {false};
 
-    private:
+    protected:
         View m_view {};
     };
 

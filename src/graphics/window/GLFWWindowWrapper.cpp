@@ -12,10 +12,10 @@ namespace orion {
     GLFWWindowWrapper::GLFWWindowWrapper(int width, int height, Ref<std::string> name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share) :
         m_name(name)
     {
-        if (count == 0)
+        if (COUNT == 0)
             initialize();
 
-        m_window = glfwCreateWindow(width, height, name.c_str(), monitor, share);
+        m_window = glfwCreateWindow(width, height, name.c_str(), monitor ? monitor : glfwGetPrimaryMonitor(), share);
         if (!m_window) {
             fmt::print(stderr, "Window creation failed.\n");
             exit(EXIT_FAILURE);
@@ -23,22 +23,22 @@ namespace orion {
 
         OpenGlContext::set_current(m_window);
 
-        count += 1;
+        COUNT += 1;
     }
 
     GLFWWindowWrapper::~GLFWWindowWrapper() {
         OpenGlContext::on_any_destroy(m_window);
         glfwDestroyWindow(m_window);
-        count -= 1;
-        if (count == 0)
+        COUNT -= 1;
+        if (COUNT == 0)
             glfwTerminate();
     }
 
-    int GLFWWindowWrapper::count = 0;
+    int GLFWWindowWrapper::COUNT = 0;
 
     void GLFWWindowWrapper::initialize() {
         if (!glfwInit()) {
-            fmt::print(stderr, "Could not initialize GLFW Library.\n");
+            fmt::print(stderr, "Could not initialize GLFW.\n");
             exit(EXIT_FAILURE);
         }
 
@@ -189,18 +189,44 @@ namespace orion {
     }
 
     void GLFWWindowWrapper::poll_events() {
-        glfwPollEvents();
+        if (COUNT > 0)
+            glfwPollEvents();
+        else
+            fmt::print(stderr, "You can't poll event before initialize GLFW.");
     }
 
     void GLFWWindowWrapper::wait_events() {
-        glfwWaitEvents();
+        if (COUNT > 0)
+            glfwWaitEvents();
+        else
+            fmt::print(stderr, "You can't wait for event before initialize GLFW.");
     }
 
     void GLFWWindowWrapper::wait_events_timeout(double timeout) {
-        glfwWaitEventsTimeout(timeout);
+        if (COUNT > 0)
+            glfwWaitEventsTimeout(timeout);
+        else
+            fmt::print(stderr, "You can't set event timeout before initialize GLFW.");
     }
 
     void GLFWWindowWrapper::post_empty_event() {
-        glfwPostEmptyEvent();
+        if (COUNT > 0)
+            glfwPostEmptyEvent();
+        else
+            fmt::print(stderr, "You can't post empty event before initialize GLFW.");
+    }
+
+    void GLFWWindowWrapper::enable_vsync() {
+        if (OpenGlContext::is_any_current())
+            glfwSwapInterval(1);
+        else
+            fmt::print(stderr, "You can't enable vsync on non existing context.");
+    }
+
+    void GLFWWindowWrapper::disable_vsync() {
+        if (OpenGlContext::is_any_current())
+            glfwSwapInterval(0);
+        else
+            fmt::print(stderr, "You can't enable vsync on non existing context.");
     }
 }

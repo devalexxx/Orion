@@ -30,9 +30,7 @@ namespace orion {
 
         static u32 CURRENT_USE;
 
-        static std::shared_ptr<Shader> load_from_file(Ptr<char> vertex, Ptr<char> fragment);
         static std::shared_ptr<Shader> load_from_file(Ref<Path> vertex, Ref<Path> fragment);
-        static std::shared_ptr<Shader> load_from_code(Ref<std::string> vertex, Ref<std::string> fragment);
 
         static void unbind();
 

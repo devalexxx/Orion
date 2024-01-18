@@ -20,28 +20,28 @@ namespace orion {
                     Mesh::create(triangle_vertices())
                 );
                 registry.add(
-                        mesh_name_builder(Primitive::SQUARE, false),
+                    mesh_name_builder(Primitive::SQUARE, false),
                     Mesh::create(square_vertices())
                 );
                 registry.add(
-                        mesh_name_builder(Primitive::CIRCLE, false, "128"),
-                        Mesh::create(index(circle_vertices(128)))
+                    mesh_name_builder(Primitive::CIRCLE, false, "128"),
+                    Mesh::create(index(circle_vertices(128)))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::CIRCLE, true, "128"),
                     Mesh::create(index(circle_vertices(128)))
                 );
                 registry.add(
-                        mesh_name_builder(Primitive::CUBE, false),
-                        Mesh::create(index(cube_vertices()))
+                    mesh_name_builder(Primitive::CUBE, false),
+                    Mesh::create(index(cube_vertices()))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::CUBE, true),
                     Mesh::create(index(cube_vertices()))
                 );
                 registry.add(
-                        mesh_name_builder(Primitive::SPHERE, false, "4"),
-                        Mesh::create(index(sphere_vertices(4)))
+                    mesh_name_builder(Primitive::SPHERE, false, "4"),
+                    Mesh::create(index(sphere_vertices(4)))
                 );
                 registry.add(
                     mesh_name_builder(Primitive::SPHERE, true, "4"),
@@ -56,9 +56,6 @@ namespace orion {
         auto& vbo = ret->m_vao.add_buffer(VertexBuffer::Type::ARRAY);
         vbo.set_data(vertices);
 
-        VertexBuffer::unbind();
-        VertexArray ::unbind();
-
         return std::move(ret);
     }
 
@@ -70,9 +67,6 @@ namespace orion {
 
         auto& ibo = ret->m_vao.add_buffer(VertexBuffer::Type::ELEMENT);
         ibo.set_data(indices);
-
-        VertexBuffer::unbind();
-        VertexArray ::unbind();
 
         return std::move(ret);
     }

@@ -17,4 +17,8 @@ namespace orion {
     Path resource::shader::of(Ref<String> filename) {
         return DIRECTORY / filename;
     }
+
+    Path resource::model::of(Ref<String> filename) {
+        return DIRECTORY / filename;
+    }
 } // orion

@@ -15,20 +15,27 @@
 #include <iostream>
 #include <vector>
 #include <fmt/core.h>
+#include <fmt/ostream.h>
 
 namespace orion {
 
     DeferredRegistry<Shader> Shader::REGISTRY = DeferredRegistry<Shader>("opengl",
-            [](RefMut<DeferredRegistry<Shader>> r) {
-                r.add("shape",Shader::load_from_file(resource::shader::of("shape_vertex.glsl"),resource::shader::of("shape_fragment.glsl")));
+            [](RefMut<DeferredRegistry<Shader>> registry) {
+                registry.add(
+                    "shape",
+                    Shader::load_from_file(
+                        resource::shader::of("shape_vertex.glsl"),
+                        resource::shader::of("shape_fragment.glsl")
+                    )
+                );
             }
     );
 
     u32 Shader::CURRENT_USE = 0;
 
-    std::shared_ptr<Shader> Shader::load_from_file(Ptr<char> vertex, Ptr<char> fragment) {
+    std::shared_ptr<Shader> Shader::load_from_file(Ref<Path> vertex, Ref<Path> fragment) {
         std::string     v_code;
-        std::ifstream   v_stream(vertex, std::ios::in);
+        std::ifstream   v_stream(vertex.c_str(), std::ios::in);
         if(v_stream.is_open()) {
             std::stringstream v_sstr;
             v_sstr << v_stream.rdbuf();
@@ -36,10 +43,10 @@ namespace orion {
             v_stream.close();
         }
         else
-            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", vertex);
+            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", fmt::streamed(vertex));
 
         std::string     f_code;
-        std::ifstream   f_stream(fragment, std::ios::in);
+        std::ifstream   f_stream(fragment.c_str(), std::ios::in);
         if(f_stream.is_open()) {
             std::stringstream f_sstr;
             f_sstr << f_stream.rdbuf();
@@ -47,21 +54,16 @@ namespace orion {
             f_stream.close();
         }
         else
-            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", fragment);
+            fmt::print(stderr, "Impossible to open {}. Are you in the right directory ? Don't forget to read the FAQ !\n", fmt::streamed(fragment));
 
         return std::shared_ptr<Shader>(new Shader(v_code, f_code));
     }
 
-    std::shared_ptr<Shader> Shader::load_from_file(Ref<Path> vertex, Ref<Path> fragment) {
-        return load_from_file(vertex.c_str(), fragment.c_str());
-    }
-
-    std::shared_ptr<Shader> Shader::load_from_code(Ref<std::string> vertex, Ref<std::string> fragment) {
-        return std::shared_ptr<Shader>(new Shader(vertex, fragment));
-    }
-
     void Shader::unbind() {
-        gl_check(glUseProgram(0));
+        if (CURRENT_USE != 0) {
+            gl_check(glUseProgram(0));
+            CURRENT_USE = 0;
+        }
     }
 
     Shader::~Shader() {
@@ -73,6 +75,53 @@ namespace orion {
             gl_check(glUseProgram(m_id));
             CURRENT_USE = m_id;
         }
+    }
+
+    bool Shader::has_attrib(Ptr<char> name) const {
+        return m_attrib.contains(name);
+    }
+
+    bool Shader::has_uniform(Ptr<char> name) const {
+        return m_uniform.contains(name);
+    }
+
+    int Shader::get_uniform_location(Ptr<char> name) const {
+        if (!has_uniform(name)) {
+            fmt::print(stderr, "Shader does not contain uniform '{}'\n", name);
+            return -1;
+        }
+        else
+            return glGetUniformLocation(m_id, name);
+    }
+
+    int Shader::get_attrib_location(Ptr<char> name) const {
+        if (!has_attrib(name)) {
+            fmt::print(stderr, "Shader does not contain attribute '{}'\n", name);
+            return -1;
+        }
+        else
+            return glGetAttribLocation(m_id, name);
+    }
+
+    void Shader::set_uniform(Ptr<char> name, int value) const {
+        use();
+        gl_check(glUniform1i(get_uniform_location(name), value));
+    }
+
+    void Shader::set_uniform(Ptr<char> name, Ref<Matrix4f> value) const {
+        use();
+        gl_check(glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, value.data()));
+    }
+
+    void Shader::set_uniform(Ptr<char> name, Ref<Color> value) const {
+        use();
+        gl_check(glUniform4fv(get_uniform_location(name), 1, &value[0]));
+    }
+
+    void Shader::set_float_attrib_pointer(Ptr<char> name, u32 size, u32 stride, u32 offset) const {
+        use();
+        gl_check(glEnableVertexAttribArray(get_attrib_location(name)));
+        gl_check(glVertexAttribPointer(get_attrib_location(name), size,GL_FLOAT,GL_FALSE,stride * sizeof(f32),(void*)(offset * sizeof(f32))));
     }
 
     Shader::Shader(Ref<std::string> vertex, Ref<std::string> fragment) {
@@ -181,53 +230,6 @@ namespace orion {
             else
                 end = true;
         }
-    }
-
-    int Shader::get_uniform_location(Ptr<char> name) const {
-        if (!has_uniform(name)) {
-            fmt::print(stderr, "Shader does not contain uniform '{}'\n", name);
-            return -1;
-        }
-        else
-            return glGetUniformLocation(m_id, name);
-    }
-
-    int Shader::get_attrib_location(Ptr<char> name) const {
-        if (!has_attrib(name)) {
-            fmt::print(stderr, "Shader does not contain attribute '{}'\n", name);
-            return -1;
-        }
-        else
-            return glGetAttribLocation(m_id, name);
-    }
-
-    void Shader::set_uniform(Ptr<char> name, int value) const {
-        use();
-        gl_check(glUniform1i(get_uniform_location(name), value));
-    }
-
-    void Shader::set_uniform(Ptr<char> name, Ref<Matrix4f> value) const {
-        use();
-        gl_check(glUniformMatrix4fv(get_uniform_location(name), 1, GL_FALSE, value.data()));
-    }
-
-    void Shader::set_uniform(Ptr<char> name, Ref<Color> value) const {
-        use();
-        gl_check(glUniform4fv(get_uniform_location(name), 1, &value[0]));
-    }
-
-    void Shader::set_float_attrib_pointer(Ptr<char> name, u32 size, u32 stride, u32 offset) const {
-        use();
-        gl_check(glEnableVertexAttribArray(get_attrib_location(name)));
-        gl_check(glVertexAttribPointer(get_attrib_location(name), size,GL_FLOAT,GL_FALSE,stride * sizeof(f32),(void*)(offset * sizeof(f32))));
-    }
-
-    bool Shader::has_attrib(Ptr<char> name) const {
-        return m_attrib.contains(name);
-    }
-
-    bool Shader::has_uniform(Ptr<char> name) const {
-        return m_uniform.contains(name);
     }
 
 }

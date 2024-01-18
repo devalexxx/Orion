@@ -20,11 +20,14 @@ namespace orion {
         static const Vector<3, T> FORWARD;
         static const Vector<3, T> BACK;
 
+        static u32 length();
+
         Vector() = default;
         Vector(T x, T y, T z);
         Vector(Ref<Vector<2, T>> v, T z);
         explicit Vector(T value);
         explicit Vector(Ref<Vector<4, T>> v);
+        explicit Vector(Ref<std::array<T, 3>> a);
 
         T get_x() const;
         T get_y() const;
@@ -68,6 +71,9 @@ namespace orion {
 
     template<typename T>
     Vector<3, T>::Vector(Ref<Vector<4, T>> v) : VectorBase<3, T>({v[0], v[1], v[2]}) {}
+
+    template<typename T>
+    Vector<3, T>::Vector(Ref<std::array<T, 3>> a) : VectorBase<3, T>(a) {}
 
     template<typename T>
     T Vector<3, T>::get_x() const {

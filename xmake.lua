@@ -1,5 +1,5 @@
 
-local packages          = {"fmt", "stb", "glfw", "glew"}
+local packages          = {"glfw", "glew", "fmt", "stb"}
 local unittest_packages = {"doctest"}
 local sandbox_packages  = {"doctest"}
 
@@ -31,10 +31,8 @@ target("orion")
         add_packages(pkg, {public = true})
     end
 
-    add_rules("glsl", "texture")
+    add_rules("resource.shader", "resource.texture", "resource.model")
 
-    add_files("resource/**/*.glsl")
-    add_files("resource/**/*.png")
 target_end()
 
 if has_config("unittest") then

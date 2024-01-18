@@ -42,7 +42,7 @@ namespace orion {
                 }
             }
 
-            return std::make_pair(vert, indices);
+            return std::make_pair(std::move(vert), std::move(indices));
         }
 
         PackedVertexContainer triangle_vertices() {
