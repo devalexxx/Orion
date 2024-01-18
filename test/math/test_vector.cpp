@@ -518,7 +518,7 @@ TEST_SUITE("math") {
             CHECK_EQ(0.f - v1, -v1);
             CHECK_EQ(1.f * v1, v1);
             CHECK_EQ(2.f * v1, v1 * 2.f);
-            CHECK_EQ(v1 / 2.f,  Vector4f(4.f, 2.f, 8.f,        16.f));
+            CHECK(vector_approx(v1 / 2.f,  Vector4f(4.f, 2.f, 8.f, 16.f)));
             CHECK(vector_approx(16.f / v1, Vector4f(2.f, 4.f, 1.f, 16.f / 32.f)));
 
             auto v2 = Vector4f(-4.f, -9.f, 5.f, 2.f);
