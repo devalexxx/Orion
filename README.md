@@ -24,9 +24,9 @@ xmake
 ````
 
 ## Credits
-* [OpenGL](https://www.opengl.org)
 * [glfw](https://github.com/glfw/glfw.github.io)
 * [glew](https://github.com/nigels-com/glew)
 * [doctest](https://github.com/doctest/doctest)
 * [stb](https://github.com/nothings/stb)
+* [fmt](https://github.com/fmtlib/fmt)
 
