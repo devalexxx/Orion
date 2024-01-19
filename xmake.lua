@@ -11,6 +11,7 @@ includes("xmake/**.lua")
 option("unittest", {description = "Build unittest (xmake run unittest)",          default = false})
 option("examples", {description = "Build examples (xmake run <example_name>)",    default = false})
 option("sandbox",  {description = "Build dev sandbox (xmake run <sandbox_name>)", default = false})
+option("nogpu",    {description = "To run unittest without gpu",                  default = false})
 
 add_rules("mode.debug", "mode.release")
 
@@ -43,6 +44,10 @@ if has_config("unittest") then
         add_deps("orion")
         add_files("test/*.cpp")
         add_files("test/**/*.cpp")
+
+        if has_config("nogpu") then
+            remove_files("test/graphics/*.cpp")
+        end
 
         for _, pkg in ipairs(unittest_packages) do
             add_packages(pkg)
