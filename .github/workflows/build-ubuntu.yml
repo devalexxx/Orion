@@ -23,7 +23,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install mesam-common-dev
+          sudo apt-get -y install mesa-common-dev
 
       - name: Setup xmake
         uses: xmake-io/github-action-setup-xmake@v1
