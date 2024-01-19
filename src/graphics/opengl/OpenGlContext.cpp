@@ -25,9 +25,10 @@ namespace orion {
             if (!OpenGlApi::IS_LOADED)
                 OpenGlApi::load();
 
-            auto it = IDeferredRegistry::REGISTRIES.find("opengl");
-            if (it != IDeferredRegistry::REGISTRIES.cend()) {
-                for (auto registry: it->second) {
+            auto& registries = IDeferredRegistry::get_registries();
+            auto opengl_registries = registries.find("opengl");
+            if (opengl_registries != registries.cend()) {
+                for (auto registry: opengl_registries->second) {
                     registry->load();
                 }
             }
@@ -45,9 +46,10 @@ namespace orion {
         Shader      ::CURRENT_USE   = 0;
 
         if (context == get_current()) {
-            auto it = IDeferredRegistry::REGISTRIES.find("opengl");
-            if (it != IDeferredRegistry::REGISTRIES.cend()) {
-                for (auto registry: it->second) {
+            auto& registries = IDeferredRegistry::get_registries();
+            auto opengl_registries = registries.find("opengl");
+            if (opengl_registries != registries.cend()) {
+                for (auto registry: opengl_registries->second) {
                     registry->reset();
                 }
             }

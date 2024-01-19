@@ -16,7 +16,7 @@
 namespace orion {
     class GLFWWindowWrapper {
     public:
-        explicit GLFWWindowWrapper(int width, int height, Ref<std::string> name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share);
+        explicit GLFWWindowWrapper(int width, int height, std::string name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share);
         virtual ~GLFWWindowWrapper();
 
         [[nodiscard]] bool is_close() const;

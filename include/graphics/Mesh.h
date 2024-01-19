@@ -15,7 +15,7 @@ namespace orion {
 
     class Mesh : public Drawable {
     public:
-        static DeferredRegistry<Mesh> REGISTRY;
+        static RefMut<DeferredRegistry<Mesh>> get_registry();
 
         static std::shared_ptr<Mesh> create(Ref<PackedVertexContainer> vertices);
         static std::shared_ptr<Mesh> create(Ref<PackedVertexContainer> vertices, Ref<IndexContainer> indices);

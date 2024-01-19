@@ -12,7 +12,7 @@ namespace orion {
 
     Shape::Shape(std::shared_ptr<Mesh> mesh, bool use_attr) :
         m_mesh       (std::move(mesh)),
-        m_shader     (Shader::REGISTRY.get("shape")),
+        m_shader     (Shader::get_registry().get("shape")),
         m_context    (RenderContext(m_shader, m_texture, VertexArray::DrawMode::TRIANGLES)),
         m_color      (Color::WHITE),
         m_sample_mode(SampleMode::UNIFORM_COLOR)
@@ -36,7 +36,7 @@ namespace orion {
     }
 
     Shape::Shape(Primitive primitive) :
-            Shape(Mesh::REGISTRY.get(default_mesh_name_of(primitive)), true)
+            Shape(Mesh::get_registry().get(default_mesh_name_of(primitive)), true)
     {}
 
     RefMut<Transform> Shape::get_transform() {

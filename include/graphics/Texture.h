@@ -18,6 +18,7 @@ namespace orion {
 
     class Texture : public OpenGlContextRequired {
     public:
+        static DeferredRegistry<Texture> get_registry();
         static DeferredRegistry<Texture> REGISTRY;
 
         static std::shared_ptr<Texture> create_from_image(Ref<Image> image);

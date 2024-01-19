@@ -19,17 +19,22 @@
 
 namespace orion {
 
-    DeferredRegistry<Shader> Shader::REGISTRY = DeferredRegistry<Shader>("opengl",
-            [](RefMut<DeferredRegistry<Shader>> registry) {
-                registry.add(
-                    "shape",
-                    Shader::load_from_file(
-                        resource::shader::of("shape_vertex.glsl"),
-                        resource::shader::of("shape_fragment.glsl")
-                    )
-                );
-            }
-    );
+    RefMut<DeferredRegistry<Shader>> Shader::get_registry() {
+        static DeferredRegistry<Shader> registry = DeferredRegistry<Shader>(
+                "opengl",
+                [](RefMut<decltype(registry)> registry) {
+                    registry.add(
+                        "shape",
+                        Shader::load_from_file(
+                            resource::shader::of("shape_vertex.glsl"),
+                            resource::shader::of("shape_fragment.glsl")
+                        )
+                    );
+                }
+        );
+
+        return registry;
+    }
 
     u32 Shader::CURRENT_USE = 0;
 

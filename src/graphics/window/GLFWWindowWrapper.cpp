@@ -9,13 +9,13 @@
 #include <fmt/core.h>
 
 namespace orion {
-    GLFWWindowWrapper::GLFWWindowWrapper(int width, int height, Ref<std::string> name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share) :
-        m_name(name)
+    GLFWWindowWrapper::GLFWWindowWrapper(int width, int height, std::string name, PtrMut<GLFWmonitor> monitor, PtrMut<GLFWwindow> share) :
+        m_name(std::move(name))
     {
         if (COUNT == 0)
             initialize();
 
-        m_window = glfwCreateWindow(width, height, name.c_str(), monitor ? monitor : glfwGetPrimaryMonitor(), share);
+        m_window = glfwCreateWindow(width, height, m_name.c_str(), monitor ? monitor : glfwGetPrimaryMonitor(), share);
         if (!m_window) {
             fmt::print(stderr, "Window creation failed.\n");
             exit(EXIT_FAILURE);

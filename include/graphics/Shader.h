@@ -26,7 +26,7 @@ namespace orion {
         };
 
     public:
-        static DeferredRegistry<Shader> REGISTRY;
+        static RefMut<DeferredRegistry<Shader>> get_registry();
 
         static u32 CURRENT_USE;
 

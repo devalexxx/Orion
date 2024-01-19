@@ -7,7 +7,6 @@
 
 #include <vector>
 #include <memory>
-#include <unordered_map>
 #include <string>
 #include <functional>
 #include <map>
@@ -21,7 +20,9 @@ namespace orion {
 
     class IDeferredRegistry {
     public:
-        static std::map<std::string, std::vector<PtrMut<IDeferredRegistry>>> REGISTRIES;
+        using Registries = std::map<std::string, std::vector<PtrMut<IDeferredRegistry>>>;
+
+        static RefMut<Registries> get_registries();
 
         virtual void load () = 0;
         virtual void reset() = 0;
@@ -56,23 +57,25 @@ namespace orion {
 
     template<typename T>
     DeferredRegistry<T>::DeferredRegistry(std::string category, DeferredRegistry::Initializer &&initializer) : m_initializer(initializer), m_is_loaded(false) {
-        auto it = IDeferredRegistry::REGISTRIES.find(category);
-        if (it != IDeferredRegistry::REGISTRIES.cend()) {
+        auto & registries = get_registries();
+        auto it = registries.find(category);
+        if (it != registries.cend()) {
             it->second.push_back(this);
         }
         else {
-            IDeferredRegistry::REGISTRIES.emplace(std::move(category), std::vector<PtrMut<IDeferredRegistry>> {{this}});
+            registries.emplace(std::move(category), std::vector<PtrMut<IDeferredRegistry>>(1, this));
         }
     }
 
     template<typename T>
     DeferredRegistry<T>::DeferredRegistry(std::string category) : m_is_loaded(false) {
-        auto it = IDeferredRegistry::REGISTRIES.find(category);
-        if (it != IDeferredRegistry::REGISTRIES.cend()) {
+        auto& registries = get_registries();
+        auto it = registries.find(category);
+        if (it != registries.cend()) {
             it->second.push_back(this);
         }
         else {
-            IDeferredRegistry::REGISTRIES.emplace(std::move(category), std::vector<PtrMut<IDeferredRegistry>> {{this}});
+            registries.emplace(std::move(category), std::vector<PtrMut<IDeferredRegistry>>(1, this));
         }
     }
 
