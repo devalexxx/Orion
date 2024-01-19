@@ -35,7 +35,7 @@ namespace orion {
 
     using PackedVertexContainer = std::vector<PackedVertex>;
 
-    std::pair<const f32*, u32> to_float_array(Ref<PackedVertexContainer> v);
+    Pair<Ptr<f32>, u32> to_float_array(Ref<PackedVertexContainer> v);
 
 }
 

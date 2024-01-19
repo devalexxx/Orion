@@ -367,38 +367,6 @@ TEST_SUITE("bench") {
 
         }
 
-//        SUBCASE("6_subdivide_cube") {
-//            auto model = orion::Model::load_from_file(orion::resource::model::of("6_subdivide_cube.obj"), true);
-//            auto shape = orion::Shape(model.get_mesh(), true);
-//
-//            std::vector<long long> elapsed_times;
-//
-//            auto it = 0;
-//
-//            while (!w->is_close()) {
-//
-//                auto start = std::chrono::high_resolution_clock::now();
-//
-//                w->clear(orion::ClearMask::DEPTH | orion::ClearMask::COLOR);
-//
-//                w->draw(shape);
-//
-//                w->display();
-//
-//                auto stop = std::chrono::high_resolution_clock::now();
-//
-//                elapsed_times.push_back(std::chrono::duration_cast<std::chrono::microseconds>(stop - start).count());
-//
-//                if (++it == max_it)
-//                    w->close();
-//
-//            }
-//
-//            std::cout << "\n<-------------6 Cube------------->\n\n";
-//            display_stats(elapsed_times);
-//
-//        }
-
     }
 
 }

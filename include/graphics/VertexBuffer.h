@@ -20,8 +20,8 @@ namespace orion {
 
     class Shader;
     class VertexArray;
-    class PackedVertex;
 
+    struct PackedVertex;
     using PackedVertexContainer = std::vector<PackedVertex>;
 
     class VertexBuffer : public OpenGlContextRequired {

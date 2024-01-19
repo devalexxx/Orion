@@ -168,6 +168,7 @@ Temporary Items
 *.slo
 *.lo
 *.obj
+!/resource/**/*.obj
 
 # Precompiled Headers
 *.gch
