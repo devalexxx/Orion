@@ -11,11 +11,8 @@
 
 namespace orion {
 
-    DeferredRegistry<Texture> Texture::REGISTRY = DeferredRegistry<Texture>("opengl");
-
     DeferredRegistry<Texture> Texture::get_registry() {
-        static DeferredRegistry<Texture> registry = DeferredRegistry<Texture>("opengl");
-        return registry;
+        return REGISTRY;
     }
 
     std::shared_ptr<Texture> Texture::create_from_image(Ref<Image> image) {
@@ -61,5 +58,7 @@ namespace orion {
     void Texture::unbind() {
         gl_check(glBindTexture(GL_TEXTURE_2D, 0));
     }
+
+    DeferredRegistry<Texture> Texture::REGISTRY = DeferredRegistry<Texture>("opengl");
 
 }

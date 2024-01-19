@@ -26,7 +26,9 @@ namespace orion {
         };
 
     public:
-        static RefMut<DeferredRegistry<Shader>> get_registry();
+        using Registry = DeferredRegistry<Shader>;
+
+        static RefMut<Registry> get_registry();
 
         static u32 CURRENT_USE;
 
@@ -62,6 +64,8 @@ namespace orion {
 
         std::unordered_map<std::string, std::string> m_attrib  {};
         std::unordered_map<std::string, std::string> m_uniform {};
+
+        static Registry REGISTRY;
 
 //        struct Description {
 //            String type;

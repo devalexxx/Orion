@@ -10,52 +10,8 @@
 
 namespace orion {
 
-    DeferredRegistry<Mesh> &Mesh::get_registry() {
-        static DeferredRegistry<Mesh> registry = DeferredRegistry<Mesh>(
-                "opengl",
-                [](RefMut<decltype(registry)> registry) {
-                    using namespace generator;
-
-                    auto mesh_wrapper = [](Ref<Pair<PackedVertexContainer, IndexContainer>> p) {
-                        return std::move(Mesh::create(p.first, p.second));
-                    };
-
-                    registry.add(
-                            mesh_name_builder(Primitive::TRIANGLE, false),
-                            Mesh::create(triangle_vertices())
-                    );
-                    registry.add(
-                            mesh_name_builder(Primitive::SQUARE, false),
-                            Mesh::create(square_vertices())
-                    );
-                    registry.add(
-                            mesh_name_builder(Primitive::CIRCLE, false, "128"),
-                            mesh_wrapper(index(circle_vertices(128)))
-                    );
-                    registry.add(
-                            mesh_name_builder(Primitive::CIRCLE, true, "128"),
-                            mesh_wrapper(index(circle_vertices(128)))
-                    );
-                    registry.add(
-                            mesh_name_builder(Primitive::CUBE, false),
-                            mesh_wrapper(index(cube_vertices()))
-                    );
-                    registry.add(
-                            mesh_name_builder(Primitive::CUBE, true),
-                            mesh_wrapper(index(cube_vertices()))
-                    );
-                    registry.add(
-                            mesh_name_builder(Primitive::SPHERE, false, "4"),
-                            mesh_wrapper(index(sphere_vertices(4)))
-                    );
-                    registry.add(
-                            mesh_name_builder(Primitive::SPHERE, true, "4"),
-                            mesh_wrapper(index(sphere_vertices(4)))
-                    );
-                }
-        );
-
-        return registry;
+    RefMut<Mesh::Registry> Mesh::get_registry() {
+        return REGISTRY;
     }
 
     std::shared_ptr<Mesh> Mesh::create(Ref<PackedVertexContainer> vertices) {
@@ -121,4 +77,49 @@ namespace orion {
                 return std::move(mesh_name_builder(p, true, "4"));
         }
     }
+
+    Mesh::Registry Mesh::REGISTRY = Mesh::Registry(
+        "opengl",
+        [](RefMut<decltype(REGISTRY)> registry) {
+            using namespace generator;
+
+            auto mesh_wrapper = [](Ref<Pair<PackedVertexContainer, IndexContainer>> p) {
+                return std::move(Mesh::create(p.first, p.second));
+            };
+
+            registry.add(
+                    mesh_name_builder(Primitive::TRIANGLE, false),
+                    Mesh::create(triangle_vertices())
+            );
+            registry.add(
+                    mesh_name_builder(Primitive::SQUARE, false),
+                    Mesh::create(square_vertices())
+            );
+            registry.add(
+                    mesh_name_builder(Primitive::CIRCLE, false, "128"),
+                    mesh_wrapper(index(circle_vertices(128)))
+            );
+            registry.add(
+                    mesh_name_builder(Primitive::CIRCLE, true, "128"),
+                    mesh_wrapper(index(circle_vertices(128)))
+            );
+            registry.add(
+                    mesh_name_builder(Primitive::CUBE, false),
+                    mesh_wrapper(index(cube_vertices()))
+            );
+            registry.add(
+                    mesh_name_builder(Primitive::CUBE, true),
+                    mesh_wrapper(index(cube_vertices()))
+            );
+            registry.add(
+                    mesh_name_builder(Primitive::SPHERE, false, "4"),
+                    mesh_wrapper(index(sphere_vertices(4)))
+            );
+            registry.add(
+                    mesh_name_builder(Primitive::SPHERE, true, "4"),
+                    mesh_wrapper(index(sphere_vertices(4)))
+            );
+        }
+    );
+
 } // orion

@@ -193,7 +193,7 @@ TEST_SUITE("bench") {
         }
 
         SUBCASE("circle") {
-            auto&& shapes = generate_shapes(orion::Shape(orion::Mesh::REGISTRY.get(orion::mesh_name_builder(orion::Primitive::CIRCLE, false, "128")), true), x_c_s, y_c_s, z_c_s);
+            auto&& shapes = generate_shapes(orion::Shape(orion::Mesh::get_registry().get(orion::mesh_name_builder(orion::Primitive::CIRCLE, false, "128")), true), x_c_s, y_c_s, z_c_s);
 
             std::vector<long long> elapsed_times;
 
@@ -267,7 +267,7 @@ TEST_SUITE("bench") {
         }
 
         SUBCASE("cube") {
-            auto&& shapes = generate_shapes(orion::Shape(orion::Mesh::REGISTRY.get(orion::mesh_name_builder(orion::Primitive::CUBE, false)), true), x_c_s, y_c_s, z_c_s);
+            auto&& shapes = generate_shapes(orion::Shape(orion::Mesh::get_registry().get(orion::mesh_name_builder(orion::Primitive::CUBE, false)), true), x_c_s, y_c_s, z_c_s);
 
             std::vector<long long> elapsed_times;
 

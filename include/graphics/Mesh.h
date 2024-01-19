@@ -15,7 +15,9 @@ namespace orion {
 
     class Mesh : public Drawable {
     public:
-        static RefMut<DeferredRegistry<Mesh>> get_registry();
+        using Registry = DeferredRegistry<Mesh>;
+
+        static RefMut<Registry> get_registry();
 
         static std::shared_ptr<Mesh> create(Ref<PackedVertexContainer> vertices);
         static std::shared_ptr<Mesh> create(Ref<PackedVertexContainer> vertices, Ref<IndexContainer> indices);
@@ -32,6 +34,8 @@ namespace orion {
         bool        m_indexed;
         u32         m_length;
         VertexArray m_vao;
+
+        static Registry REGISTRY;
     };
 
     std::string mesh_name_builder(Primitive p, bool indexed, Ref<String> opt = "");

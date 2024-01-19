@@ -59,7 +59,7 @@ TEST_CASE("square") {
     square1.get_transform().set_position(orion::Vector3f(-2, 0, 0));
     square1.get_transform().set_scale(orion::Vector3f(2));
 
-    auto square2 = orion::Shape(orion::Primitive::SQUARE);;
+    auto square2 = orion::Shape(orion::Primitive::SQUARE);
     square2.set_texture(texture);
     square2.get_transform().set_position(orion::Vector3f(2, 0, 0));
     square2.get_transform().set_scale(orion::Vector3f(1, 2, 1));
@@ -139,11 +139,7 @@ TEST_CASE("circle") {
 TEST_CASE("sphere") {
     auto w = orion::Window::create("sphere");
 
-//    auto image = orion::Image::load_from_file(orion::resource::texture::of("weird-circle.png"), true);
-//    auto texture = orion::Texture::create_from_image(image);
-
     auto sphere = orion::Shape(orion::Primitive::SPHERE);
-//    sphere.set_color(orion::Color::RED);
 
     auto& rot = sphere.get_transform().get_rotation();
 
@@ -251,7 +247,8 @@ TEST_CASE("index_cube_w_mesh") {
 
     auto model = orion::translate(Vector3f::zero());
 
-    auto mesh = Mesh::create(index(cube_vertices()));
+    auto [v, i] = index(cube_vertices());
+    auto mesh = Mesh::create(v, i);
 
     auto shader = orion::Shader::load_from_file(shader::of("shape_vertex.glsl"),shader::of("shape_fragment.glsl"));
 
