@@ -27,8 +27,8 @@ target("orion")
     set_kind("static")
     add_files("src/**/*.cpp")
     add_includedirs("include", {public = true})
-    add_headerfiles("include/*.h")
-    add_headerfiles("include/**/*.h")
+    add_headerfiles("include/*.h", { prefixdir = "orion" })
+    --add_headerfiles("include/**/*.h")
 
     for _, pkg in ipairs(packages) do
         add_packages(pkg, {public = true})
