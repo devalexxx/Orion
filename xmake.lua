@@ -4,7 +4,7 @@ local unittest_packages = {"doctest"}
 local sandbox_packages  = {"doctest"}
 
 set_project("Orion")
---set_xmakever("1.0a1")
+set_xmakever("2.8.6")
 
 includes("xmake/**.lua")
 
@@ -27,9 +27,8 @@ target("orion")
     set_kind("static")
     add_files("src/**/*.cpp")
     add_includedirs("include/", {public = true})
-    add_headerfiles("include/**.h", { prefixdir = "orion" })
-    add_headerfiles("include/**/*.h", { prefixdir = "orion" })
-    --add_headerfiles("include/**/*.h")
+    add_headerfiles("include/*.h", { prefixdir = "orion" })
+    add_headerfiles("include/(**/*.h)", { prefixdir = "orion" })
 
     for _, pkg in ipairs(packages) do
         add_packages(pkg, {public = true})
