@@ -1,7 +1,9 @@
 name: Windows build
-run-name: ${{ github.actor }} is testing out GitHub Actions
+
 on:
   push:
+    tags-ignore:
+      - '**'
     paths:
       - '**.c'
       - '**.cpp'
