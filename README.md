@@ -32,7 +32,7 @@ xmake
 
 #### Add repository
 ````bash
-xrepo add orion-repo https://github.com/alspin8/xmake-repo.git master
+xrepo add-repo orion-repo https://github.com/alspin8/xmake-repo.git main
 ````
 
 #### Install package (version match with tags name)
