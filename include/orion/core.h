@@ -5,6 +5,24 @@
 #ifndef ORION_CORE_H
 #define ORION_CORE_H
 
+#if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+    #define ORION_IMPORT __declspec(dllimport)
+    #define ORION_EXPORT __declspec(dllexport)
+#else
+    #define ORION_IMPORT __attribute__ ((visibility("default")))
+    #define ORION_EXPORT __attribute__ ((visibility("default")))
+#endif
+
+#ifdef ORION_SHARED
+    #ifdef ORION_BUILD
+        #define ORION_API ORION_EXPORT
+    #else
+        #define ORION_API ORION_IMPORT
+    #endif
+#else
+    #define ORION_API
+#endif
+
 #include "orion/core/type.h"
 #include "orion/core/Indexer.h"
 #include "orion/core/DeferredRegistry.h"

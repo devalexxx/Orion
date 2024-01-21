@@ -6,9 +6,9 @@
 ---
 local function create_resource_rule(name)
     rule("resource." .. name)
-    before_build(function (opt)
-        os.cp("$(projectdir)/resource/" .. name .. "/*", "$(buildir)/$(plat)/$(arch)/$(mode)/resource/" .. name .. "/")
-    end)
+        before_build(function (opt)
+            os.cp("$(projectdir)/resource/" .. name .. "/*", "$(buildir)/$(plat)/$(arch)/$(mode)/resource/" .. name .. "/")
+        end)
 end
 
 create_resource_rule("shader")
