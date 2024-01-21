@@ -2,11 +2,11 @@
 // Created by Alex on 14/01/2024.
 //
 
-#include "graphics/Shape.h"
+#include "orion/graphics/Shape.h"
 
-#include "graphics/Shader.h"
-#include "graphics/Mesh.h"
-#include "graphics/Primitive.h"
+#include "orion/graphics/Shader.h"
+#include "orion/graphics/Mesh.h"
+#include "orion/graphics/Primitive.h"
 
 namespace orion {
 

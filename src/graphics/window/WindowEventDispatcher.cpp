@@ -2,11 +2,11 @@
 // Created by Alex on 12/11/2023.
 //
 
-#include "graphics/window/WindowEventDispatcher.h"
+#include "orion/graphics/window/WindowEventDispatcher.h"
 
-#include "graphics/window/Window.h"
-#include "graphics/window/WindowEvent.h"
-#include "core/event/EventManager.h"
+#include "orion/graphics/window/Window.h"
+#include "orion/graphics/window/WindowEvent.h"
+#include "orion/core/event/EventManager.h"
 
 namespace orion {
     void WindowEventDispatcher::error_callback(int error, const char *description) {

@@ -2,7 +2,7 @@
 // Created by Alex on 09/12/2023.
 //
 
-#include "graphics/Image.h"
+#include "orion/graphics/Image.h"
 
 namespace orion {
 

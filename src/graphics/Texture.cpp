@@ -2,10 +2,10 @@
 // Created by Alex on 09/12/2023.
 //
 
-#include "graphics/Texture.h"
+#include "orion/graphics/Texture.h"
 
-#include "graphics/Image.h"
-#include "graphics/opengl/OpenGlApi.h"
+#include "orion/graphics/Image.h"
+#include "orion/graphics/opengl/OpenGlApi.h"
 
 #include "GL/glew.h"
 

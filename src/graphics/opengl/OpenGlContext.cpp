@@ -2,13 +2,13 @@
 // Created by Alex on 04/01/2024.
 //
 
-#include "graphics/opengl/OpenGlContext.h"
+#include "orion/graphics/opengl/OpenGlContext.h"
 
-#include "graphics/opengl/OpenGlApi.h"
+#include "orion/graphics/opengl/OpenGlApi.h"
 
-#include "graphics/Texture.h"
-#include "graphics/Shader.h"
-#include "graphics/VertexArray.h"
+#include "orion/graphics/Texture.h"
+#include "orion/graphics/Shader.h"
+#include "orion/graphics/VertexArray.h"
 
 #include <iostream>
 

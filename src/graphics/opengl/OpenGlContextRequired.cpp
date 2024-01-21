@@ -2,10 +2,11 @@
 // Created by Alex on 04/01/2024.
 //
 
-#include "graphics/opengl/OpenGlContextRequired.h"
+#include "orion/graphics/opengl/OpenGlContextRequired.h"
+
+#include "orion/graphics/opengl/OpenGlContext.h"
 
 #include <cassert>
-#include "graphics/opengl/OpenGlContext.h"
 
 namespace orion {
 

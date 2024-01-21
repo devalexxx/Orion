@@ -2,7 +2,7 @@
 // Created by Alex on 23/12/2023.
 //
 
-#include "graphics/PackedVertex.h"
+#include "orion/graphics/PackedVertex.h"
 
 namespace orion {
 

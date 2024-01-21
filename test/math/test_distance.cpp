@@ -4,7 +4,7 @@
 
 #include "doctest/doctest.h"
 
-#include "omath.h"
+#include "orion/omath.h"
 
 TEST_SUITE("math") {
 

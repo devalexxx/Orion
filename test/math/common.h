@@ -4,7 +4,7 @@
 
 #include "doctest/doctest.h"
 
-#include "omath.h"
+#include "orion/omath.h"
 
 template<size_t S, typename T>
 inline bool vector_approx(orion::Ref<orion::Vector<S, T>> lhs, orion::Ref<orion::Vector<S, T>> rhs) {

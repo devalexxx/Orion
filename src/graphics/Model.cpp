@@ -2,10 +2,10 @@
 // Created by Alex on 16/01/2024.
 //
 
-#include "graphics/Model.h"
+#include "orion/graphics/Model.h"
 
-#include "graphics/Primitive.h"
-#include "graphics/Mesh.h"
+#include "orion/graphics/Primitive.h"
+#include "orion/graphics/Mesh.h"
 
 #include <fstream>
 #include <sstream>

@@ -27,7 +27,7 @@ target("orion")
     set_kind("static")
     add_files("src/**/*.cpp")
     add_includedirs("include/", {public = true})
-    add_headerfiles("include/*.h", { prefixdir = "orion" })
+    add_headerfiles("include/*.h")
     add_headerfiles("include/(**/*.h)")
 
     for _, pkg in ipairs(packages) do
@@ -47,7 +47,7 @@ if has_config("unittest") then
         add_files("test/*.cpp")
         add_files("test/**/*.cpp")
 
-        if has_config("nogpu") then
+        if has_config("nogpu", "y") then
             remove_files("test/graphics/*.cpp")
         end
 

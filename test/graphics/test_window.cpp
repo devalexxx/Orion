@@ -4,7 +4,7 @@
 
 #include "doctest/doctest.h"
 
-#include "graphics.h"
+#include "orion/graphics.h"
 
 TEST_SUITE("graphics") {
 

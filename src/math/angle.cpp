@@ -5,10 +5,10 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "math/angle.h"
+#include "orion/math/angle.h"
 
-#include "math/Matrix4.h"
-#include "math/Vector3.h"
+#include "orion/math/Matrix4.h"
+#include "orion/math/Vector3.h"
 
 namespace orion {
 

@@ -4,8 +4,8 @@
 
 #include "doctest/doctest.h"
 
-#include "graphics.h"
-#include "omath.h"
+#include "orion/graphics.h"
+#include "orion/omath.h"
 
 #include <chrono>
 #include <numeric>

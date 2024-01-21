@@ -2,11 +2,11 @@
 // Created by Alex on 09/12/2023.
 //
 
-#include "graphics/Shader.h"
+#include "orion/graphics/Shader.h"
 
-#include "core/Resource.h"
-#include "graphics/Color.h"
-#include "graphics/opengl/OpenGlApi.h"
+#include "orion/core/Resource.h"
+#include "orion/graphics/Color.h"
+#include "orion/graphics/opengl/OpenGlApi.h"
 
 #include "GL/glew.h"
 

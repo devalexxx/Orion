@@ -2,12 +2,12 @@
 // Created by Alex on 23/12/2023.
 //
 
-#include "graphics/RenderTarget.h"
+#include "orion/graphics/RenderTarget.h"
 
-#include "graphics/Drawable.h"
-#include "graphics/VertexArray.h"
-#include "graphics/Shader.h"
-#include "graphics/Texture.h"
+#include "orion/graphics/Drawable.h"
+#include "orion/graphics/VertexArray.h"
+#include "orion/graphics/Shader.h"
+#include "orion/graphics/Texture.h"
 
 #include <fmt/core.h>
 

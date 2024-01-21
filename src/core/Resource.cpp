@@ -2,7 +2,7 @@
 // Created by Alex on 05/01/2024.
 //
 
-#include "core/Resource.h"
+#include "orion/core/Resource.h"
 
 namespace orion {
 

@@ -4,7 +4,7 @@
 
 #include "doctest/doctest.h"
 
-#include "core.h"
+#include "orion/core.h"
 
 TEST_SUITE("Event") {
 

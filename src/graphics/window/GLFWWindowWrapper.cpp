@@ -2,9 +2,9 @@
 // Created by Alex on 12/11/2023.
 //
 
-#include "graphics/window/GLFWWindowWrapper.h"
+#include "orion/graphics/window/GLFWWindowWrapper.h"
 
-#include "graphics/opengl/OpenGlContext.h"
+#include "orion/graphics/opengl/OpenGlContext.h"
 
 #include <fmt/core.h>
 

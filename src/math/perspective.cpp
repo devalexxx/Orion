@@ -2,9 +2,9 @@
 // Created by Alex on 15/12/2023.
 //
 
-#include "math/perspective.h"
+#include "orion/math/perspective.h"
 
-#include "math/Vector.h"
+#include "orion/math/Vector.h"
 
 #include <cmath>
 

@@ -2,11 +2,11 @@
 // Created by Alex on 15/12/2023.
 //
 
-#include "math/transform.h"
+#include "orion/math/transform.h"
 
-#include "math/Matrix.h"
-#include "math/Vector.h"
-#include "math/normalize.h"
+#include "orion/math/Matrix.h"
+#include "orion/math/Vector.h"
+#include "orion/math/normalize.h"
 
 #include <cmath>
 

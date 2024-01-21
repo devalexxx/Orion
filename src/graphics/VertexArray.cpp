@@ -2,8 +2,8 @@
 // Created by Alex on 23/12/2023.
 //
 
-#include "graphics/VertexArray.h"
-#include "graphics/opengl/OpenGlApi.h"
+#include "orion/graphics/VertexArray.h"
+#include "orion/graphics/opengl/OpenGlApi.h"
 
 #include <type_traits>
 #include <iostream>

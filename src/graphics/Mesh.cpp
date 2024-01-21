@@ -2,11 +2,11 @@
 // Created by Alex on 14/01/2024.
 //
 
-#include "graphics/Mesh.h"
+#include "orion/graphics/Mesh.h"
 
-#include "graphics/VertexArray.h"
-#include "graphics/Primitive.h"
-#include "graphics/RenderTarget.h"
+#include "orion/graphics/VertexArray.h"
+#include "orion/graphics/Primitive.h"
+#include "orion/graphics/RenderTarget.h"
 
 namespace orion {
 

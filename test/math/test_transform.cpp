@@ -4,8 +4,6 @@
 
 #include "doctest/doctest.h"
 
-#include "omath.h"
-
 #include "common.h"
 
 TEST_SUITE("math") {

@@ -2,9 +2,9 @@
 // Created by Alex on 14/01/2024.
 //
 
-#include "graphics/Primitive.h"
+#include "orion/graphics/Primitive.h"
 
-#include "graphics/PackedVertex.h"
+#include "orion/graphics/PackedVertex.h"
 
 #include <functional>
 

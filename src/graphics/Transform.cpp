@@ -2,8 +2,8 @@
 // Created by Alex on 24/12/2023.
 //
 
-#include "graphics/Transform.h"
-#include "omath.h"
+#include "orion/graphics/Transform.h"
+#include "orion/omath.h"
 
 namespace orion {
 

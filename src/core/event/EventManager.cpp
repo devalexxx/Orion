@@ -2,7 +2,7 @@
 // Created by Alex on 14/11/2023.
 //
 
-#include "core/event/EventManager.h"
+#include "orion/core/event/EventManager.h"
 
 namespace orion {
 

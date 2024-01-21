@@ -2,12 +2,12 @@
 // Created by Alex on 12/11/2023.
 //
 
-#include "graphics/window/Window.h"
+#include "orion/graphics/window/Window.h"
 
 #include <iostream>
 
-#include "graphics/window/WindowEventDispatcher.h"
-#include "graphics/opengl/OpenGlApi.h"
+#include "orion/graphics/window/WindowEventDispatcher.h"
+#include "orion/graphics/opengl/OpenGlApi.h"
 
 namespace orion {
 

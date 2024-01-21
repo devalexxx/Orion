@@ -2,7 +2,7 @@
 // Created by Alex on 15/12/2023.
 //
 
-#include "math/Matrix.h"
+#include "orion/math/Matrix.h"
 
 namespace orion {
 } // orion

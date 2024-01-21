@@ -2,7 +2,7 @@
 // Created by Alex on 20/11/2023.
 //
 
-#include "graphics/window/KeyEventListener.h"
+#include "orion/graphics/window/KeyEventListener.h"
 
 namespace orion {
     KeyEventListener::KeyEventListener(Ref<std::shared_ptr<EventManager>> e_manager) : EventListener(e_manager) {

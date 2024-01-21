@@ -2,14 +2,14 @@
 // Created by Alex on 14/12/2023.
 //
 
-#include "graphics/VertexBuffer.h"
+#include "orion/graphics/VertexBuffer.h"
 
 #include <iostream>
 
-#include "graphics/Shader.h"
-#include "graphics/VertexArray.h"
-#include "graphics/PackedVertex.h"
-#include "graphics/opengl/OpenGlApi.h"
+#include "orion/graphics/Shader.h"
+#include "orion/graphics/VertexArray.h"
+#include "orion/graphics/PackedVertex.h"
+#include "orion/graphics/opengl/OpenGlApi.h"
 
 namespace orion {
 
