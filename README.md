@@ -45,12 +45,10 @@ xrepo install orion <version>
 Create a simple program that draw a triangle.
 
 #### xmake.lua
-
-![xmake.png](documentation%2Fasset%2Fxmake.png)
+![xmake.png](.github%2Fdocs%2Fasset%2Fxmake.png)
 
 #### main.cpp
-
-![main.png](documentation%2Fasset%2Fmain.png)
+![main.png](.github%2Fdocs%2Fasset%2Fmain.png)
 
 ## Credits
 * [xmake](https://xmake.io/#/)
