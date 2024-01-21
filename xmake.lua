@@ -23,7 +23,7 @@ if is_mode("debug") then
 end
 
 for _, pkg in ipairs(packages) do
-    add_requires(pkg, {configs = { debug = is_mode("debug"), shared = has_config("shared") } })
+    add_requires(pkg, { debug = is_mode("debug"), shared = has_config("shared") })
 end
 
 target("orion")
@@ -33,7 +33,6 @@ target("orion")
     if has_config("shared") then
         set_kind("shared")
         add_defines("ORION_SHARED")
-        print("shared")
     else
         set_kind("static")
     end
