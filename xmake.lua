@@ -8,8 +8,8 @@ set_xmakever("2.8.6")
 
 includes("xmake/**.lua")
 
-option("unittest", {description = "Build unittest (xmake run unittest)",          default = false})
 option("examples", {description = "Build examples (xmake run <example_name>)",    default = false})
+option("unittest", {description = "Build unittest (xmake run unittest)",          default = false})
 option("sandbox",  {description = "Build dev sandbox (xmake run <sandbox_name>)", default = false})
 option("nogpu",    {description = "To run unittest without gpu",                  default = false})
 option("shared",   {description = "Build as shared library",                      default = false})

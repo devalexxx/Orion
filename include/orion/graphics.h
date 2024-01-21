@@ -5,6 +5,10 @@
 #ifndef ORION_GRAPHICS_H
 #define ORION_GRAPHICS_H
 
+#include "orion/graphics/opengl/OpenGlApi.h"
+#include "orion/graphics/opengl/OpenGlContext.h"
+#include "orion/graphics/opengl/OpenGlContextRequired.h"
+
 #include "orion/graphics/window/GLFWWindowWrapper.h"
 #include "orion/graphics/window/KeyEventListener.h"
 #include "orion/graphics/window/Window.h"
@@ -25,9 +29,5 @@
 #include "orion/graphics/Primitive.h"
 #include "orion/graphics/Shape.h"
 #include "orion/graphics/Model.h"
-
-#include "orion/graphics/opengl/OpenGlApi.h"
-#include "orion/graphics/opengl/OpenGlContext.h"
-#include "orion/graphics/opengl/OpenGlContextRequired.h"
 
 #endif //ORION_GRAPHICS_H

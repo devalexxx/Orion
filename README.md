@@ -8,22 +8,52 @@
 
 ## Installation
 
-### Clone repo
+### Install xmake
+https://xmake.io/#/guide/installation
+
+### From GitHub
+
+#### Clone repository
 ````bash
 git clone https://github.com/alspin8/Orion.git
 ````
 
-### Configure
+#### Configure
 ````bash
-xmake f --mode=<debug|release> --unittest=<y|n> --nogpu=<y|n> --sandbox=<y|n>
+xmake f --mode=<debug|release> --shared=<y|n> --unittest=<y|n> --nogpu=<y|n> --sandbox=<y|n>
 ````
 
-### Build
+#### Build
 ````bash
 xmake
 ````
 
+### From xrepo
+
+#### Add repository
+````bash
+xrepo add orion-repo https://github.com/alspin8/xmake-repo.git master
+````
+
+#### Install package (version match with tags name)
+````bash
+xrepo install orion <version>
+````
+
+## Usage
+
+Create a simple program that draw a triangle.
+
+#### xmake.lua
+
+![xmake.png](documentation%2Fasset%2Fxmake.png)
+
+#### main.cpp
+
+![main.png](documentation%2Fasset%2Fmain.png)
+
 ## Credits
+* [xmake](https://xmake.io/#/)
 * [glfw](https://github.com/glfw/glfw.github.io)
 * [glew](https://github.com/nigels-com/glew)
 * [doctest](https://github.com/doctest/doctest)
