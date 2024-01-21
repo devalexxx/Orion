@@ -34,6 +34,10 @@ target("orion")
         add_packages(pkg, {public = true})
     end
 
+    after_install(function (target)
+        os.cp("$(projectdir)/resource", path.join(target:installdir(), "resource"))
+    end)
+
     add_rules("resource.shader", "resource.texture", "resource.model")
 
 target_end()
