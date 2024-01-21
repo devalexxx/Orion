@@ -22,7 +22,9 @@ if is_mode("debug") then
     add_defines("ORION_DEBUG")
 end
 
-add_requires(table.unpack(packages))
+for _, pkg in ipairs(packages) do
+    add_requires(pkg, {configs = { debug = is_mode("debug"), shared = has_config("shared") } })
+end
 
 target("orion")
 
