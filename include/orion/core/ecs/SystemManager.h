@@ -24,7 +24,7 @@ namespace orion {
         void update();
 
         template<typename T>
-        RefMut<SystemDescriptor> emplace_system(System<T>::Functor&& system);
+        RefMut<SystemDescriptor> emplace_system(typename System<T>::Functor&& system);
 
     private:
         std::vector<SystemDescriptor> m_systems;
@@ -33,7 +33,7 @@ namespace orion {
     };
 
     template<typename T>
-    RefMut<SystemDescriptor> SystemManager::emplace_system(System<T>::Functor&& system) {
+    RefMut<SystemDescriptor> SystemManager::emplace_system(typename System<T>::Functor&& system) {
         return m_systems.emplace_back(std::make_unique<System<T>>(std::move(system)));
     }
 

@@ -52,9 +52,9 @@ namespace orion {
         static_assert(are_types_unique<T...>::value);
     public:
         using value_type          = std::tuple<T...>;
-        using filtered_value_type = Filter<is_not_marker, std::tuple, T...>::type;
+        using filtered_value_type = typename Filter<is_not_marker, std::tuple, T...>::type;
         using types_info          = std::tuple<TypeInfo<T>...>;
-        using filtered_types_info = Filter<is_not_marker_nested, std::tuple, TypeInfo<T>...>::type;
+        using filtered_types_info = typename Filter<is_not_marker_nested, std::tuple, TypeInfo<T>...>::type;
 
         Selector();
 
