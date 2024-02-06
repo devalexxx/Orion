@@ -2,8 +2,8 @@ name: Windows build
 
 on:
   push:
-    tags-ignore:
-      - '**'
+#    tags-ignore:
+#      - '**'
     paths:
       - '**.c'
       - '**.cpp'

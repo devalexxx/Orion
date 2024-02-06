@@ -2,8 +2,8 @@ name: Ubuntu build
 
 on:
   push:
-    tags-ignore:
-      - '**'
+#    tags-ignore:
+#      - '**'
     paths:
       - '**.c'
       - '**.cpp'
