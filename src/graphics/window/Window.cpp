@@ -15,6 +15,13 @@ namespace orion {
         return static_cast<ClearMask>(EnumValue<ClearMask>(lhs) | EnumValue<ClearMask> (rhs));
     }
 
+    void Window::clear(ClearMask mask) {
+        #ifdef ORION_DEBUG
+            OpenGlApi::CALL_TRACE = {};
+        #endif
+        glClear(std::underlying_type<ClearMask>::type (mask));
+    }
+
     std::shared_ptr<Window> Window::create(std::string name) {
         auto p = std::shared_ptr<Window>(new Window(std::move(name)));
         return std::move(p);
@@ -24,13 +31,6 @@ namespace orion {
         swap_buffers();
         poll_events();
         m_frame_swap = !m_frame_swap;
-    }
-
-    void Window::clear(ClearMask mask) {
-        #ifdef ORION_DEBUG
-            OpenGlApi::CALL_TRACE = {};
-        #endif
-        glClear(std::underlying_type<ClearMask>::type (mask));
     }
 
     Window::Window(std::string name)

@@ -5,7 +5,7 @@
 #ifndef ORION_INDEXER_H
 #define ORION_INDEXER_H
 
-#include "type.h"
+#include "orion/core/type.h"
 
 #include <unordered_map>
 #include <iostream>

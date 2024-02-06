@@ -30,11 +30,11 @@ namespace orion {
             public RenderTarget
     {
     public:
+        static void clear(ClearMask mask);
+
         static std::shared_ptr<Window> create(std::string name);
 
         void display();
-
-        void clear(ClearMask mask);
 
         void set_event_manager(Ref<std::shared_ptr<EventManager>> event_manager);
     private:

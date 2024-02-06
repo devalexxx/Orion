@@ -23,7 +23,7 @@ namespace orion {
     }
 
     Vector3f Color::to_rgb() const {
-        return {(*this)[0], (*this)[1], (*this)[2]};
+        return Vector3f(m_data);
     }
 
 }

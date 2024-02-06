@@ -4,7 +4,7 @@
 
 #include "orion/graphics/Shader.h"
 
-#include "orion/core/Resource.h"
+#include "orion/core/resource.h"
 #include "orion/graphics/Color.h"
 #include "orion/graphics/opengl/OpenGlApi.h"
 

@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <vector>
 #include <string>
+#include <optional>
 
 namespace orion {
 
@@ -51,6 +52,14 @@ namespace orion {
 
     template<typename T>
     using EnumValue = typename std::underlying_type<T>::type;
+
+    template<typename T>
+    using OptRef = std::optional<std::reference_wrapper<const T>>;
+
+    template<typename T>
+    using OptRefMut = std::optional<std::reference_wrapper<T>>;
+
+    using DynBitset = std::vector<bool>;
 
 }
 

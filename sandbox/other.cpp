@@ -8,6 +8,10 @@
 
 #include "numeric"
 
+void foo() {
+    ORION_ASSERT(1 == 2, "Oh my god, {} is not equal to {}", 1, 2);
+}
+
 TEST_SUITE("other") {
 
     TEST_CASE("model_load") {
@@ -110,6 +114,10 @@ TEST_SUITE("other") {
 
         glDeleteBuffers(1, &vertexbuffer);
         glDeleteVertexArrays(1, &VertexArrayID);
+    }
+
+    TEST_CASE("assert") {
+        foo();
     }
 
 }
