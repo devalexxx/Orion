@@ -30,10 +30,10 @@ namespace orion {
         void remove_component (Ref<Entity> entity);
 
         template<typename T>
-        RefMut<SystemDescriptor> emplace_system(ISystem::BaseFunctorPtr<T> system);
+        RefMut<SystemDescriptor> emplace_system(ISystem::FunctorPtr<T> system);
 
-//        template<typename T>
-//        RefMut<SystemDescriptor> emplace_system(ISystem::BaseFunctor<T>&& system);
+        template<DerivedSystem T, typename... Args>
+        RefMut<SystemDescriptor> emplace_system(Args... args);
 
         template<typename I>
         Query<I, Exclude<>> query();
@@ -72,14 +72,14 @@ namespace orion {
     }
 
     template<typename T>
-    RefMut<SystemDescriptor> World::emplace_system(ISystem::BaseFunctorPtr<T> system) {
+    RefMut<SystemDescriptor> World::emplace_system(ISystem::FunctorPtr<T> system) {
         return m_sym.emplace_system<T>(system);
     }
 
-//    template<typename T>
-//    RefMut<SystemDescriptor> World::emplace_system(ISystem::BaseFunctor<T> &&system) {
-//        return m_sym.emplace_system<T>(system);
-//    }
+    template<DerivedSystem T, typename... Args>
+    RefMut<SystemDescriptor> World::emplace_system(Args... args) {
+        return m_sym.emplace_system<T, Args...>(args...);
+    }
 
     template<typename I>
     Query<I, Exclude<>> World::query() {

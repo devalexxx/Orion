@@ -35,7 +35,7 @@ namespace orion {
         return *this;
     }
 
-    System<RefMut<World>>::System(Functor &&fn) : m_fn(fn) {}
+    System<RefMut<World>>::System(Functor<value_type> &&fn) : m_fn(fn) {}
 
     void System<RefMut<World>>::execute(RefMut<World> world) {
         m_fn(world);

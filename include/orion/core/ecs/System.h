@@ -20,13 +20,16 @@ namespace orion {
     class ISystem {
     public:
         template<class T>
-        using BaseFunctorPtr = void(*)(T);
+        using FunctorPtr = void(*)(T);
         template<class T>
-        using BaseFunctor = std::function<void(T)>;
+        using Functor = std::function<void(T)>;
 
         virtual ~ISystem() = default;
         virtual void execute(RefMut<World> world) = 0;
     };
+
+    template<typename T>
+    concept DerivedSystem = std::is_base_of<ISystem, T>::value;
 
     class SystemDescriptor {
     public:
@@ -65,25 +68,25 @@ namespace orion {
     template<>
     class System<RefMut<World>> : public ISystem {
     public:
-        using Functor = BaseFunctor<RefMut<World>>;
-        explicit System(Functor&& fn);
+        using value_type = RefMut<World>;
+        explicit System(Functor<value_type>&& fn);
         void execute(RefMut<World> world) override;
     private:
-        Functor m_fn;
+        Functor<value_type> m_fn;
     };
 
     template<typename... Ts>
     class System<Query<Ts...>> : public ISystem {
     public:
-        using Functor = BaseFunctor<Query<Ts...>>;
-        explicit System(Functor&& fn);
+        using value_type = Query<Ts...>;
+        explicit System(Functor<value_type>&& fn);
         void execute(RefMut<World> world) override;
     private:
-        Functor m_fn;
+        Functor<value_type> m_fn;
     };
 
     template<typename... Ts>
-    System<Query<Ts...>>::System(Functor&& fn) : m_fn(fn) {}
+    System<Query<Ts...>>::System(Functor<value_type>&& fn) : m_fn(fn) {}
 
     template<typename... Ts>
     void System<Query<Ts...>>::execute(RefMut<World> world) {

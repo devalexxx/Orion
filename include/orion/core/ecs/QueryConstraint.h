@@ -82,7 +82,7 @@ namespace orion {
     }
 
     template<typename... T>
-    Selector<T...>::Selector() : m_types(types_info(TypeInfo < T > ()...)) {}
+    Selector<T...>::Selector() : m_types(types_info(TypeInfo<T>()...)) {}
 
     template<RefType... T>
     class Include : public Selector<T...> {

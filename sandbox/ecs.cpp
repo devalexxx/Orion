@@ -10,13 +10,38 @@ namespace orion {
     template<>
     class System<int> : public ISystem {
     public:
-        using Functor = BaseFunctor<int>;
+        using Functor = Functor<int>;
         explicit System(Functor&& fn) : m_fn(fn) {}
         void execute(RefMut<World> world) override {
             m_fn(5);
         }
     private:
         Functor m_fn;
+    };
+
+    template<>
+    class System<void> : public ISystem {
+    public:
+        void execute(RefMut<World> world) override {
+            std::cout << ++m_i << "\n";
+        }
+    private:
+        i32 m_i = 0;
+    };
+
+    class CustomSystem : public ISystem {
+    public:
+        using FnPtr = void(*)(RefMut<World>, i32);
+        using Fn    = std::function<void(RefMut<World>, i32)>;
+
+        explicit CustomSystem(FnPtr fn, int value) : m_fn(fn), m_value(value) {}
+        void execute(RefMut<World> world) override {
+            m_fn(world, m_value);
+            m_value++;
+        }
+    private:
+        Fn  m_fn;
+        i32 m_value;
     };
 
 }
@@ -251,6 +276,22 @@ TEST_SUITE("ecs") {
 
         auto q = world.query<Include<float&>>();
 
+    }
+
+    void custom_system(RefMut<World> world, int value) {
+        std::cout << value << "\n";
+    }
+
+    TEST_CASE("system_obj") {
+        orion::World world;
+
+        world.emplace_system<orion::System<void>>();
+        world.emplace_system(first_sys);
+        world.emplace_system<orion::CustomSystem>(custom_system, 5);
+
+        world.update();
+        world.update();
+        world.update();
     }
 
 }
