@@ -11,6 +11,12 @@
 #include <fmt/core.h>
 #include <algorithm>
 
+#ifdef _LIBCPP___ALGORITHM_RANGES_ALL_OF_H
+#   define ALL_OF std::ranges::all_of
+#else
+#   define ALL_OF std::all_of
+#endif
+
 namespace orion {
 
     template<IncludeType IT, ExcludeType ET = Exclude<>>
@@ -55,9 +61,9 @@ namespace orion {
 
         for (const auto& entity: m_world.m_em.iter()) {
 
-            if (std::ranges::all_of(exclude.begin(), exclude.end(), [&](u32 comp) {return !entity.get_signature()[comp];})) {
+            if (ALL_OF(exclude.begin(), exclude.end(), [&](u32 comp) {return !entity.get_signature()[comp];})) {
 
-                if (std::ranges::all_of(include.begin(), include.end(), [&](u32 comp) {return entity.get_signature()[comp];})) {
+                if (ALL_OF(include.begin(), include.end(), [&](u32 comp) {return entity.get_signature()[comp];})) {
 
                     using tuple_type_info = typename IT::filtered_types_info;
 

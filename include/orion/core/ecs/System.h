@@ -75,22 +75,22 @@ namespace orion {
         Functor<value_type> m_fn;
     };
 
-    template<typename... Ts>
-    class System<Query<Ts...>> : public ISystem {
+    template<typename T, typename... Ts>
+    class System<Query<T, Ts...>> : public ISystem {
     public:
-        using value_type = Query<Ts...>;
+        using value_type = Query<T, Ts...>;
         explicit System(Functor<value_type>&& fn);
         void execute(RefMut<World> world) override;
     private:
         Functor<value_type> m_fn;
     };
 
-    template<typename... Ts>
-    System<Query<Ts...>>::System(Functor<value_type>&& fn) : m_fn(fn) {}
+    template<typename T, typename... Ts>
+    System<Query<T, Ts...>>::System(Functor<value_type>&& fn) : m_fn(fn) {}
 
-    template<typename... Ts>
-    void System<Query<Ts...>>::execute(RefMut<World> world) {
-        m_fn(Query<Ts...>(world));
+    template<typename T, typename... Ts>
+    void System<Query<T, Ts...>>::execute(RefMut<World> world) {
+        m_fn(Query<T, Ts...>(world));
     }
 
 } // orion
