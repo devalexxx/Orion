@@ -45,10 +45,60 @@ xrepo install orion <version>
 Create a simple program that draw a triangle.
 
 #### xmake.lua
-![xmake.png](.github%2Fdocs%2Fasset%2Fxmake.png)
+
+````lua
+add_rules("mode.debug", "mode.release")
+
+set_language("c++23")
+
+add_repositories("orion-repo https://github.com/devalexxx/xmake-repo.git")
+
+add_requires("orion", { config = { debug = is_mode("debug") } })
+
+target("orion_test")
+    set_kind("binary")
+    add_files("src/*.cpp")
+
+    add_packages("orion")
+    add_rules("@orion/resource")
+````
 
 #### main.cpp
-![main.png](.github%2Fdocs%2Fasset%2Fmain.png)
+
+````c++
+#include <orion/graphics.h>
+
+int main(int argc, char** argv)
+{
+    auto event_manager = orion::EventManager::create();
+    auto window        = orion::Window::create("Test");
+    
+    window->set_event_manager(event_manager);
+    
+    event_manager->subscribe<orion::Input::KeyEvent>([](const auto& event)
+    {
+        if (event.key == orion::Input::Key::ESCAPE && event.pressed)
+        {
+            event.window.lock()->close();    
+        }
+    });
+    
+    window->get_view().transalte(orion::Vector3f(0.f, 0.f, 5.f));
+    window->get_view().look_at  (orion::Vector3f(0.f, 0.f, 0.f));
+    
+    orion::Shape shape(orion::Primitive::TRIANGLE);
+    
+    while(!window->is_close())
+    {
+        window->clear(orion::ClearMask::COLOR | orion::ClearMask::DEPTH);
+        window->draw(shape);
+        window->display();
+    }
+    
+    return EXIT_SUCCESS;
+}
+
+````
 
 ## Credits
 * [xmake](https://xmake.io/#/)
