@@ -83,7 +83,7 @@ int main(int argc, char** argv)
         }
     });
     
-    window->get_view().transalte(orion::Vector3f(0.f, 0.f, 5.f));
+    window->get_view().translate(orion::Vector3f(0.f, 0.f, 5.f));
     window->get_view().look_at  (orion::Vector3f(0.f, 0.f, 0.f));
     
     orion::Shape shape(orion::Primitive::TRIANGLE);
